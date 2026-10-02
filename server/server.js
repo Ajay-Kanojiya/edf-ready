@@ -9,18 +9,10 @@ const { EDF_RESPONSE_SCHEMA, EXTRACTION_PROMPT, FALLBACK_EXTRACTION_PROMPT } = r
 const { isOcrEligible, runOcr, heuristicParseEDF } = require("./ocrFallback");
 
 const PORT = Number(process.env.PORT) || 3001;
-const AI_PROVIDER = (process.env.AI_PROVIDER || "gemini").toLowerCase();
-const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
-const GEMINI_MODEL = process.env.GEMINI_MODEL || "gemini-flash-latest";
+const AI_PROVIDER = "openrouter";
 const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY;
 const OPENROUTER_MODEL = process.env.OPENROUTER_MODEL || "google/gemini-2.5-flash-lite";
-const OPENROUTER_MODELS = [...new Set(
-  (process.env.OPENROUTER_MODELS || [
-    OPENROUTER_MODEL,
-    "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free",
-    "google/gemma-4-26b-a4b-it:free",
-  ].join(",")).split(",").map((model) => model.trim()).filter(Boolean),
-)];
+const OPENROUTER_MODELS = [OPENROUTER_MODEL];
 const FRONTEND_ORIGIN = process.env.FRONTEND_ORIGIN || `http://localhost:${PORT}`;
 const RATE_LIMIT_MAX = Number(process.env.RATE_LIMIT_MAX) || 30;
 
@@ -28,9 +20,8 @@ const MAX_FILE_BYTES = 10 * 1024 * 1024; // 10MB
 const MAX_TEXT_CHARS = 20000;
 const ALLOWED_MIME_TYPES = new Set(["application/pdf", "image/png", "image/jpeg", "image/webp"]);
 
-const activeApiKey = AI_PROVIDER === "openrouter" ? OPENROUTER_API_KEY : GEMINI_API_KEY;
-if (!activeApiKey) {
-  console.error(`Missing API key for ${AI_PROVIDER}. Set the matching key in server/.env.`);
+if (!OPENROUTER_API_KEY) {
+  console.error("Missing OPENROUTER_API_KEY. Set it in server/.env.");
   process.exit(1);
 }
 
@@ -176,6 +167,68 @@ function parseModelJson(raw) {
   }
 }
 
+function sanitizeExtractedData(value) {
+  if (typeof value === "string") {
+    return value.replace(/[\uE000-\uF8FF]/g, "-").replace(/[‐‑‒–—−]/g, "-");
+  }
+  if (Array.isArray(value)) return value.map(sanitizeExtractedData);
+  if (value && typeof value === "object") {
+    return Object.fromEntries(Object.entries(value).map(([key, child]) => [key, sanitizeExtractedData(child)]));
+  }
+  return value;
+}
+
+function extractPanFromSource(sourceText) {
+  const labeledMatch = String(sourceText || '').match(/(?:PAN|Permanent\s+Account\s+Number|Income\s+Tax\s+PAN)[^\nA-Z0-9]{0,20}([A-Z](?:\s*[A-Z]){4}\s*\d(?:\s*\d){3}\s*[A-Z])/i);
+  const compactMatch = String(sourceText || '').match(/\b([A-Z]{5}\d{4}[A-Z])\b/i);
+  return (labeledMatch?.[1] || compactMatch?.[1] || '').replace(/\s+/g, '').toUpperCase();
+}
+
+function ensurePanFromSource(result, sourceText) {
+  const pan = extractPanFromSource(sourceText);
+  if (!pan) return result;
+  const generalInfo = result && typeof result.generalInfo === 'object' ? result.generalInfo : {};
+  const existingPan = generalInfo.pan && String(generalInfo.pan.value || '').replace(/\s+/g, '').toUpperCase();
+  if (/^[A-Z]{5}\d{4}[A-Z]$/.test(existingPan)) return result;
+  return {
+    ...result,
+    generalInfo: {
+      ...generalInfo,
+      pan: {
+        value: pan,
+        status: 'extracted',
+        confidence: 1,
+        rationale: 'Matched the PAN shown in the source document.'
+      }
+    }
+  };
+}
+
+function ensureIndividualExporterCategory(result, sourceText) {
+  const source = String(sourceText || '');
+  const generalInfo = result && typeof result.generalInfo === 'object' ? result.generalInfo : {};
+  const category = String(generalInfo.exporterCategory?.value || '').toLowerCase();
+  const detail = String(generalInfo.exporterCategoryOtherSpecify?.value || '').trim();
+  const sourceIdentifiesIndividual = /\bindividual\b/i.test(source);
+  const categoryIdentifiesIndividual = category.includes('individual') || detail.toLowerCase().includes('individual');
+  if (!sourceIdentifiesIndividual && !categoryIdentifiesIndividual) return result;
+  return {
+    ...result,
+    generalInfo: {
+      ...generalInfo,
+      exporterCategory: category.includes('individual') && !category.includes('other')
+        ? { value: 'others', status: 'ai_suggested', confidence: 0.9, rationale: 'Individual exporter mapped to Other (Specify).' }
+        : generalInfo.exporterCategory,
+      exporterCategoryOtherSpecify: {
+        value: 'Individual',
+        status: categoryIdentifiesIndividual ? (generalInfo.exporterCategoryOtherSpecify?.status || 'ai_suggested') : 'extracted',
+        ...(generalInfo.exporterCategoryOtherSpecify?.confidence !== undefined ? { confidence: generalInfo.exporterCategoryOtherSpecify.confidence } : { confidence: sourceIdentifiesIndividual ? 1 : 0.9 }),
+        rationale: 'Individual exporter identified from the source document.'
+      }
+    }
+  };
+}
+
 async function callOpenRouter({ inlineFile, text }) {
   let sourceText = text;
   if (inlineFile) {
@@ -191,7 +244,7 @@ async function callOpenRouter({ inlineFile, text }) {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${OPENROUTER_API_KEY}`,
-        "HTTP-Referer": `http://localhost:${PORT}`,
+        "HTTP-Referer": FRONTEND_ORIGIN,
         "X-Title": "Smart EDF Autofill",
       },
       body: JSON.stringify({
@@ -221,7 +274,7 @@ async function callOpenRouter({ inlineFile, text }) {
       continue;
     }
     console.log(`[openrouter] model=${model} response:`, raw);
-    return parseModelJson(raw);
+    return ensureIndividualExporterCategory(ensurePanFromSource(parseModelJson(raw), sourceText), sourceText);
   }
 
   throw new Error(lastError);
@@ -263,6 +316,7 @@ app.post("/api/extract", extractLimiter, handleUpload, async (req, res) => {
       console.error(`All ${AI_PROVIDER} tiers failed, attempting OCR fallback:`, aiErr.message);
       result = await extractWithOcrFallback({ inlineFile: file });
     }
+    result = sanitizeExtractedData(result);
     console.log(`[extract] completed method=${result?._meta?.method || AI_PROVIDER}`);
     res.json(result);
   } catch (err) {
@@ -280,6 +334,6 @@ app.use((err, _req, res, _next) => {
   res.status(500).json({ error: "Unexpected server error." });
 });
 
-app.listen(PORT, () => {
-  console.log(`Smart EDF Autofill server listening on http://localhost:${PORT}`);
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`Smart EDF Autofill server listening on ${FRONTEND_ORIGIN}`);
 });

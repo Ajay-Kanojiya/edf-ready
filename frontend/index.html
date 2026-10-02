@@ -128,6 +128,27 @@
       border: none !important;
       box-shadow: none !important;
     }
+    #statutory-form-wrapper input[type="checkbox"],
+    #statutory-form-wrapper input[type="radio"] {
+      appearance: none !important;
+      width: 14px !important;
+      height: 14px !important;
+      min-width: 14px !important;
+      border: 1px solid #64748b !important;
+      border-radius: 2px !important;
+      background: #ffffff !important;
+      box-shadow: none !important;
+      vertical-align: middle;
+    }
+    #statutory-form-wrapper input[type="checkbox"]:checked,
+    #statutory-form-wrapper input[type="radio"]:checked {
+      border-color: #000000 !important;
+      background-color: #ffffff !important;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3 8.5 6.5 12 13 4.5' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: 12px 12px;
+    }
     .autofilled-field {
       color: #000000 !important;
       font-weight: 700 !important;
@@ -174,7 +195,8 @@
       display: none !important;
     }
     .pdf-export-mode input.cell-input,
-    .pdf-export-mode input.cell-input-compact {
+      .pdf-export-mode input.cell-input-compact,
+      .pdf-export-mode textarea.cell-textarea {
       display: none !important;
     }
     .pdf-export-mode .print-value-echo {
@@ -244,6 +266,7 @@
         background: transparent !important;
       }
       #statutory-form-wrapper textarea {
+        display: none !important;
         resize: none !important;
         overflow: visible !important;
       }
@@ -353,6 +376,16 @@
         break-inside: avoid;
         page-break-inside: avoid;
       }
+      #servicesTable,
+      #servicesTable tbody,
+      #servicesTable tr,
+      #servicesTable td {
+        height: auto !important;
+      }
+      #servicesTable tr {
+        break-inside: auto !important;
+        page-break-inside: auto !important;
+      }
       /* Show full field values as wrapping text instead of clipped single-line inputs */
       input.cell-input, input.cell-input-compact {
         display: none !important;
@@ -395,18 +428,69 @@
     border: 1px solid #15803D;
     box-shadow: 0 0 0 1px rgba(21,128,61,0.12);
   }
+  .badge-suggested {
+    position: relative;
+    cursor: help;
+  }
+  .badge-suggested::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    left: 0;
+    bottom: calc(100% + 6px);
+    z-index: 100;
+    width: max-content;
+    max-width: 280px;
+    padding: 8px 10px;
+    border-radius: 6px;
+    background: #1f2937;
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.35;
+    white-space: pre-line;
+    text-align: left;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.22);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.12s ease;
+  }
+  .badge-suggested:hover::after,
+  .badge-suggested:focus-visible::after {
+    opacity: 1;
+    visibility: visible;
+  }
   .badge-extracted-check {
-    min-width: 20px;
+    width: 24px;
+    height: 24px;
+    min-width: 24px;
+    max-width: 24px;
     justify-content: center;
-    padding-left: 4px;
-    padding-right: 4px;
+    padding: 0;
     font-size: 12px;
     font-weight: 800;
+    justify-self: start;
+    flex: 0 0 24px;
   }
   .badge-suggested {
     background: rgba(99,102,241,0.08);
     color: #4338CA;
     border: 1px solid rgba(99,102,241,0.3);
+  }
+  .ai-hover-tooltip {
+    position: fixed;
+    z-index: 1000;
+    max-width: 280px;
+    padding: 8px 10px;
+    border-radius: 6px;
+    background: #1f2937;
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.35;
+    white-space: pre-line;
+    pointer-events: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.22);
   }
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
@@ -490,7 +574,7 @@
   <!-- Title & Action Bar -->
   <div class="flex items-center justify-between mb-1.5 pb-0.5 no-print flex-wrap gap-2">
     <div class="w-28 hidden sm:block"></div>
-    <h1 class="text-base sm:text-lg font-bold tracking-tight uppercase font-sans text-black text-center flex-1">Export Declaration Form (EDF)</h1>
+    <h1 class="text-base sm:text-lg font-bold tracking-tight font-sans text-black text-center flex-1">Export Declaration Form (EDF)</h1>
     <div class="flex items-center gap-1.5 flex-wrap justify-end">
       <button class="px-2 py-1 text-[11px] sm:px-2.5 sm:py-1.5 sm:text-xs font-medium text-slate-700 bg-white border border-slate-300 rounded hover:bg-slate-50 transition" onclick="startOver()" title="Clear all fields client-side" type="button">Clear</button>
       <button class="inline-flex items-center gap-1 px-2.5 py-1 text-[11px] sm:gap-1.5 sm:px-3.5 sm:py-1.5 sm:text-xs md:px-4 md:py-2 md:text-sm font-medium text-white bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 rounded-lg shadow-sm transition-colors cursor-pointer whitespace-nowrap" onclick="downloadOfficialPDF()" type="button">
@@ -502,7 +586,7 @@
 
   <!-- Printable Header Visible in Print Only -->
   <div class="hidden print:block text-center mb-4">
-    <h1 class="text-xl font-bold uppercase text-black">Export Declaration Form</h1>
+    <h1 class="text-xl font-bold text-black">Export Declaration Form</h1>
     <!-- <p class="text-xs text-slate-600">(Mandatory with effect from 01 October 2026)</p> -->
   </div>
 
@@ -606,7 +690,7 @@
               <div class="flex items-center gap-1">
                 <label class="inline-flex items-center gap-1.5 cursor-pointer">
                   <input class="text-slate-900 h-3.5 w-3.5 border-slate-400" id="ec_others" name="exporter_cat" type="radio">
-                  <span class="">others (Specify).......</span>
+                  <span class="">Other (Specify).......</span>
                 </label>
                 <input class="cell-input py-0.5 text-xs" id="exporterCategoryOtherSpecify" placeholder="Specify if other" type="text">
               </div>
@@ -790,8 +874,8 @@
         <thead>
           <tr class="bg-gov-100 font-bold border-b border-black">
             <th class="py-0 px-2 text-black text-xs">Particulars</th>
-            <th class="py-0 px-2 text-black text-xs">Currency</th>
-            <th class="py-0 px-2 text-right text-black text-xs">Amount</th>
+            <th class="py-0 px-2 text-center text-black text-xs">Currency</th>
+            <th class="py-0 px-2 text-center text-black text-xs">Amount</th>
           </tr>
         </thead>
         <tbody>
@@ -861,17 +945,17 @@
             <th class="p-1 w-32" rowspan="2">Service recipient Name &amp; Address</th>
             <th class="p-1 w-16" rowspan="2">Country</th>
             <th class="p-1 border-b border-black" colspan="4">Details of Invoice</th>
-            <th class="p-1 w-20" rowspan="2">Net Realisable value</th>
-            <th class="p-1 w-24" rowspan="2">Contract No., if any, and Date</th>
-            <th class="p-1 w-28" rowspan="2">Description of services</th>
-            <th class="p-1 w-14" rowspan="2">SAC Code</th>
-            <th class="p-1 w-16" rowspan="2">Remarks</th>
+            <th class="p-1 w-20 leading-tight" rowspan="2">Net<br>Realisable<br>value</th>
+            <th class="p-1 w-24 leading-tight" rowspan="2">Contract No.,<br>if any, and<br>Date</th>
+            <th class="p-1 w-28 leading-tight" rowspan="2">Description<br>of services</th>
+            <th class="p-1 w-14 leading-tight" rowspan="2">SAC<br>Code</th>
+            <th class="p-1 w-16 leading-tight" rowspan="2">Remarks</th>
           </tr>
           <tr class="text-center bg-slate-100/70 text-[11px]">
             <th class="p-1 w-16 border-r border-black">No.</th>
             <th class="p-1 w-16 border-r border-black">Date</th>
-            <th class="p-1 w-12 border-r border-black">Currency</th>
-            <th class="p-1 w-20">Amount</th>
+            <th class="p-1 w-12 border-r border-black text-center">Currency</th>
+            <th class="p-1 w-20 text-center">Amount</th>
           </tr>
         </thead>
         <tbody id="servicesTableBody">
@@ -887,7 +971,7 @@
             <td class="p-1"><textarea class="cell-textarea text-xs" data-field="contract" placeholder="Contract &amp; Date" rows="1"></textarea></td>
             <td class="p-1"><textarea class="cell-textarea text-xs" data-field="description" placeholder="Description of service" rows="1"></textarea></td>
             <td class="p-1 text-center"><input class="cell-input font-mono text-center text-xs" data-field="sac" placeholder="SAC" type="text" value=""></td>
-            <td class="p-1 relative"><input class="cell-input text-xs" data-field="remarks" placeholder="Remarks" type="text" value=""></td>
+            <td class="p-1 relative"><textarea class="cell-textarea text-xs" data-field="remarks" placeholder="Remarks" rows="1"></textarea></td>
           </tr>
         </tbody>
       </table>
@@ -1037,7 +1121,7 @@
       <p class="">2. ^ If the full export value is not ascertainable at the time of export, the value which the exporter, having regard to the prevailing market conditions expects to receive on the sale of the goods in overseas market.</p>
       <p class="">3. Export value may be indicated as nil in case the goods are sent without any consideration.</p>
     </div>
-    <div class="text-center text-xs font-semibold py-0.5 text-slate-700">10</div></div>
+    </div>
 </div></div>
 </main>
 <!-- END: MainContentArea -->
@@ -1164,7 +1248,14 @@
       echo.classList.toggle('print-filled-field', Boolean((el.value || '').trim()));
     });
     wrapper.querySelectorAll('textarea').forEach((el) => {
-      el.classList.toggle('print-filled-field', Boolean((el.value || '').trim()));
+      let echo = el.nextElementSibling;
+      if (!echo || !echo.classList.contains('print-value-echo')) {
+        echo = document.createElement('span');
+        echo.className = 'print-value-echo';
+        el.insertAdjacentElement('afterend', echo);
+      }
+      echo.textContent = el.value || '';
+      echo.classList.toggle('print-filled-field', Boolean((el.value || '').trim()));
     });
   }
 
@@ -1282,6 +1373,11 @@
   function handleFileInputChange(event) {
     const file = event.target.files && event.target.files[0];
     if (!file) return;
+    if (isExtracting) {
+      showToast('Please wait for the current document extraction to finish.');
+      event.target.value = '';
+      return;
+    }
 
     const ALLOWED = ['application/pdf', 'image/png', 'image/jpeg', 'image/webp'];
     const MAX_BYTES = 10 * 1024 * 1024;
@@ -1296,6 +1392,7 @@
       return;
     }
 
+    resetFormForNewDocument();
     pendingFile = file;
     document.getElementById('sourceDocCard').classList.remove('hidden');
     document.getElementById('sourceDocName').textContent = file.name;
@@ -1401,11 +1498,34 @@
     const pct = typeof confidence === 'number' ? ` ${Math.round(confidence * 100)}%` : '';
     chip.textContent = status === 'extracted' ? '✓' : `AI Suggested${pct}`;
     if (status === 'extracted') {
-      chip.title = 'Extracted from the document';
+      chip.setAttribute('aria-label', 'Extracted from the document');
     } else {
       const value = Array.isArray(suggestedValue) ? suggestedValue.join(', ') : String(suggestedValue ?? el.value ?? '').trim();
-      const details = [value && `Suggested value: ${value}`, rationale && `Why: ${rationale}`, 'Please confirm this value.'].filter(Boolean).join('\n');
+      const details = [value && `AI suggested: ${value}`, 'Please check and confirm.', rationale && `Why: ${rationale}`].filter(Boolean).join('\n');
+      chip.dataset.tooltip = details;
       chip.title = details;
+      let hoverTooltip;
+      const removeHoverTooltip = () => {
+        if (hoverTooltip) {
+          hoverTooltip.remove();
+          hoverTooltip = null;
+        }
+      };
+      const showHoverTooltip = () => {
+        removeHoverTooltip();
+        hoverTooltip = document.createElement('div');
+        hoverTooltip.className = 'ai-hover-tooltip';
+        hoverTooltip.textContent = details;
+        document.body.appendChild(hoverTooltip);
+        const rect = chip.getBoundingClientRect();
+        const tooltipRect = hoverTooltip.getBoundingClientRect();
+        hoverTooltip.style.left = `${Math.max(8, Math.min(rect.left, window.innerWidth - tooltipRect.width - 8))}px`;
+        hoverTooltip.style.top = `${Math.max(8, rect.top - tooltipRect.height - 8)}px`;
+      };
+      chip.addEventListener('mouseenter', showHoverTooltip);
+      chip.addEventListener('mouseleave', removeHoverTooltip);
+      chip.addEventListener('focus', showHoverTooltip);
+      chip.addEventListener('blur', removeHoverTooltip);
       el.title = details;
     }
     el.insertAdjacentElement('afterend', chip);
@@ -1419,12 +1539,18 @@
     else delete el.dataset.autofillStatus;
   }
 
+  function normalizeInvoiceNumber(value) {
+    return String(value ?? '')
+      .replace(/[\uE000-\uF8FF]/g, '-')
+      .replace(/[‐‑‒–—−]/g, '-');
+  }
+
   function setField(id, fieldData) {
     const el = document.getElementById(id);
     if (!el || !fieldData) return;
     setAutofilledFieldState(el, fieldData);
     if (fieldData.value !== undefined && fieldData.value !== null && fieldData.value !== '') {
-      el.value = fieldData.value;
+      el.value = id === 'field_inv_no' ? normalizeInvoiceNumber(fieldData.value) : fieldData.value;
     }
     applyFieldBadge(el, fieldData.status, fieldData.confidence, fieldData.rationale, fieldData.value);
     if (el.tagName === 'TEXTAREA') autoGrowTextarea(el);
@@ -1434,20 +1560,49 @@
     return String(value || '').toLowerCase().replace(/[^a-z0-9]/g, '');
   }
 
+  function choiceMatches(values, label) {
+    const target = normalizeChoice(label);
+    return values.some((value) => {
+      const normalized = normalizeChoice(value);
+      if (!normalized) return false;
+      if (normalized === target) return true;
+      if ((normalized === 'courier' || normalized === 'postcourier') && target === 'postcouriers') return true;
+      if (normalized === 'postcouriers' && (target === 'courier' || target === 'postcourier')) return true;
+      if (target === 'others' && ['other', 'advancepayment', 'transfer', 'remittance'].some((alias) => normalized.includes(alias))) return true;
+      if (target === 'internet' && ['online', 'remote', 'digital', 'electronic', 'virtual'].some((alias) => normalized.includes(alias))) return true;
+      if (target === 'periodical' && ['monthly', 'recurring', 'retainer'].some((alias) => normalized.includes(alias))) return true;
+      return normalized.includes(target) || target.includes(normalized);
+    });
+  }
+
   function setCheckboxGroup(idMap, fieldData, anchorId) {
-    const values = Array.isArray(fieldData && fieldData.value) ? fieldData.value.map(normalizeChoice) : [];
+    const rawValue = fieldData && fieldData.value;
+    const aiSuggested = fieldData && fieldData.status === 'ai_suggested';
+    const values = Array.isArray(rawValue)
+      ? rawValue
+      : typeof rawValue === 'string'
+        ? rawValue.split(/[,;|]/).map((value) => value.trim()).filter(Boolean)
+        : [];
     Object.entries(idMap).forEach(([label, id]) => {
       const el = document.getElementById(id);
-      if (el) el.checked = values.includes(normalizeChoice(label));
+      if (!el) return;
+      el.checked = choiceMatches(values, label);
+      el.dataset.aiSuggested = aiSuggested && el.checked ? 'true' : 'false';
+      if (aiSuggested && el.checked) el.title = 'AI suggested selection. Please check and confirm.';
     });
     if (anchorId) applyFieldBadge(document.getElementById(anchorId), fieldData && fieldData.status, fieldData && fieldData.confidence, fieldData && fieldData.rationale, fieldData && fieldData.value);
   }
 
   function setRadioGroup(idMap, fieldData, anchorId) {
-    const value = normalizeChoice(fieldData && fieldData.value);
+    const rawValue = fieldData && fieldData.value;
+    const aiSuggested = fieldData && fieldData.status === 'ai_suggested';
+    const values = Array.isArray(rawValue) ? rawValue : [rawValue];
     Object.entries(idMap).forEach(([label, id]) => {
       const el = document.getElementById(id);
-      if (el) el.checked = normalizeChoice(label) === value;
+      if (!el) return;
+      el.checked = choiceMatches(values, label);
+      el.dataset.aiSuggested = aiSuggested && el.checked ? 'true' : 'false';
+      if (aiSuggested && el.checked) el.title = 'AI suggested selection. Please check and confirm.';
     });
     if (anchorId) applyFieldBadge(document.getElementById(anchorId), fieldData && fieldData.status, fieldData && fieldData.confidence, fieldData && fieldData.rationale, fieldData && fieldData.value);
   }
@@ -1460,7 +1615,7 @@
     if (existingBadge) existingBadge.remove();
     setAutofilledFieldState(el, fieldData);
     if (fieldData.value !== undefined && fieldData.value !== null && fieldData.value !== '') {
-      el.value = fieldData.value;
+      el.value = fieldKey === 'invoiceNo' ? normalizeInvoiceNumber(fieldData.value) : fieldData.value;
     }
     applyFieldBadge(el, fieldData.status, fieldData.confidence, fieldData.rationale, fieldData.value);
     if (el.tagName === 'TEXTAREA') autoGrowTextarea(el);
@@ -1567,11 +1722,15 @@
   }
 
   // --- clear / start over (client-side only) ---
-  function startOver() {
+  function resetFormForNewDocument() {
     const wrapper = document.getElementById('statutory-form-wrapper');
     wrapper.querySelectorAll('.ai-badge').forEach((b) => b.remove());
     wrapper.querySelectorAll('input[type="text"], input[type="date"], input[type="number"], textarea').forEach((el) => {
       el.value = '';
+      el.classList.remove('autofilled-field');
+      delete el.dataset.autofillStatus;
+      delete el.dataset.aiSuggested;
+      el.removeAttribute('title');
     });
     wrapper.querySelectorAll('input[type="checkbox"], input[type="radio"]').forEach((el) => {
       el.checked = false;
@@ -1581,8 +1740,16 @@
     updateServiceRowIndices();
     document.getElementById('val_net_realisable').value = '';
     document.getElementById('netCurrencyCell').textContent = '-';
+    const progress = document.getElementById('extractionProgress');
+    const progressBar = document.getElementById('extractionProgressBar');
+    if (progress) progress.classList.add('hidden');
+    if (progressBar) progressBar.style.width = '0%';
+  }
+
+  function startOver() {
+    resetFormForNewDocument();
     clearSourceDoc();
-    wrapper.querySelectorAll('textarea.cell-textarea').forEach((el) => autoGrowTextarea(el));
+    document.querySelectorAll('textarea.cell-textarea').forEach((el) => autoGrowTextarea(el));
     showToast('Form cleared. Ready to start over.');
   }
 

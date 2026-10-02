@@ -63,7 +63,9 @@ function heuristicParseEDF(rawText) {
   const invoiceCurrency = firstMatch(text, /\b(USD|EUR|GBP|INR|JPY|AUD|CAD|AED|SGD)\b/);
   const invoiceAmount = firstMatch(text, /(?:amount|value|total)[^\n\d]{0,15}([\d,]+\.\d{2})/i);
   const gstin = firstMatch(text, /\b(\d{2}[A-Z]{5}\d{4}[A-Z]\d[Z][A-Z\d])\b/);
-  const pan = firstMatch(text, /\b([A-Z]{5}\d{4}[A-Z])\b/);
+  const pan = firstMatch(text, /(?:PAN|Permanent\s+Account\s+Number|Income\s+Tax\s+PAN)[^\nA-Z0-9]{0,20}([A-Z](?:\s*[A-Z]){4}\s*\d(?:\s*\d){3}\s*[A-Z])/i)
+    .replace(/\s+/g, "")
+    .toUpperCase() || firstMatch(text, /\b([A-Z]{5}\d{4}[A-Z])\b/i).toUpperCase();
   const ieCode = firstMatch(text, /IE\s*Code\s*[:\-]?\s*(\d{7,10})/i);
   const adCode = firstMatch(text, /AD\s*code\s*[:\-]?\s*(\d{5,8})/i);
   const hsnSacCode = firstMatch(text, /(?:HSN|SAC)[^\d]{0,10}([\d.]{4,10})/i);
