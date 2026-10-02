@@ -1,0 +1,1636 @@
+<!DOCTYPE html><html lang="en" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0" name="viewport">
+<title>Export Declaration Form (EDF)</title>
+<meta content="Fill the RBI Export Declaration Form (EDF) online in minutes. Upload an invoice or shipping bill and let AI auto-extract and populate every field — free, no login, nothing stored. Download a ready-to-submit statutory PDF." name="description">
+<meta content="Export Declaration Form, EDF form online, EDF AI autofill, RBI export declaration, FEMA export form, shipping bill EDF, export declaration PDF, fill EDF online free" name="keywords">
+<meta content="index, follow" name="robots">
+<meta content="Export Declaration Form (EDF) — Free AI Autofill &amp; PDF Generator" property="og:title">
+<meta content="Upload an invoice or shipping bill and AI auto-fills your RBI Export Declaration Form (EDF). Free, private, no login — download a statutory-format PDF instantly." property="og:description">
+<meta content="website" property="og:type">
+<meta content="summary" name="twitter:card">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Export Declaration Form (EDF) AI Autofill",
+  "applicationCategory": "BusinessApplication",
+  "operatingSystem": "Any (Web Browser)",
+  "description": "Free online tool to fill the RBI Export Declaration Form (EDF). Upload a commercial invoice or shipping bill and AI extracts and populates every statutory field automatically, then download a print-ready PDF.",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+}
+</script>
+<!-- Tailwind CSS v3 with forms and container queries -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script data-purpose="tailwind-config">
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'Plus Jakarta Sans', 'system-ui', '-apple-system', 'sans-serif'],
+            mono: ['JetBrains Mono', 'Menlo', 'monospace']
+          },
+          colors: {
+            gov: {
+              50: '#f8fafc',
+              100: '#f1f5f9',
+              200: '#e2e8f0',
+              300: '#cbd5e1',
+              700: '#334155',
+              800: '#1e293b',
+              900: '#0f172a'
+            }
+          }
+        }
+      }
+    };
+  </script>
+<style data-purpose="print-and-table-layout">
+    html, body {
+      overflow-x: hidden !important;
+      max-width: 100vw !important;
+      width: 100%;
+    }
+    * {
+      min-width: 0;
+    }
+    /* Precise statutory grid borders mirroring official government document */
+    .form-table-bordered {
+      border: 1.5px solid #000000;
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .form-table-bordered > tbody > tr > td,
+    .form-table-bordered > tbody > tr > th,
+    .form-table-bordered > thead > tr > td,
+    .form-table-bordered > thead > tr > th {
+      border: 1px solid #000000;
+      vertical-align: top;
+    }
+    /* Nested sub-grid (Country/Port/LEO block) uses plain divs, not a nested <table>,
+       so its internal lines never double up with the outer table's own border. */
+    .nested-grid-cell {
+      padding: 0 !important;
+      vertical-align: top;
+    }
+    
+    /* Clean, unobtrusive input styling inside table cells */
+    .cell-input {
+      width: 100%;
+      background-color: #f6f9fe !important;
+      border: none !important;
+      border-radius: 2px !important;
+      padding: 2px 5px !important;
+      font-size: 0.75rem !important;
+      line-height: 1.1rem;
+      color: #0f172a;
+      transition: all 0.15s ease-in-out;
+    }
+    .cell-input:focus {
+      outline: none !important;
+      background-color: #ffffff !important;
+      border: none !important;
+      box-shadow: none !important;
+    }
+    .cell-input-compact {
+      width: 100%;
+      background-color: #f6f9fe !important;
+      border: none !important;
+      border-radius: 2px !important;
+      padding: 1px 4px !important;
+      font-size: 0.75rem !important;
+      line-height: 1rem;
+      height: 1.3rem;
+      color: #0f172a;
+      transition: all 0.15s ease-in-out;
+    }
+    .cell-input-compact:focus {
+      outline: none !important;
+      background-color: #ffffff !important;
+      border: none !important;
+      box-shadow: none !important;
+    }
+    .cell-textarea {
+      width: 100%;
+      background-color: #f6f9fe !important;
+      border: none !important;
+      border-radius: 2px !important;
+      padding: 2px 5px !important;
+      font-size: 0.75rem !important;
+      line-height: 1.1rem;
+      resize: vertical;
+      color: #0f172a;
+      transition: all 0.15s ease-in-out;
+    }
+    .cell-textarea:focus {
+      outline: none !important;
+      background-color: #ffffff !important;
+      border: none !important;
+      box-shadow: none !important;
+    }
+    .autofilled-field {
+      color: #000000 !important;
+      font-weight: 700 !important;
+    }
+    #statutory-form-wrapper input[type="text"],
+    #statutory-form-wrapper input[type="date"],
+    #statutory-form-wrapper input[type="number"],
+    #statutory-form-wrapper textarea {
+      border: none !important;
+      outline: none !important;
+      box-shadow: none !important;
+    }
+    .print-value-echo {
+      display: none;
+    }
+    .ad-authentication-print-label {
+      display: none;
+    }
+    .pdf-export-mode {
+      background: #ffffff !important;
+    }
+    .pdf-export-mode .no-print {
+      display: none !important;
+    }
+    .pdf-export-mode .form-sheet,
+    .pdf-export-mode [class*="bg-gov-"],
+    .pdf-export-mode [class*="bg-slate-"] {
+      background: #ffffff !important;
+      color: #000000 !important;
+    }
+    .pdf-export-mode .form-table-bordered,
+    .pdf-export-mode .form-table-bordered > tbody > tr > td,
+    .pdf-export-mode .form-table-bordered > tbody > tr > th,
+    .pdf-export-mode .form-table-bordered > thead > tr > td,
+    .pdf-export-mode .form-table-bordered > thead > tr > th {
+      border-color: #000000 !important;
+    }
+    .pdf-export-mode .cell-textarea {
+      background: #ffffff !important;
+      border-color: #000000 !important;
+      color: #000000 !important;
+    }
+    .pdf-export-mode .ai-badge {
+      display: none !important;
+    }
+    .pdf-export-mode input.cell-input,
+    .pdf-export-mode input.cell-input-compact {
+      display: none !important;
+    }
+    .pdf-export-mode .print-value-echo {
+      display: block !important;
+      white-space: pre-wrap;
+      word-break: break-word;
+      font-size: 0.75rem;
+      line-height: 1.15;
+      color: #0f172a;
+      padding: 1px 2px;
+    }
+    .pdf-export-mode .form-sheet {
+      box-shadow: none !important;
+      border: none !important;
+      margin: 0 !important;
+      width: 794px !important;
+      max-width: 794px !important;
+      box-sizing: border-box !important;
+    }
+    .pdf-export-mode .statutory-page-2-marker {
+      break-before: page !important;
+      page-break-before: always !important;
+    }
+    .pdf-export-mode .min-w-\[900px\] {
+      min-width: 0 !important;
+      width: 100% !important;
+    }
+
+    @media print {
+      @page {
+        margin: 10mm 8mm;
+      }
+      body {
+        background: #ffffff !important;
+        padding: 0 !important;
+      }
+      .no-print {
+        display: none !important;
+      }
+      .page-break {
+        page-break-before: always !important;
+        break-before: page !important;
+        margin: 0 !important;
+        border: none !important;
+        height: 0 !important;
+      }
+      .form-sheet {
+        box-shadow: none !important;
+        border: none !important;
+        margin: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 0 !important;
+      }
+      .cell-input, .cell-input-compact, .cell-textarea {
+        background-color: transparent !important;
+        border: none !important;
+        padding: 0 !important;
+      }
+      #statutory-form-wrapper input[type="text"],
+      #statutory-form-wrapper input[type="date"],
+      #statutory-form-wrapper input[type="number"] {
+        display: none !important;
+        border: none !important;
+        outline: none !important;
+        box-shadow: none !important;
+        background: transparent !important;
+      }
+      #statutory-form-wrapper textarea {
+        resize: none !important;
+        overflow: visible !important;
+      }
+      .signature-pad-box {
+        display: block !important;
+        border: none !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        overflow: visible !important;
+        background: transparent !important;
+      }
+      #signatureControl .signature-pad-box.hidden {
+        display: none !important;
+      }
+      #signatureControl #signatureUploadPreview:not(.hidden) {
+        display: block !important;
+      }
+      .signature-pad-box > #sig-draw-pane {
+        display: block !important;
+        padding: 0 !important;
+        background: transparent !important;
+      }
+      .signature-pad-box #sig-draw-pane > div {
+        height: 5rem !important;
+        padding: 0 !important;
+        border: none !important;
+        border-radius: 0 !important;
+        background: transparent !important;
+      }
+      .signature-pad-box #signatureCanvas {
+        cursor: default !important;
+      }
+      .ad-signature-line {
+        display: none !important;
+      }
+      .ad-authentication-box {
+        display: none !important;
+      }
+        .ad-authentication-print-label {
+          display: block !important;
+          margin-top: 5.5rem !important;
+          text-align: left !important;
+          color: #000000 !important;
+          font-size: 0.75rem !important;
+        }
+        .fpo-print-fields {
+          display: flex !important;
+          flex-direction: column !important;
+          justify-content: space-between !important;
+          min-height: 7.5rem !important;
+        }
+        .fpo-print-fields > span:first-of-type {
+          margin-bottom: 0 !important;
+        }
+        .fpo-details-cell {
+          display: table-cell !important;
+          vertical-align: top !important;
+        }
+        .fpo-details-cell > .fpo-print-fields {
+          display: flex !important;
+        }
+        .section-3-table {
+          margin-top: 0.5rem !important;
+        }
+      #statutory-form-wrapper input::placeholder,
+      #statutory-form-wrapper textarea::placeholder {
+        color: transparent !important;
+        opacity: 0 !important;
+      }
+      #servicesTable .print-empty-service-row {
+        display: table-row !important;
+      }
+      #servicesTable .print-empty-service-row .service-row-num {
+        color: transparent !important;
+      }
+      .ai-badge {
+        display: none !important;
+      }
+      .bg-gov-100, .bg-gov-50, .bg-slate-50, .bg-slate-50\/40, .bg-slate-50\/50, .bg-slate-100\/70 {
+        background-color: #ffffff !important;
+      }
+      /* Section 2B must fit inside the printable page instead of keeping its 900px screen width. */
+      #servicesTable {
+        width: 100% !important;
+        min-width: 0 !important;
+        table-layout: fixed !important;
+        font-size: 8px !important;
+      }
+      #servicesTable th,
+      #servicesTable td {
+        min-width: 0 !important;
+        padding: 2px !important;
+        overflow-wrap: anywhere !important;
+        word-break: break-word !important;
+      }
+      #servicesTable input,
+      #servicesTable textarea {
+        max-width: 100% !important;
+        font-size: 8px !important;
+        line-height: 1.05 !important;
+      }
+      .statutory-page-2-marker .overflow-x-auto {
+        overflow: visible !important;
+      }
+      /* Never split a table row across a page break (fixes 2A half-on-one-page issue) */
+      tr, .form-table-bordered {
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+      /* Show full field values as wrapping text instead of clipped single-line inputs */
+      input.cell-input, input.cell-input-compact {
+        display: none !important;
+      }
+      .print-value-echo {
+        display: block !important;
+        white-space: pre-wrap;
+        word-break: break-word;
+        font-size: 0.75rem;
+        line-height: 1.15;
+        color: #0f172a;
+        padding: 1px 2px;
+      }
+      .print-value-echo.print-filled-field,
+      #statutory-form-wrapper textarea.print-filled-field {
+        font-weight: 600 !important;
+        color: #111827 !important;
+        background: #f8fafc !important;
+        border-radius: 2px !important;
+      }
+    }
+  </style>
+<style data-purpose="ai-badge-styles">
+  .ai-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 1px 6px;
+    border-radius: 9999px;
+    white-space: nowrap;
+    vertical-align: middle;
+    margin-left: 6px;
+    line-height: 1.4;
+  }
+  .badge-extracted {
+    background: #DCFCE7;
+    color: #14532D;
+    border: 1px solid #15803D;
+    box-shadow: 0 0 0 1px rgba(21,128,61,0.12);
+  }
+  .badge-extracted-check {
+    min-width: 20px;
+    justify-content: center;
+    padding-left: 4px;
+    padding-right: 4px;
+    font-size: 12px;
+    font-weight: 800;
+  }
+  .badge-suggested {
+    background: rgba(99,102,241,0.08);
+    color: #4338CA;
+    border: 1px solid rgba(99,102,241,0.3);
+  }
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+<body class="bg-slate-100/80 text-slate-900 font-sans min-h-screen antialiased flex flex-col justify-between">
+<!-- BEGIN: Minimal Top Navigation Bar -->
+<header class="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-slate-200 shadow-xs no-print" data-purpose="top-navigation-bar">
+<div class="max-w-5xl mx-auto px-4 sm:px-6 py-2.5 flex items-center justify-between relative">
+
+<div class="w-full text-center py-0.5">
+<h1 class="text-sm sm:text-base font-bold text-slate-900 tracking-tight">Export Declaration Form</h1>
+<!-- <p class="text-[11px] sm:text-xs text-slate-500 font-medium">(Mandatory with effect from 01 October 2026)</p> -->
+</div>
+
+</div>
+</header>
+<!-- END: Minimal Top Navigation Bar -->
+<!-- BEGIN: MainContentArea -->
+<main class="flex-grow py-2 sm:py-3 px-2 sm:px-4 flex flex-col items-center">
+<!-- BEGIN: Auto-Extraction Dropzone (real backend-wired, extracts automatically on upload) -->
+<div class="w-full max-w-[960px] mb-3 bg-white border border-slate-200 rounded-lg shadow-xs p-2 no-print" id="doc-ingestion-zone">
+<div class="flex items-center justify-between gap-2 mb-1 flex-wrap">
+<p class="text-[11px] font-semibold text-slate-500 uppercase tracking-wide">Document Ingestion &amp; Smart Extraction</p>
+</div>
+<div class="border-2 border-dashed border-slate-300 hover:border-blue-500 bg-slate-50/70 hover:bg-blue-50/20 rounded-md p-2 transition relative group flex flex-col sm:flex-row items-center justify-between gap-2" id="dropZone">
+<input accept=".pdf,.jpg,.jpeg,.png,.webp" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" id="fileInput" onchange="handleFileInputChange(event)" type="file">
+<div class="flex items-center gap-2">
+<div class="p-1.5 bg-blue-50 text-blue-600 rounded-lg shadow-2xs border border-blue-100 group-hover:scale-105 transition-transform flex items-center justify-center flex-shrink-0">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</div>
+<div class="text-left">
+<p class="text-sm font-semibold text-slate-800">
+        Drag &amp; drop Commercial Invoice or Shipping Bill to auto-fill
+      </p>
+<p class="text-[11px] text-slate-500 mt-0.5">
+        Supports PDF, JPG, PNG, WEBP (up to 10MB). Extraction starts automatically on upload.
+      </p>
+</div>
+</div>
+<div class="flex-shrink-0 relative pointer-events-none">
+<span class="inline-flex items-center gap-2 px-4 py-2 text-xs font-semibold text-white bg-blue-600 group-hover:bg-blue-700 rounded-lg shadow-sm transition-colors cursor-pointer">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+      Browse &amp; Upload
+    </span>
+</div>
+</div>
+<!-- Active Source Doc card (hidden until a file is chosen) -->
+<div class="hidden mt-3 bg-gov-50 border border-slate-200 rounded-lg p-3" id="sourceDocCard">
+<div class="flex items-center justify-between mb-1.5">
+<span class="text-[10px] font-bold uppercase tracking-wider text-slate-500">Active Source Doc</span>
+<span class="text-[10px] bg-slate-100 text-slate-600 px-1.5 py-0.2 rounded font-medium border border-slate-200" id="sourceDocStatusChip">Ready</span>
+</div>
+<div class="flex items-center gap-1.5 bg-white border border-slate-200 rounded px-2 py-1.5 shadow-xs mb-2">
+<svg class="w-3.5 h-3.5 text-blue-600 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path clip-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" fill-rule="evenodd"></path></svg>
+<div class="flex-1 min-w-0">
+<p class="text-[11px] font-mono font-semibold text-slate-800 truncate" id="sourceDocName">—</p>
+<p class="text-[9px] text-slate-500 font-sans" id="sourceDocMeta">—</p>
+</div>
+<button class="text-slate-400 hover:text-slate-700 p-0.5" onclick="clearSourceDoc()" title="Clear document" type="button">
+<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+</div>
+<button class="hidden w-full px-2 py-1.5 text-[11px] font-semibold text-white bg-indigo-600 hover:bg-indigo-700 rounded transition shadow-xs" id="extractFileBtn" onclick="extractFromFile()" type="button">Fetch from Document/Invoice</button>
+<div class="hidden mt-2" id="extractionProgress" aria-live="polite">
+<div class="flex items-center justify-between mb-1 text-[10px] font-semibold text-slate-600">
+<span id="extractionProgressLabel">Preparing document…</span>
+<span id="extractionProgressPercent">0%</span>
+</div>
+<div class="h-1.5 w-full overflow-hidden rounded-full bg-slate-200">
+<div class="h-full rounded-full bg-emerald-600 transition-[width] duration-1000 ease-out" id="extractionProgressBar" style="width: 0%;"></div>
+</div>
+</div>
+</div>
+<p class="text-[10px] text-slate-500 mt-2 flex items-center gap-1">
+<svg class="w-3 h-3 text-slate-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>Nothing you upload is stored — it is processed in memory only and discarded immediately after extraction. No database, no login, no local-storage writes.</p>
+</div>
+<!-- END: Auto-Extraction Dropzone -->
+<!-- FORM CANVAS: EXACT TWO-PAGE STATUTORY ORIENTATION -->
+<div class="w-full max-w-[960px] space-y-2" id="statutory-form-wrapper"><div class="bg-white p-2 sm:p-4 shadow-lg border border-slate-300 rounded-xs form-sheet text-slate-900 w-full overflow-x-hidden">
+  <p class="text-right text-xs font-semibold text-black mb-1">Annex</p>
+  <!-- Title & Action Bar -->
+  <div class="flex items-center justify-between mb-1.5 pb-0.5 no-print flex-wrap gap-2">
+    <div class="w-28 hidden sm:block"></div>
+    <h1 class="text-base sm:text-lg font-bold tracking-tight uppercase font-sans text-black text-center flex-1">Export Declaration Form (EDF)</h1>
+    <div class="flex items-center gap-1.5 flex-wrap justify-end">
+      <button class="px-2 py-1 text-[11px] sm:px-2.5 sm:py-1.5 sm:text-xs font-medium text-slate-700 bg-white border border-slate-300 rounded hover:bg-slate-50 transition" onclick="startOver()" title="Clear all fields client-side" type="button">Clear</button>
+      <button class="inline-flex items-center gap-1 px-2.5 py-1 text-[11px] sm:gap-1.5 sm:px-3.5 sm:py-1.5 sm:text-xs md:px-4 md:py-2 md:text-sm font-medium text-white bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 rounded-lg shadow-sm transition-colors cursor-pointer whitespace-nowrap" onclick="downloadOfficialPDF()" type="button">
+        <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+        Download PDF
+      </button>
+    </div>
+  </div>
+
+  <!-- Printable Header Visible in Print Only -->
+  <div class="hidden print:block text-center mb-4">
+    <h1 class="text-xl font-bold uppercase text-black">Export Declaration Form</h1>
+    <!-- <p class="text-xs text-slate-600">(Mandatory with effect from 01 October 2026)</p> -->
+  </div>
+
+  <!-- ==================== PART 1: SECTION 1 & 2A ==================== -->
+  <div class="form-part space-y-1.5"><table class="w-full form-table-bordered border-collapse text-left text-xs">
+      <tbody>
+        <!-- SECTION 1 HEADER -->
+        <tr class="bg-gov-100 font-bold">
+          <td class="p-1.5 text-sm text-black" colspan="2">
+            1. General Information:
+          </td>
+        </tr>
+        <!-- TYPE OF EXPORT & FORM NO -->
+        <tr>
+          <td class="w-1/2 p-1 align-top">
+            <div class="flex items-center justify-between gap-2 flex-wrap">
+              <span class="font-bold text-black text-xs sm:text-[13px]" id="lbl_exportType">Type of export : Goods/Service</span>
+              <div class="flex items-center gap-3 text-xs">
+                <label class="inline-flex items-center gap-1 cursor-pointer">
+                  <input class="text-slate-900 h-3.5 w-3.5 focus:ring-slate-900 border-slate-400" id="exp_type_goods" name="export_type" type="radio" value="Goods">
+                  <span class="">Goods</span>
+                </label>
+                <label class="inline-flex items-center gap-1 cursor-pointer">
+                  <input class="text-slate-900 h-3.5 w-3.5 focus:ring-slate-900 border-slate-400" id="exp_type_service" name="export_type" type="radio" value="Service">
+                  <span class="">Service</span>
+                </label>
+              </div>
+            </div>
+          </td>
+          <td class="w-1/2 p-1 align-top">
+            <div class="flex items-center gap-2">
+              <span class="font-medium whitespace-nowrap text-xs sm:text-[13px]">Form No:</span>
+              <input class="cell-input font-mono font-medium" id="field_form_no" placeholder="Enter Form No" type="text" value="">
+            </div>
+          </td>
+        </tr>
+        <!-- SHIPPING BILL NO & MODE OF TRANSPORT -->
+        <tr>
+          <td class="p-1 align-top">
+            <div class="font-medium mb-1 text-xs sm:text-[13px]">Shipping Bill No. &amp; Date:</div>
+            <div class="flex gap-2">
+              <input class="cell-input" id="field_sb_no" placeholder="SB No." type="text" value="">
+              <input class="cell-input" id="field_sb_date" type="date" value="">
+            </div>
+          </td>
+          <td class="p-1 align-top">
+            <div class="font-medium mb-1.5 text-xs sm:text-[13px]" id="lbl_modeTransport">Mode of Transport/Delivery:</div>
+            <div class="grid grid-cols-3 gap-y-1.5 gap-x-2 text-xs">
+              <label class="inline-flex items-center gap-1.5 cursor-pointer">
+                <input class="rounded border-slate-400 text-slate-800 h-3.5 w-3.5 focus:ring-0" id="mt_air" type="checkbox">
+                <span class="">Air</span>
+              </label>
+              <label class="inline-flex items-center gap-1.5 cursor-pointer">
+                <input class="rounded border-slate-400 text-slate-800 h-3.5 w-3.5 focus:ring-0" id="mt_land" type="checkbox">
+                <span class="">Land</span>
+              </label>
+              <label class="inline-flex items-center gap-1.5 cursor-pointer">
+                <input class="rounded border-slate-400 text-slate-800 h-3.5 w-3.5 focus:ring-0" id="mt_sea" type="checkbox">
+                <span class="">Sea</span>
+              </label>
+              <label class="inline-flex items-center gap-1.5 cursor-pointer">
+                <input class="rounded border-slate-400 text-slate-800 h-3.5 w-3.5 focus:ring-0" id="mt_post" type="checkbox">
+                <span class="">Post/Couriers</span>
+              </label>
+              <label class="inline-flex items-center gap-1.5 cursor-pointer">
+                <input class="rounded border-slate-400 text-slate-800 h-3.5 w-3.5 focus:ring-0" id="mt_internet" type="checkbox">
+                <span class="">Internet</span>
+              </label>
+              <label class="inline-flex items-center gap-1.5 cursor-pointer">
+                <input class="rounded border-slate-400 text-slate-800 h-3.5 w-3.5 focus:ring-0" id="mt_others" type="checkbox">
+                <span class="">others</span>
+              </label>
+            </div>
+          </td>
+        </tr>
+        <!-- CATEGORY OF EXPORTER & AD CODE -->
+        <tr>
+          <td class="p-1 align-top">
+            <div class="font-medium mb-1 text-xs sm:text-[13px]" id="lbl_exporterCategory">Category of Exporter:</div>
+            <div class="space-y-1 text-xs">
+              <div class="flex items-center gap-3">
+                <label class="inline-flex items-center gap-1.5 cursor-pointer">
+                  <input class="text-slate-900 h-3.5 w-3.5 border-slate-400" id="ec_custom" name="exporter_cat" type="radio">
+                  <span class="">Custom (DTA units)</span>
+                </label>
+                <label class="inline-flex items-center gap-1.5 cursor-pointer">
+                  <input class="text-slate-900 h-3.5 w-3.5 border-slate-400" id="ec_sez" name="exporter_cat" type="radio">
+                  <span class="">SEZ</span>
+                </label>
+              </div>
+              <div class="flex items-center gap-3">
+                <label class="inline-flex items-center gap-1.5 cursor-pointer">
+                  <input class="text-slate-900 h-3.5 w-3.5 border-slate-400" id="ec_eou" name="exporter_cat" type="radio">
+                  <span class="">100% EOU</span>
+                </label>
+                <label class="inline-flex items-center gap-1.5 cursor-pointer">
+                  <input class="text-slate-900 h-3.5 w-3.5 border-slate-400" id="ec_warehouse" name="exporter_cat" type="radio">
+                  <span class="">Warehouse export</span>
+                </label>
+              </div>
+              <div class="flex items-center gap-1">
+                <label class="inline-flex items-center gap-1.5 cursor-pointer">
+                  <input class="text-slate-900 h-3.5 w-3.5 border-slate-400" id="ec_others" name="exporter_cat" type="radio">
+                  <span class="">others (Specify).......</span>
+                </label>
+                <input class="cell-input py-0.5 text-xs" id="exporterCategoryOtherSpecify" placeholder="Specify if other" type="text">
+              </div>
+            </div>
+          </td>
+          <td class="p-1 align-top">
+            <div class="flex items-center gap-2">
+              <span class="font-medium whitespace-nowrap text-xs sm:text-[13px]">AD code:</span>
+              <input class="cell-input font-mono font-medium" id="field_ad_code" placeholder="Enter AD code" type="text" value="">
+            </div>
+          </td>
+        </tr>
+        <!-- IE CODE, GSTIN, PAN & AD NAME ADDRESS -->
+        <tr>
+          <td class="p-1 align-top">
+            <div class="space-y-1.5 text-xs sm:text-[13px]">
+              <div class="flex items-center gap-2">
+                <span class="font-medium w-16">IE Code:</span>
+                <input class="cell-input font-mono" id="field_ie_code" placeholder="Enter IE Code" type="text" value="">
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="font-medium w-16">GSTIN:</span>
+                <input class="cell-input font-mono" id="field_gstin" placeholder="Enter GSTIN" type="text" value="">
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="font-medium w-16">PAN:</span>
+                <input class="cell-input font-mono" id="field_pan" placeholder="Enter PAN" type="text" value="">
+              </div>
+            </div>
+          </td>
+          <td class="p-1 align-top">
+            <span class="font-medium block mb-1 text-xs sm:text-[13px]">AD Name &amp; Address:</span>
+            <textarea class="cell-textarea" id="field_ad_address" placeholder="Enter AD Name and Address" rows="1"></textarea>
+          </td>
+        </tr>
+        <!-- EXPORTER NAME & MODE OF REALISATION -->
+        <tr>
+          <td class="p-1 align-top">
+            <span class="font-medium block mb-1 text-xs sm:text-[13px]">Exporters Name &amp; Address:</span>
+            <textarea class="cell-textarea" id="field_exporter_address" placeholder="Enter Exporter Name and Address" rows="1"></textarea>
+          </td>
+          <td class="p-1 align-top">
+            <span class="font-medium block mb-1 text-xs sm:text-[13px]" id="lbl_modeRealisation">Mode of Realisation :</span>
+            <div class="space-y-1 text-xs">
+              <div class="flex items-center gap-4">
+                <label class="inline-flex items-center gap-1.5 cursor-pointer">
+                  <input class="rounded border-slate-400 text-slate-800 h-3.5 w-3.5" id="mr_lc" type="checkbox">
+                  <span class="">L/C</span>
+                </label>
+                <label class="inline-flex items-center gap-1.5 cursor-pointer">
+                  <input class="rounded border-slate-400 text-slate-800 h-3.5 w-3.5" id="mr_bg" type="checkbox">
+                  <span class="">BG</span>
+                </label>
+              </div>
+              <div class="flex items-start gap-1.5">
+                <input class="rounded border-slate-400 text-slate-800 h-3.5 w-3.5 mt-0.5" id="mr_others" type="checkbox">
+                <span class="leading-tight text-[11px] text-slate-700">Others (advance payment, etc. including transfer/remittance to bank a/c maintained overseas)</span>
+              </div>
+            </div>
+          </td>
+        </tr>
+        <!-- CONSIGNEE & PORT OF LOADING -->
+        <tr>
+          <td class="p-1 align-top">
+            <span class="font-medium block mb-1 text-xs sm:text-[13px]">Consignee Name &amp; Address:</span>
+            <textarea class="cell-textarea" id="field_consignee_address" placeholder="Enter Consignee Name and Address" rows="1"></textarea>
+          </td>
+          <td class="p-1 align-top">
+            <span class="font-medium block mb-1 text-xs sm:text-[13px]">Port of Loading / Source Port in case of SEZ :</span>
+            <input class="cell-input mt-1" id="field_port_loading" placeholder="Port of loading" type="text" value="">
+          </td>
+        </tr>
+        <!-- THIRD PARTY & COUNTRY OF DESTINATION / DISCHARGE -->
+        <tr>
+          <td class="p-1 align-top">
+            <span class="font-medium block text-xs leading-snug">Third Party name &amp; Address (In case of third Party Payments for Exports) :</span>
+            <textarea class="cell-textarea mt-1" id="field_third_party" placeholder="Leave blank if direct settlement" rows="1"></textarea>
+            <div class="mt-2 pt-1 border-t border-slate-200">
+              <span class="font-medium block text-xs">Relationship between Exporter &amp; Third Party:</span>
+              <input class="cell-input mt-0.5" id="field_third_party_rel" placeholder="e.g. Authorized Agent" type="text" value="">
+            </div>
+          </td>
+          <td class="nested-grid-cell align-top">
+            <div class="grid grid-cols-2 h-full">
+              <div class="p-1 border-r border-b border-black">
+                <span class="font-medium block text-xs">Country of Final Destination:</span>
+                <input class="cell-input mt-1" id="field_dest_country" placeholder="Destination Country" type="text" value="">
+              </div>
+              <div class="p-1 border-b border-black">
+                <span class="font-medium block text-xs">Port of Discharge:</span>
+                <input class="cell-input mt-1" id="field_port_discharge" placeholder="Port of Discharge" type="text" value="">
+              </div>
+              <div class="p-1 col-span-2">
+                <span class="font-medium block text-xs">Date of Let Export order (LEO):</span>
+                <input class="cell-input mt-0.5" id="field_leo_date" type="date" value="">
+              </div>
+            </div>
+          </td>
+        </tr>
+        <!-- NAME OF AD IN CASE OF LC/BG -->
+        <tr>
+          <td class="p-1 align-top" colspan="2">
+            <div class="flex items-center gap-2">
+              <span class="font-medium whitespace-nowrap text-xs">Name of the AD and AD code, in case of LC/BG :</span>
+              <input class="cell-input" id="field_ad_lc" placeholder="Enter Bank Name and AD code" type="text" value="">
+            </div>
+          </td>
+        </tr>
+        <!-- DESCRIPTION OF GOODS -->
+        <tr>
+          <td class="p-1 align-top" colspan="2">
+            <span class="font-medium block text-xs mb-1">Description of Goods/Services:</span>
+            <textarea class="cell-textarea" id="field_desc_goods" placeholder="Enter description of goods or services" rows="1"></textarea>
+          </td>
+        </tr>
+        <!-- TOTAL FOB VALUE IN WORDS -->
+        <tr>
+          <td class="p-1 align-top bg-gov-50" colspan="2">
+            <div class="flex flex-col gap-1 sm:flex-row sm:items-center sm:gap-2">
+              <span class="font-medium text-xs leading-tight">Total FOB/Services value in words (INR):</span>
+              <input class="cell-input min-w-0 flex-1 font-medium uppercase" id="fobInWords" placeholder="Total value in words" type="text" value="">
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- SECTION 2A: DETAILS OF EXPORT VALUE OF GOODS -->
+    <div class="pt-1">
+      <table class="w-full form-table-bordered border-collapse text-left text-xs" style="table-layout: fixed;">
+        <colgroup>
+          <col style="width: 30%;">
+          <col style="width: 25%;">
+          <col style="width: 45%;">
+        </colgroup>
+        <tbody>
+          <tr class="bg-gov-100 font-bold">
+            <td class="p-1.5 text-xs sm:text-sm text-black" colspan="3">
+              2A. Details of Export Value^ of Goods (This part shall be repeated for each invoice drawn under a shipping bill)
+            </td>
+          </tr>
+          <tr>
+            <td class="p-1 align-top">
+              <span class="font-medium block mb-1 text-xs">Client Name &amp; Address:</span>
+              <textarea class="cell-textarea" id="field_client_address" placeholder="Enter Client Name &amp; Address" rows="1"></textarea>
+            </td>
+            <td class="p-1 align-top text-xs space-y-1">
+              <div class="grid grid-cols-[max-content_minmax(0,1fr)] items-center gap-x-1"><span class="font-medium text-[11px] leading-tight">Invoice No:</span><input class="cell-input min-w-0 font-mono" id="field_inv_no" placeholder="Enter Invoice No" type="text" value=""></div>
+              <div class="grid grid-cols-[max-content_minmax(0,1fr)] items-center gap-x-1"><span class="font-medium text-[11px] leading-tight">Invoice date:</span><input class="cell-input min-w-0" id="field_inv_date" type="date" value=""></div>
+              <div class="grid grid-cols-[max-content_minmax(0,1fr)] items-center gap-x-1"><span class="font-medium text-[11px] leading-tight">Invoice Currency:</span><input class="cell-input min-w-0 font-bold" id="invoiceCurrency" oninput="syncCurrency(this.value)" placeholder="e.g. USD" type="text" value=""></div>
+              <div class="grid grid-cols-[max-content_minmax(0,1fr)] items-center gap-x-1"><span class="font-medium text-[11px] leading-tight">Invoice Amount:</span><input class="cell-input min-w-0 font-mono font-bold" id="invoiceTotalAmount" placeholder="0.00" step="0.01" type="number" value=""></div>
+              <div class="grid grid-cols-[max-content_minmax(0,1fr)] items-center gap-x-1"><span class="font-medium text-[11px] leading-tight">Contract No. and Date:</span><input class="cell-input min-w-0" id="field_contract_no" placeholder="Contract No. and Date" type="text" value=""></div>
+            </td>
+            <td class="p-1 align-top text-xs">
+              <span class="font-medium block mb-1" id="lbl_natureOfPayment">Nature of payment in terms of Contract:</span>
+              <div class="grid grid-cols-2 gap-1 mb-2">
+                <label class="inline-flex items-center gap-1 cursor-pointer"><input class="rounded border-slate-400 text-slate-800 h-3 w-3" id="np_fob" type="checkbox"><span class="">FOB</span></label>
+                <label class="inline-flex items-center gap-1 cursor-pointer"><input class="rounded border-slate-400 text-slate-800 h-3 w-3" id="np_cif" type="checkbox"><span class="">CIF</span></label>
+                <label class="inline-flex items-center gap-1 cursor-pointer"><input class="rounded border-slate-400 text-slate-800 h-3 w-3" id="np_cnf" type="checkbox"><span class="">C&amp;F</span></label>
+                <label class="inline-flex items-center gap-1 cursor-pointer"><input class="rounded border-slate-400 text-slate-800 h-3 w-3" id="np_ci" type="checkbox"><span class="">CI</span></label>
+                <label class="inline-flex items-center gap-1 cursor-pointer"><input class="rounded border-slate-400 text-slate-800 h-3 w-3" id="np_periodical" type="checkbox"><span class="">periodical</span></label>
+                <label class="inline-flex items-center gap-1 cursor-pointer"><input class="rounded border-slate-400 text-slate-800 h-3 w-3" id="np_milestone" type="checkbox"><span class="">milestone</span></label>
+                <label class="inline-flex items-center gap-1 cursor-pointer"><input class="rounded border-slate-400 text-slate-800 h-3 w-3" id="np_advance" type="checkbox"><span class="">advance</span></label>
+                <label class="inline-flex items-center gap-1 cursor-pointer"><input class="rounded border-slate-400 text-slate-800 h-3 w-3" id="np_others" type="checkbox"><span class="">others</span></label>
+              </div>
+              <div class="pt-1 border-t border-slate-200">
+                <span class="font-medium text-xs block mb-0.5" id="lbl_hsnSac">HSN/Service Accounting Codes (SAC):</span>
+                <input class="cell-input font-mono" id="field_hsn" placeholder="HSN / SAC Code" type="text" value="">
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <table class="w-full form-table-bordered border-collapse text-xs text-left" id="goodsParticularsTable" style="table-layout: fixed; border-top-width: medium; border-top-style: none; border-top-color: currentcolor;">
+        <colgroup>
+          <col style="width: 30%;">
+          <col style="width: 25%;">
+          <col style="width: 45%;">
+        </colgroup>
+        <thead>
+          <tr class="bg-gov-100 font-bold border-b border-black">
+            <th class="py-0 px-2 text-black text-xs">Particulars</th>
+            <th class="py-0 px-2 text-black text-xs">Currency</th>
+            <th class="py-0 px-2 text-right text-black text-xs">Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="py-0 px-2 font-medium text-xs align-middle leading-tight">FOB/Services Value</td>
+            <td class="p-0 px-1.5 align-middle"><input class="cell-input-compact uppercase curr-sync" placeholder="Currency" type="text" value=""></td>
+            <td class="p-0 px-1.5 align-middle"><input class="cell-input-compact text-right font-mono" id="val_fob" oninput="calculateTotals()" placeholder="0.00" step="0.01" type="number" value=""></td>
+          </tr>
+          <tr>
+            <td class="py-0 px-2 font-medium text-xs align-middle leading-tight">Freight/Transmission</td>
+            <td class="p-0 px-1.5 align-middle"><input class="cell-input-compact uppercase curr-sync" placeholder="Currency" type="text" value=""></td>
+            <td class="p-0 px-1.5 align-middle"><input class="cell-input-compact text-right font-mono" id="val_freight" oninput="calculateTotals()" placeholder="0.00" step="0.01" type="number" value=""></td>
+          </tr>
+          <tr>
+            <td class="py-0 px-2 font-medium text-xs align-middle leading-tight">Insurance</td>
+            <td class="p-0 px-1.5 align-middle"><input class="cell-input-compact uppercase curr-sync" placeholder="Currency" type="text" value=""></td>
+            <td class="p-0 px-1.5 align-middle"><input class="cell-input-compact text-right font-mono" id="val_insurance" oninput="calculateTotals()" placeholder="0.00" step="0.01" type="number" value=""></td>
+          </tr>
+          <tr>
+            <td class="py-0 px-2 font-medium text-xs align-middle leading-tight">Commission</td>
+            <td class="p-0 px-1.5 align-middle"><input class="cell-input-compact uppercase curr-sync" placeholder="Currency" type="text" value=""></td>
+            <td class="p-0 px-1.5 align-middle"><input class="cell-input-compact text-right font-mono" id="val_commission" oninput="calculateTotals()" placeholder="0.00" step="0.01" type="number" value=""></td>
+          </tr>
+          <tr>
+            <td class="py-0 px-2 font-medium text-xs align-middle leading-tight">Discount</td>
+            <td class="p-0 px-1.5 align-middle"><input class="cell-input-compact uppercase curr-sync" placeholder="Currency" type="text" value=""></td>
+            <td class="p-0 px-1.5 align-middle"><input class="cell-input-compact text-right font-mono" id="val_discount" oninput="calculateTotals()" placeholder="0.00" step="0.01" type="number" value=""></td>
+          </tr>
+          <tr>
+            <td class="py-0 px-2 font-medium text-xs align-middle leading-tight">Other Deduction</td>
+            <td class="p-0 px-1.5 align-middle"><input class="cell-input-compact uppercase curr-sync" placeholder="Currency" type="text" value=""></td>
+            <td class="p-0 px-1.5 align-middle"><input class="cell-input-compact text-right font-mono" id="val_deduction" oninput="calculateTotals()" placeholder="0.00" step="0.01" type="number" value=""></td>
+          </tr>
+          <tr>
+            <td class="py-0 px-2 font-medium text-xs align-middle leading-tight">Packing Charges</td>
+            <td class="p-0 px-1.5 align-middle"><input class="cell-input-compact uppercase curr-sync" placeholder="Currency" type="text" value=""></td>
+            <td class="p-0 px-1.5 align-middle"><input class="cell-input-compact text-right font-mono" id="val_packing" oninput="calculateTotals()" placeholder="0.00" step="0.01" type="number" value=""></td>
+          </tr>
+          <tr class="bg-gov-100 font-bold border-t-2 border-black">
+            <td class="py-0.5 px-2 text-black text-xs align-middle leading-tight">Full export value / Net Realisable export value</td>
+            <td class="py-0.5 px-2 font-mono uppercase text-xs align-middle" id="netCurrencyCell">-</td>
+            <td class="p-0 px-1.5 align-middle"><input class="cell-input-compact text-right font-mono font-bold text-slate-900 bg-white" id="val_net_realisable" placeholder="0.00" readonly="" type="text" value=""></td>
+          </tr>
+        </tbody>
+      </table>
+    </div></div>
+
+  <!-- ==================== PART 2: SECTION 2B, 3, 4, 5 (PAGE 2 IN STATUTORY PRINT) ==================== -->
+  <div class="form-part statutory-page-2-marker space-y-2 pt-1"><!-- SECTION 2B: DETAILS OF EXPORT VALUE OF SERVICES -->
+    <div>
+      <div class="overflow-x-auto -mx-1 px-1">
+      <table class="w-full form-table-bordered border-collapse text-left text-xs min-w-[900px]" id="servicesTable">
+        <thead>
+          <tr class="bg-gov-100 font-bold">
+            <th class="p-1.5 text-sm text-black" colspan="11" id="servicesSectionHeading">
+              2B. Details of Export Value^ of Services
+            </th>
+          </tr>
+          <tr class="bg-slate-50 font-semibold border-b">
+            <th class="p-1.5 text-xs text-slate-800" colspan="11">
+              Details of services provided to multiple recipients
+            </th>
+          </tr>
+          <!-- Multicolumn Headings -->
+          <tr class="text-center bg-slate-100/70 font-semibold text-[11px] align-middle">
+            <th class="p-1 w-8" rowspan="2">S. No.</th>
+            <th class="p-1 w-32" rowspan="2">Service recipient Name &amp; Address</th>
+            <th class="p-1 w-16" rowspan="2">Country</th>
+            <th class="p-1 border-b border-black" colspan="4">Details of Invoice</th>
+            <th class="p-1 w-20" rowspan="2">Net Realisable value</th>
+            <th class="p-1 w-24" rowspan="2">Contract No., if any, and Date</th>
+            <th class="p-1 w-28" rowspan="2">Description of services</th>
+            <th class="p-1 w-14" rowspan="2">SAC Code</th>
+            <th class="p-1 w-16" rowspan="2">Remarks</th>
+          </tr>
+          <tr class="text-center bg-slate-100/70 text-[11px]">
+            <th class="p-1 w-16 border-r border-black">No.</th>
+            <th class="p-1 w-16 border-r border-black">Date</th>
+            <th class="p-1 w-12 border-r border-black">Currency</th>
+            <th class="p-1 w-20">Amount</th>
+          </tr>
+        </thead>
+        <tbody id="servicesTableBody">
+          <tr class="service-row group">
+            <td class="p-1 text-center font-mono align-middle service-row-num">1.</td>
+            <td class="p-1"><textarea class="cell-textarea text-xs" data-field="recipient" placeholder="Recipient Name &amp; Address" rows="1"></textarea></td>
+            <td class="p-1 text-center"><input class="cell-input text-center text-xs" data-field="country" placeholder="Country" type="text" value=""></td>
+            <td class="p-1"><input class="cell-input font-mono text-xs" data-field="invoiceNo" placeholder="Inv No" type="text" value=""></td>
+            <td class="p-1"><input class="cell-input text-[11px]" data-field="invoiceDate" type="date" value=""></td>
+            <td class="p-1 text-center"><input class="cell-input text-center uppercase text-xs curr-sync" data-field="currency" placeholder="Curr" type="text" value=""></td>
+            <td class="p-1 text-right"><input class="cell-input text-right font-mono text-xs service-amount-input" data-field="amount" oninput="updateServiceRowNet(this)" placeholder="0.00" step="0.01" type="number" value=""></td>
+            <td class="p-1 text-right font-mono"><input class="cell-input text-right font-mono text-xs font-semibold service-net-input" data-field="netValue" placeholder="0.00" type="text" value=""></td>
+            <td class="p-1"><textarea class="cell-textarea text-xs" data-field="contract" placeholder="Contract &amp; Date" rows="1"></textarea></td>
+            <td class="p-1"><textarea class="cell-textarea text-xs" data-field="description" placeholder="Description of service" rows="1"></textarea></td>
+            <td class="p-1 text-center"><input class="cell-input font-mono text-center text-xs" data-field="sac" placeholder="SAC" type="text" value=""></td>
+            <td class="p-1 relative"><input class="cell-input text-xs" data-field="remarks" placeholder="Remarks" type="text" value=""></td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="flex items-center justify-between mt-1.5 no-print">
+        <button class="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-semibold text-blue-700 bg-blue-50 hover:bg-blue-100 active:bg-blue-200 border border-blue-200 rounded transition cursor-pointer" id="addServiceRowBtn" onclick="addServiceRow()" type="button">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 4v16m8-8H4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path></svg>
+          Add Service Row
+        </button>
+        <span class="text-[11px] text-slate-500 font-mono" id="serviceRowCountMsg">0 records entered</span>
+      </div>
+    </div>
+
+    <!-- SECTION 3: APPLICABLE FOR EXPORT UNDER FPO/COURIERS -->
+    <table class="section-3-table w-full form-table-bordered border-collapse text-left text-xs">
+      <tbody>
+        <tr class="bg-gov-100 font-bold">
+          <td class="p-1.5 text-sm text-black" colspan="2">
+            3. Applicable for Export under FPO/Couriers
+          </td>
+        </tr>
+        <tr>
+          <td class="fpo-details-cell w-1/2 p-1 align-top">
+            <div class="fpo-print-fields">
+              <span class="font-medium block mb-1">Name of the Foreign post Office/Courier:</span>
+              <input class="cell-input mb-3" id="fpoName" placeholder="Enter Foreign Post Office or Courier Name" type="text" value="">
+              <span class="font-medium block mb-1">Number &amp; date of Parcel receipts:</span>
+              <input class="cell-input" id="parcelReceiptNoDate" placeholder="AWB / Receipt Number and Date" type="text" value="">
+            </div>
+          </td>
+          <td class="w-1/2 p-1 align-top bg-slate-50/40">
+            <div class="ad-authentication-box h-28 flex flex-col justify-between p-2 border border-dashed border-slate-400 rounded bg-white">
+              <span class="text-slate-400 text-[11px] uppercase tracking-wider font-semibold text-center">Authorised Dealer Bank Authentication</span>
+              <div class="text-center">
+                <p class="text-[11px] text-slate-500 font-medium">Stamp &amp; Signature of Authorised Dealer</p>
+              </div>
+            </div>
+              <p class="ad-authentication-print-label">Stamp &amp; Signature of Authorised Dealer</p>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- SECTION 4: DECLARATION BY THE EXPORTERS -->
+    <table class="w-full form-table-bordered border-collapse text-left text-xs">
+      <tbody>
+        <tr class="bg-gov-100 font-bold">
+          <td class="p-1.5 text-sm text-black">
+            4. Declaration by the Exporters (All types of exports)
+          </td>
+        </tr>
+        <tr>
+          <td class="p-2 text-[12px] leading-snug text-slate-800 space-y-1.5">
+            <p class="">
+              I /We hereby declare that I/we 
+              <span class="inline-block px-1 font-semibold text-slate-900 border-b border-slate-600">@am/are</span>
+              the seller/consignor of the goods/ provider of services in respect of which this declaration is made and that the particulars given above are true and that the value to be received from the buyer/third party represents the export value^ contracted and declared above. I/We undertake that I/we have delivered/ will deliver to the authorised dealer named above the foreign exchange / Indian Rupees representing the full value of the goods/services exported as above on or before
+              <input class="inline-block border-b border-slate-700 bg-transparent px-1 py-0.5 text-xs font-semibold text-slate-900 focus:outline-none" id="realisationDeadlineDate" type="date" value="">
+              (i.e. within the period of realisation stipulated by RBI from time to time) in the manner specified in the Regulations made under the Foreign Exchange Management Act, 1999.
+            </p>
+            <p class="">
+              I/We also undertake to submit the documents pertaining to exports declared in this form, to the Authorised Dealer named above, as may be required under the Act.
+            </p>
+            <!-- Signatures Row -->
+            <div class="pt-2 mt-1.5 border-t border-slate-200">
+              <div class="flex flex-wrap sm:flex-nowrap items-start justify-between gap-3">
+                <div class="space-y-3 w-full sm:w-1/2">
+                  <div class="flex items-center gap-2">
+                    <span class="font-bold text-slate-900 text-xs">Date:</span>
+                    <input class="cell-input font-medium text-xs w-36" id="declarationDate" type="date" value="">
+                  </div>
+                </div>
+                <!-- Signature Pad / Upload Option -->
+                <div class="w-full sm:w-auto sm:min-w-[300px] sm:max-w-[340px]" id="signatureControl">
+                  <div class="signature-pad-box bg-white border border-slate-300 rounded shadow-xs overflow-hidden">
+                    <div class="flex items-center border-b border-slate-200 bg-slate-100 text-xs font-semibold text-slate-700 no-print">
+                      <button class="flex-1 py-1.5 text-center bg-white text-blue-700 border-b-2 border-blue-600 font-semibold" id="tab-draw-btn" onclick="document.getElementById('sig-draw-pane').classList.remove('hidden'); document.getElementById('sig-upload-pane').classList.add('hidden'); this.className='flex-1 py-1.5 text-center bg-white text-blue-700 border-b-2 border-blue-600 font-semibold'; document.getElementById('tab-upload-btn').className='flex-1 py-1.5 text-center text-slate-600 hover:text-slate-900 hover:bg-slate-50 font-medium';" type="button">
+                        Draw Signature
+                      </button>
+                      <button class="flex-1 py-1.5 text-center text-slate-600 hover:text-slate-900 hover:bg-slate-50 font-medium" id="tab-upload-btn" onclick="document.getElementById('sig-upload-pane').classList.remove('hidden'); document.getElementById('sig-draw-pane').classList.add('hidden'); this.className='flex-1 py-1.5 text-center bg-white text-blue-700 border-b-2 border-blue-600 font-semibold'; document.getElementById('tab-draw-btn').className='flex-1 py-1.5 text-center text-slate-600 hover:text-slate-900 hover:bg-slate-50 font-medium';" type="button">
+                        Upload Image
+                      </button>
+                    </div>
+                    <!-- Draw Pane (real canvas) -->
+                    <div class="p-2.5 bg-slate-50/50" id="sig-draw-pane">
+                      <div class="relative h-24 bg-white border border-dashed border-slate-300 rounded flex flex-col justify-between p-2">
+                        <canvas class="absolute inset-0 w-full h-full cursor-crosshair" id="signatureCanvas"></canvas>
+                        <div class="flex items-center justify-between border-t border-slate-100 pt-1 text-[10px] relative z-10 pointer-events-none no-print">
+                          <span class="text-slate-400">Draw Signature Here</span>
+                          <button class="text-slate-600 hover:text-slate-900 font-medium no-print pointer-events-auto" onclick="clearSignature()" type="button">
+                            Clear
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- Upload Pane -->
+                    <div class="p-2.5 bg-slate-50/50 hidden" id="sig-upload-pane">
+                      <label class="h-24 border-2 border-dashed border-slate-300 hover:border-blue-400 hover:bg-blue-50/30 rounded flex flex-col items-center justify-center cursor-pointer transition p-2 text-center bg-white">
+                        <svg class="w-5 h-5 text-slate-400 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+                        <span class="text-xs font-semibold text-slate-700">Click to upload signature</span>
+                        <span class="text-[10px] text-slate-500">PNG, JPG or SVG</span>
+                        <input accept="image/*" class="opacity-0 absolute -z-50" onchange="handleSignatureUpload(this)" type="file">
+                      </label>
+                    </div>
+                  </div>
+                  <img alt="Uploaded signature" class="hidden max-h-24 max-w-full object-contain mx-auto" id="signatureUploadPreview">
+                  <p class="text-center font-bold text-slate-900 text-[11px] mt-1.5">(Signature of Exporter)</p>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- SECTION 5: SPACE FOR USE OF SPECIFIED AUTHORITY -->
+    <table class="w-full form-table-bordered border-collapse text-left text-xs">
+      <tbody>
+        <tr class="bg-gov-100 font-bold">
+          <td class="p-1.5 text-sm text-black">
+            5. Space for use of Specified Authority (Custom/SEZ/AD/STPI):
+          </td>
+        </tr>
+        <tr>
+          <td class="p-2 text-[12px] leading-snug text-slate-800">
+            <p class="">
+              Certified, on the basis of above declaration at 4, that the goods/services described above and the export value^ declared by the exporter in this form is as per the corresponding invoice/gist of invoices submitted and declared by the exporter.
+            </p>
+            <div class="pt-3 mt-1.5 flex items-end justify-between">
+              <div class="flex items-center gap-2">
+                <span class="font-bold text-slate-900 text-xs">Date:</span>
+                <input class="cell-input font-medium text-xs w-36" type="date" value="">
+              </div>
+              <div class="text-right">
+                <div class="ad-signature-line inline-block border-b border-black w-72 mb-1"></div>
+                <p class="font-bold text-slate-900 text-xs">(Signature of Designated/Authorised officials of Custom /SEZ/ Authorised Dealer/STPI)</p>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- STATUTORY FOOTNOTES (Exact matching IMAGE_10) -->
+    <div class="pt-1.5 text-[11px] text-slate-700 space-y-0.5 font-sans">
+      <p class="">1. @ Strike out whichever is not applicable.</p>
+      <p class="">2. ^ If the full export value is not ascertainable at the time of export, the value which the exporter, having regard to the prevailing market conditions expects to receive on the sale of the goods in overseas market.</p>
+      <p class="">3. Export value may be indicated as nil in case the goods are sent without any consideration.</p>
+    </div>
+    <div class="text-center text-xs font-semibold py-0.5 text-slate-700">10</div></div>
+</div></div>
+</main>
+<!-- END: MainContentArea -->
+<!-- Feedback Toast -->
+<div class="fixed bottom-5 right-5 bg-slate-900 text-white px-4 py-2.5 rounded shadow-lg text-xs font-medium transform transition duration-300 flex items-center gap-2 no-print z-50 translate-y-20 opacity-0" id="toastNotification">
+<svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span class="" id="toastMessage">Form updated successfully.</span>
+</div>
+<!-- Scripts -->
+<script data-purpose="form-interactions">
+  // Recalculates Goods Section totals
+  function calculateTotals() {
+    const fob = parseFloat(document.getElementById('val_fob')?.value) || 0;
+    const freight = parseFloat(document.getElementById('val_freight')?.value) || 0;
+    const insurance = parseFloat(document.getElementById('val_insurance')?.value) || 0;
+    const commission = parseFloat(document.getElementById('val_commission')?.value) || 0;
+    const discount = parseFloat(document.getElementById('val_discount')?.value) || 0;
+    const deduction = parseFloat(document.getElementById('val_deduction')?.value) || 0;
+    const packing = parseFloat(document.getElementById('val_packing')?.value) || 0;
+
+    const net = (fob + freight + insurance + packing) - (commission + discount + deduction);
+    
+    const netField = document.getElementById('val_net_realisable');
+    if (netField) {
+      netField.value = net.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+  }
+
+  // Update Net Realisable Value for a service row when its amount changes
+  function updateServiceRowNet(inputEl) {
+    const row = inputEl.closest('tr');
+    if (!row) return;
+    const netInput = row.querySelector('.service-net-input');
+    const val = parseFloat(inputEl.value) || 0;
+    if (netInput) {
+      netInput.value = val.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+  }
+
+  // Clone the first service row's exact field layout for "Add Service Row" (structural clone only — never injects AI-sourced strings)
+  function addServiceRow() {
+    const tbody = document.getElementById('servicesTableBody');
+    const template = tbody.querySelector('tr.service-row');
+    const clone = template.cloneNode(true);
+    clone.querySelectorAll('input, textarea').forEach((el) => {
+      el.value = '';
+      el.style.height = '';
+    });
+    clone.querySelectorAll('.ai-badge').forEach((b) => b.remove());
+    if (!clone.querySelector('.remove-service-row-btn')) {
+      const removeCell = clone.querySelector('td:last-child');
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'no-print remove-service-row-btn mt-1 text-[10px] text-red-500 hover:text-red-700 block text-right w-full cursor-pointer';
+      btn.textContent = '✕ remove';
+      btn.onclick = () => removeServiceRow(btn);
+      removeCell.appendChild(btn);
+    }
+    tbody.appendChild(clone);
+    updateServiceRowIndices();
+    wireAutoGrow(clone);
+    return clone;
+  }
+
+  // Remove a dynamically added row
+  function removeServiceRow(btn) {
+    const tbody = document.getElementById('servicesTableBody');
+    const row = btn.closest('tr');
+    if (row) row.remove();
+    if (!tbody.querySelector('tr.service-row')) addServiceRow();
+    updateServiceRowIndices();
+  }
+
+  // Re-index all service rows
+  function updateServiceRowIndices() {
+    const rows = document.querySelectorAll('#servicesTableBody tr.service-row');
+    rows.forEach((r, idx) => {
+      const numCell = r.querySelector('.service-row-num');
+      if (numCell) numCell.textContent = `${idx + 1}.`;
+    });
+    const countMsg = document.getElementById('serviceRowCountMsg');
+    if (countMsg) {
+      countMsg.textContent = `${rows.length} ${rows.length === 1 ? 'record' : 'records'} entered`;
+    }
+  }
+
+  // Sync currency changes across table
+  function syncCurrency(val) {
+    const normalized = (val || '').trim().toUpperCase();
+    document.querySelectorAll('.curr-sync').forEach(el => el.value = normalized);
+    const netCurr = document.getElementById('netCurrencyCell');
+    if (netCurr) netCurr.textContent = normalized || '-';
+  }
+
+  // Toast messenger
+  let toastTimer = null;
+  function showToast(message) {
+    const toast = document.getElementById('toastNotification');
+    const msg = document.getElementById('toastMessage');
+    if (toast && msg) {
+      msg.textContent = message;
+      toast.classList.remove('translate-y-20', 'opacity-0');
+      if (toastTimer) clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        toast.classList.add('translate-y-20', 'opacity-0');
+      }, 3200);
+    }
+  }
+
+  // Single-line inputs can't wrap internally — before printing, mirror each value into a
+  // wrapping <span> so long text (addresses, codes, etc.) is fully visible in the PDF
+  // instead of being clipped. Uses .textContent only — never innerHTML.
+  function prepareFieldsForPrint() {
+    const wrapper = document.getElementById('statutory-form-wrapper');
+    if (!wrapper) return;
+    wrapper.querySelectorAll('input[type="text"], input[type="date"], input[type="number"]').forEach((el) => {
+      let echo = el.nextElementSibling;
+      if (!echo || !echo.classList.contains('print-value-echo')) {
+        echo = document.createElement('span');
+        echo.className = 'print-value-echo';
+        el.insertAdjacentElement('afterend', echo);
+      }
+      echo.textContent = el.value || '';
+      echo.classList.toggle('print-filled-field', Boolean((el.value || '').trim()));
+    });
+    wrapper.querySelectorAll('textarea').forEach((el) => {
+      el.classList.toggle('print-filled-field', Boolean((el.value || '').trim()));
+    });
+  }
+
+  function prepareDocumentForPrint() {
+    prepareFieldsForPrint();
+    document.querySelectorAll('#servicesTableBody tr.service-row').forEach((row) => {
+      const hasValue = Array.from(row.querySelectorAll('input, textarea'))
+        .some((field) => (field.value || '').trim());
+      row.classList.toggle('print-empty-service-row', !hasValue);
+    });
+  }
+
+  function downloadOfficialPDF() {
+    prepareDocumentForPrint();
+    window.print();
+  }
+  window.addEventListener('beforeprint', prepareDocumentForPrint);
+
+  function validateForm() {
+    const required = ['field_form_no', 'field_ie_code', 'field_gstin', 'field_exporter_address', 'field_consignee_address', 'fobInWords', 'field_inv_no', 'invoiceTotalAmount'];
+    const missing = required.filter((id) => !(document.getElementById(id)?.value || '').trim());
+    if (missing.length) {
+      showToast(`Missing ${missing.length} required field(s): ${missing.join(', ')}`);
+    } else {
+      showToast('Local completeness check passed. (No statutory/ICEGATE submission is performed.)');
+    }
+  }
+
+  updateServiceRowIndices();
+</script>
+<script data-purpose="signature-pad">
+  (function () {
+    const canvas = document.getElementById('signatureCanvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    let drawing = false;
+    let lastPoint = null;
+
+    function resizeCanvas() {
+      const rect = canvas.getBoundingClientRect();
+      const ratio = window.devicePixelRatio || 1;
+      const prevData = canvas.width ? ctx.getImageData(0, 0, canvas.width, canvas.height) : null;
+      canvas.width = rect.width * ratio;
+      canvas.height = rect.height * ratio;
+      ctx.scale(ratio, ratio);
+      ctx.lineWidth = 2;
+      ctx.lineCap = 'round';
+      ctx.strokeStyle = '#1e3a8a';
+      if (prevData) ctx.putImageData(prevData, 0, 0);
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    function getPos(evt) {
+      const rect = canvas.getBoundingClientRect();
+      const point = evt.touches ? evt.touches[0] : evt;
+      return { x: point.clientX - rect.left, y: point.clientY - rect.top };
+    }
+    function start(evt) {
+      drawing = true;
+      lastPoint = getPos(evt);
+    }
+    function move(evt) {
+      if (!drawing) return;
+      evt.preventDefault();
+      const point = getPos(evt);
+      ctx.beginPath();
+      ctx.moveTo(lastPoint.x, lastPoint.y);
+      ctx.lineTo(point.x, point.y);
+      ctx.stroke();
+      lastPoint = point;
+    }
+    function end() {
+      drawing = false;
+    }
+    canvas.addEventListener('mousedown', start);
+    canvas.addEventListener('mousemove', move);
+    window.addEventListener('mouseup', end);
+    canvas.addEventListener('touchstart', start, { passive: true });
+    canvas.addEventListener('touchmove', move, { passive: false });
+    canvas.addEventListener('touchend', end);
+
+    window.clearSignature = function clearSignature() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      showToast('Signature cleared. Ready to redraw.');
+    };
+
+    window.handleSignatureUpload = function handleSignatureUpload(input) {
+      const file = input.files && input.files[0];
+      const preview = document.getElementById('signatureUploadPreview');
+      const control = document.getElementById('signatureControl');
+      const pad = control?.querySelector('.signature-pad-box');
+      if (!file || !preview || !control || !pad) return;
+      const reader = new FileReader();
+      reader.onload = () => {
+        preview.src = reader.result;
+        preview.classList.remove('hidden');
+        pad.classList.add('hidden');
+        showToast('Signature image uploaded successfully');
+      };
+      reader.readAsDataURL(file);
+    };
+  })();
+</script>
+<script data-purpose="extraction-wiring">
+  // --- state ---
+  let pendingFile = null;
+  let isExtracting = false;
+
+  function togglePastePanel() {
+    document.getElementById('pastePanel').classList.toggle('hidden');
+  }
+
+  // Selecting/dropping a file immediately kicks off real AI extraction — no extra click needed
+  function handleFileInputChange(event) {
+    const file = event.target.files && event.target.files[0];
+    if (!file) return;
+
+    const ALLOWED = ['application/pdf', 'image/png', 'image/jpeg', 'image/webp'];
+    const MAX_BYTES = 10 * 1024 * 1024;
+    if (!ALLOWED.includes(file.type)) {
+      showToast('Unsupported file type. Please use PDF, PNG, JPG, or WEBP.');
+      event.target.value = '';
+      return;
+    }
+    if (file.size > MAX_BYTES) {
+      showToast('File too large. Maximum size is 10MB.');
+      event.target.value = '';
+      return;
+    }
+
+    pendingFile = file;
+    document.getElementById('sourceDocCard').classList.remove('hidden');
+    document.getElementById('sourceDocName').textContent = file.name;
+    document.getElementById('sourceDocMeta').textContent = `${(file.size / 1024).toFixed(0)} KB • ready to fetch`;
+    document.getElementById('sourceDocStatusChip').textContent = 'Ready';
+    document.getElementById('extractFileBtn').textContent = 'Fetch from Document/Invoice';
+    document.getElementById('extractFileBtn').classList.remove('hidden');
+  }
+
+  function clearSourceDoc() {
+    pendingFile = null;
+    document.getElementById('fileInput').value = '';
+    document.getElementById('sourceDocCard').classList.add('hidden');
+    document.getElementById('extractFileBtn').classList.add('hidden');
+    document.getElementById('extractionProgress').classList.add('hidden');
+    showToast('Document cleared. Nothing was sent to the server.');
+  }
+
+  function setExtractingState(active) {
+    isExtracting = active;
+    const text = document.getElementById('extractionReadyText');
+    const textBtn = document.getElementById('extractTextBtn');
+    if (text) text.textContent = active ? 'Extracting…' : 'Ready';
+    if (textBtn) textBtn.disabled = active;
+  }
+
+  function setExtractionProgress(percent, label) {
+    const progress = document.getElementById('extractionProgress');
+    const bar = document.getElementById('extractionProgressBar');
+    const labelEl = document.getElementById('extractionProgressLabel');
+    const percentEl = document.getElementById('extractionProgressPercent');
+    if (!progress || !bar || !labelEl || !percentEl) return;
+    progress.classList.remove('hidden');
+    bar.style.width = `${percent}%`;
+    labelEl.textContent = label;
+    percentEl.textContent = `${percent}%`;
+  }
+
+  async function extractFromFile() {
+    if (isExtracting || !pendingFile) return;
+    setExtractingState(true);
+    document.getElementById('extractFileBtn').classList.add('hidden');
+    setExtractionProgress(10, 'Reading document/invoice…');
+    document.getElementById('sourceDocStatusChip').textContent = 'Reading document';
+    document.getElementById('sourceDocMeta').textContent = `${(pendingFile.size / 1024).toFixed(0)} KB • fetching data from document/invoice…`;
+    try {
+      const formData = new FormData();
+      formData.append('file', pendingFile);
+      setExtractionProgress(45, 'Processing document…');
+      document.getElementById('sourceDocStatusChip').textContent = 'Processing document';
+      document.getElementById('sourceDocMeta').textContent = 'Preparing extracted data for the form…';
+      const resp = await fetch('/api/extract', { method: 'POST', body: formData });
+      const data = await parseApiResponse(resp);
+      setExtractionProgress(85, 'Applying extracted data to form…');
+      applyAutofill(data);
+      const isOcrFallback = data && data._meta && data._meta.method === 'ocr-fallback';
+      document.getElementById('sourceDocStatusChip').textContent = isOcrFallback ? 'OCR fallback' : 'Form populated';
+      document.getElementById('sourceDocMeta').textContent = isOcrFallback
+        ? 'Document read with OCR • review populated fields'
+        : 'Document read and form populated';
+      setExtractionProgress(100, 'Form populated');
+      showToast(isOcrFallback
+        ? 'AI unavailable (quota) — used basic OCR fallback. Some fields may be missing or need review.'
+        : 'Document read. Form fields populated below.');
+    } catch (err) {
+      const progress = document.getElementById('extractionProgress');
+      if (progress) progress.classList.add('hidden');
+      document.getElementById('sourceDocStatusChip').textContent = 'Failed';
+      document.getElementById('extractFileBtn').textContent = 'Fetch from Document/Invoice';
+      document.getElementById('extractFileBtn').classList.remove('hidden');
+      showToast(err.message || 'Extraction failed. Please try again.');
+    } finally {
+      setExtractingState(false);
+    }
+  }
+
+  async function parseApiResponse(resp) {
+    if (!resp.ok) {
+      let message = 'Extraction failed. Please try again.';
+      try {
+        const body = await resp.json();
+        if (body && body.error) message = body.error;
+      } catch (_) { /* ignore parse failure, use default message */ }
+      throw new Error(message);
+    }
+    return resp.json();
+  }
+
+  // --- badge helper (generic — works for any field) ---
+  function applyFieldBadge(el, status, confidence, rationale, suggestedValue) {
+    if (!el) return;
+    const parent = el.parentElement;
+    if (!parent) return;
+    const existing = parent.querySelector(`.ai-badge[data-for="${el.id}"]`);
+    if (existing) existing.remove();
+    el.removeAttribute('title');
+    if (status !== 'extracted' && status !== 'ai_suggested') return;
+    if (!status || status === 'missing') return;
+
+    const chip = document.createElement('span');
+    chip.className = `ai-badge ${status === 'extracted' ? 'badge-extracted badge-extracted-check' : 'badge-suggested'}`;
+    chip.dataset.for = el.id || '';
+    const pct = typeof confidence === 'number' ? ` ${Math.round(confidence * 100)}%` : '';
+    chip.textContent = status === 'extracted' ? '✓' : `AI Suggested${pct}`;
+    if (status === 'extracted') {
+      chip.title = 'Extracted from the document';
+    } else {
+      const value = Array.isArray(suggestedValue) ? suggestedValue.join(', ') : String(suggestedValue ?? el.value ?? '').trim();
+      const details = [value && `Suggested value: ${value}`, rationale && `Why: ${rationale}`, 'Please confirm this value.'].filter(Boolean).join('\n');
+      chip.title = details;
+      el.title = details;
+    }
+    el.insertAdjacentElement('afterend', chip);
+  }
+
+  function setAutofilledFieldState(el, fieldData) {
+    if (!el) return;
+    const hasValue = fieldData && fieldData.value !== undefined && fieldData.value !== null && String(fieldData.value).trim() !== '';
+    el.classList.toggle('autofilled-field', hasValue);
+    if (hasValue) el.dataset.autofillStatus = fieldData.status || 'extracted';
+    else delete el.dataset.autofillStatus;
+  }
+
+  function setField(id, fieldData) {
+    const el = document.getElementById(id);
+    if (!el || !fieldData) return;
+    setAutofilledFieldState(el, fieldData);
+    if (fieldData.value !== undefined && fieldData.value !== null && fieldData.value !== '') {
+      el.value = fieldData.value;
+    }
+    applyFieldBadge(el, fieldData.status, fieldData.confidence, fieldData.rationale, fieldData.value);
+    if (el.tagName === 'TEXTAREA') autoGrowTextarea(el);
+  }
+
+  function normalizeChoice(value) {
+    return String(value || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+  }
+
+  function setCheckboxGroup(idMap, fieldData, anchorId) {
+    const values = Array.isArray(fieldData && fieldData.value) ? fieldData.value.map(normalizeChoice) : [];
+    Object.entries(idMap).forEach(([label, id]) => {
+      const el = document.getElementById(id);
+      if (el) el.checked = values.includes(normalizeChoice(label));
+    });
+    if (anchorId) applyFieldBadge(document.getElementById(anchorId), fieldData && fieldData.status, fieldData && fieldData.confidence, fieldData && fieldData.rationale, fieldData && fieldData.value);
+  }
+
+  function setRadioGroup(idMap, fieldData, anchorId) {
+    const value = normalizeChoice(fieldData && fieldData.value);
+    Object.entries(idMap).forEach(([label, id]) => {
+      const el = document.getElementById(id);
+      if (el) el.checked = normalizeChoice(label) === value;
+    });
+    if (anchorId) applyFieldBadge(document.getElementById(anchorId), fieldData && fieldData.status, fieldData && fieldData.confidence, fieldData && fieldData.rationale, fieldData && fieldData.value);
+  }
+
+  function setRowField(tr, fieldKey, fieldData) {
+    if (!tr || !fieldData) return;
+    const el = tr.querySelector(`[data-field="${fieldKey}"]`);
+    if (!el) return;
+    const existingBadge = el.parentElement?.querySelector(`.ai-badge[data-for="${el.id}"]`);
+    if (existingBadge) existingBadge.remove();
+    setAutofilledFieldState(el, fieldData);
+    if (fieldData.value !== undefined && fieldData.value !== null && fieldData.value !== '') {
+      el.value = fieldData.value;
+    }
+    applyFieldBadge(el, fieldData.status, fieldData.confidence, fieldData.rationale, fieldData.value);
+    if (el.tagName === 'TEXTAREA') autoGrowTextarea(el);
+  }
+
+  const TRANSPORT_IDS = { Air: 'mt_air', Land: 'mt_land', Sea: 'mt_sea', 'Post/Couriers': 'mt_post', Internet: 'mt_internet', others: 'mt_others' };
+  const REALISATION_IDS = { 'L/C': 'mr_lc', BG: 'mr_bg', Others: 'mr_others' };
+  const PAYMENT_NATURE_IDS = { FOB: 'np_fob', CIF: 'np_cif', 'C&F': 'np_cnf', CI: 'np_ci', periodical: 'np_periodical', milestone: 'np_milestone', advance: 'np_advance', others: 'np_others' };
+  const EXPORT_TYPE_IDS = { Goods: 'exp_type_goods', Service: 'exp_type_service' };
+  const EXPORTER_CAT_IDS = { 'Custom (DTA units)': 'ec_custom', SEZ: 'ec_sez', '100% EOU': 'ec_eou', 'Warehouse export': 'ec_warehouse', others: 'ec_others' };
+
+  const PARTICULAR_ROWS = [
+    ['fob', 'val_fob'],
+    ['freight', 'val_freight'],
+    ['insurance', 'val_insurance'],
+    ['commission', 'val_commission'],
+    ['discount', 'val_discount'],
+    ['otherDeduction', 'val_deduction'],
+    ['packingCharges', 'val_packing'],
+  ];
+
+  function applyAutofill(data) {
+    const g = data.generalInfo || {};
+    setField('field_form_no', g.formNo);
+    setField('field_sb_no', g.shippingBillNo);
+    setField('field_sb_date', g.shippingBillDate);
+    setRadioGroup(EXPORT_TYPE_IDS, g.exportType, 'lbl_exportType');
+    setCheckboxGroup(TRANSPORT_IDS, g.modeOfTransport, 'lbl_modeTransport');
+    setRadioGroup(EXPORTER_CAT_IDS, g.exporterCategory, 'lbl_exporterCategory');
+    setField('exporterCategoryOtherSpecify', g.exporterCategoryOtherSpecify);
+    setField('field_ad_code', g.adCode);
+    setField('field_ie_code', g.ieCode);
+    setField('field_gstin', g.gstin);
+    setField('field_pan', g.pan);
+    setField('field_ad_address', g.adNameAddress);
+    setField('field_exporter_address', g.exportersNameAddress);
+    setCheckboxGroup(REALISATION_IDS, g.modeOfRealisation, 'lbl_modeRealisation');
+    setField('field_consignee_address', g.consigneeNameAddress);
+    setField('field_port_loading', g.portOfLoading);
+    setField('field_third_party', g.thirdPartyNameAddress);
+    setField('field_third_party_rel', g.relationshipExporterThirdParty);
+    setField('field_dest_country', g.countryOfFinalDestination);
+    setField('field_port_discharge', g.portOfDischarge);
+    setField('field_leo_date', g.dateOfLEO);
+    setField('field_ad_lc', g.adNameAdCodeForLCBG);
+    setField('field_desc_goods', g.descriptionOfGoods);
+    setField('fobInWords', g.fobInWords);
+
+    const inv = data.invoiceDetails || {};
+    setField('field_client_address', inv.clientNameAddress);
+    setField('field_inv_no', inv.invoiceNo);
+    setField('field_inv_date', inv.invoiceDate);
+    setField('invoiceCurrency', inv.invoiceCurrency);
+    setField('invoiceTotalAmount', inv.invoiceAmount);
+    setField('field_contract_no', inv.contractNoDate);
+    setCheckboxGroup(PAYMENT_NATURE_IDS, inv.natureOfPayment, 'lbl_natureOfPayment');
+    setField('field_hsn', inv.hsnSacCode);
+    if (inv.hsnSacCode) applyFieldBadge(document.getElementById('lbl_hsnSac'), inv.hsnSacCode.status, inv.hsnSacCode.confidence);
+
+    const invoiceCurrencyEl = document.getElementById('invoiceCurrency');
+    if (invoiceCurrencyEl && invoiceCurrencyEl.value) syncCurrency(invoiceCurrencyEl.value);
+
+    const p = data.particulars || {};
+    PARTICULAR_ROWS.forEach(([key, amountId]) => {
+      const row = p[key];
+      if (!row) return;
+      setField(amountId, row.amount);
+    });
+
+    const services = Array.isArray(data.services) ? data.services : [];
+    applyFieldBadge(
+      document.getElementById('servicesSectionHeading'),
+      services.length ? 'extracted' : 'missing',
+      services.length ? 1 : undefined,
+    );
+    const servicesBody = document.getElementById('servicesTableBody');
+    while (servicesBody.children.length < services.length) addServiceRow();
+    services.forEach((row, i) => {
+      const tr = servicesBody.children[i];
+      if (!tr) return;
+      setRowField(tr, 'recipient', row.recipientNameAddress);
+      setRowField(tr, 'country', row.country);
+      setRowField(tr, 'invoiceNo', row.invoiceNo);
+      setRowField(tr, 'invoiceDate', row.invoiceDate);
+      setRowField(tr, 'currency', row.currency);
+      setRowField(tr, 'amount', row.amount);
+      setRowField(tr, 'netValue', row.netRealisableValue);
+      setRowField(tr, 'contract', row.contractNoDate);
+      setRowField(tr, 'description', row.descriptionOfServices);
+      setRowField(tr, 'sac', row.sacCode);
+      setRowField(tr, 'remarks', row.remarks);
+    });
+    updateServiceRowIndices();
+
+    const fpo = data.fpo || {};
+    setField('fpoName', fpo.fpoNameAddress);
+    setField('parcelReceiptNoDate', fpo.parcelReceiptNoDate);
+
+    const decl = data.declaration || {};
+    setField('declarationDate', decl.declarationDate);
+    setField('realisationDeadlineDate', decl.realisationDeadlineDate);
+
+    calculateTotals();
+  }
+
+  // --- clear / start over (client-side only) ---
+  function startOver() {
+    const wrapper = document.getElementById('statutory-form-wrapper');
+    wrapper.querySelectorAll('.ai-badge').forEach((b) => b.remove());
+    wrapper.querySelectorAll('input[type="text"], input[type="date"], input[type="number"], textarea').forEach((el) => {
+      el.value = '';
+    });
+    wrapper.querySelectorAll('input[type="checkbox"], input[type="radio"]').forEach((el) => {
+      el.checked = false;
+    });
+    const servicesBody = document.getElementById('servicesTableBody');
+    while (servicesBody.children.length > 1) servicesBody.lastElementChild.remove();
+    updateServiceRowIndices();
+    document.getElementById('val_net_realisable').value = '';
+    document.getElementById('netCurrencyCell').textContent = '-';
+    clearSourceDoc();
+    wrapper.querySelectorAll('textarea.cell-textarea').forEach((el) => autoGrowTextarea(el));
+    showToast('Form cleared. Ready to start over.');
+  }
+
+  // --- download draft (local file only — no server/localStorage write) ---
+  function collectFormDataForDraft() {
+    const wrapper = document.getElementById('statutory-form-wrapper');
+    const result = {};
+    wrapper.querySelectorAll('input[id], textarea[id]').forEach((el) => {
+      result[el.id] = el.type === 'checkbox' || el.type === 'radio' ? el.checked : el.value;
+    });
+    result.services = Array.from(document.querySelectorAll('#servicesTableBody tr.service-row')).map((entry) => {
+      const row = {};
+      entry.querySelectorAll('[data-field]').forEach((el) => {
+        row[el.dataset.field] = el.value;
+      });
+      return row;
+    });
+    return result;
+  }
+
+  function downloadDraft() {
+    const data = collectFormDataForDraft();
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `EDF-draft-${new Date().toISOString().slice(0, 10)}.json`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+    showToast('Draft downloaded to your device. Nothing was stored on any server.');
+  }
+
+  // --- dynamic field sizing: grow textareas to fit content instead of fixed rows ---
+  function autoGrowTextarea(el) {
+    el.style.height = 'auto';
+    el.style.height = `${el.scrollHeight}px`;
+  }
+
+  function wireAutoGrow(scope) {
+    scope.querySelectorAll('textarea.cell-textarea').forEach((el) => {
+      autoGrowTextarea(el);
+      el.addEventListener('input', () => autoGrowTextarea(el));
+    });
+  }
+
+  wireAutoGrow(document);
+  window.addEventListener('resize', () => wireAutoGrow(document));
+</script>
+</body></html>
