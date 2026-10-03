@@ -123,6 +123,9 @@
       border: none !important;
       box-shadow: none !important;
     }
+    #field_export_type::placeholder {
+      font-size: 10px;
+    }
     .cell-input-compact {
       width: 100%;
       background-color: #f6f9fe !important;
@@ -881,18 +884,9 @@
         <!-- TYPE OF EXPORT & FORM NO -->
         <tr>
           <td class="w-1/2 p-1 align-top">
-            <div class="flex items-center justify-between gap-2 flex-wrap">
-              <span class="font-bold text-black text-xs sm:text-[13px]" id="lbl_exportType">Type of export : Goods/Service</span>
-              <div class="flex items-center gap-3 text-xs">
-                <label class="inline-flex items-center gap-1 cursor-pointer">
-                  <input class="text-slate-900 h-3.5 w-3.5 focus:ring-slate-900 border-slate-400" id="exp_type_goods" name="export_type" type="radio" value="Goods">
-                  <span class="">Goods</span>
-                </label>
-                <label class="inline-flex items-center gap-1 cursor-pointer">
-                  <input class="text-slate-900 h-3.5 w-3.5 focus:ring-slate-900 border-slate-400" id="exp_type_service" name="export_type" type="radio" value="Service">
-                  <span class="">Service</span>
-                </label>
-              </div>
+            <div class="flex flex-col gap-1 sm:flex-row sm:items-center sm:gap-2">
+              <span class="font-bold text-black text-xs sm:text-[13px] whitespace-nowrap shrink-0" id="lbl_exportType">Type of export :</span>
+              <input class="cell-input font-medium" data-default="Service/Software" id="field_export_type" placeholder="Enter Type of service like Service/Software or Goods/Service" type="text" value="Service/Software">
             </div>
           </td>
           <td class="w-1/2 p-1 align-top">
@@ -1367,7 +1361,7 @@
                       </div>
                       <label class="signature-designation block text-right text-[11px] font-bold text-slate-900">
                       <span class="sr-only">Designation</span>
-                      <input class="cell-input text-right text-[11px] font-bold" id="signatureDesignation" placeholder="Proprietor" type="text" value="Proprietor">
+                      <input class="cell-input text-right text-[11px] font-bold" id="signatureDesignation" data-default="Proprietor" placeholder="Proprietor" type="text" value="Proprietor">
                       </label>
                     </div>
                   </div>
@@ -2020,7 +2014,6 @@
   const TRANSPORT_IDS = { Air: 'mt_air', Land: 'mt_land', Sea: 'mt_sea', 'Post/Couriers': 'mt_post', Internet: 'mt_internet', others: 'mt_others' };
   const REALISATION_IDS = { 'L/C': 'mr_lc', BG: 'mr_bg', Others: 'mr_others' };
   const PAYMENT_NATURE_IDS = { FOB: 'np_fob', CIF: 'np_cif', 'C&F': 'np_cnf', CI: 'np_ci', periodical: 'np_periodical', milestone: 'np_milestone', advance: 'np_advance', others: 'np_others' };
-  const EXPORT_TYPE_IDS = { Goods: 'exp_type_goods', Service: 'exp_type_service' };
   const EXPORTER_CAT_IDS = { 'Custom (DTA units)': 'ec_custom', SEZ: 'ec_sez', '100% EOU': 'ec_eou', 'Warehouse export': 'ec_warehouse', others: 'ec_others' };
 
   function makeCheckboxGroupExclusive(idMap) {
@@ -2054,7 +2047,7 @@
     setField('field_form_no', g.formNo);
     setField('field_sb_no', g.shippingBillNo);
     setField('field_sb_date', g.shippingBillDate);
-    setRadioGroup(EXPORT_TYPE_IDS, g.exportType, 'lbl_exportType');
+    setField('field_export_type', g.exportType);
     setCheckboxGroup(TRANSPORT_IDS, g.modeOfTransport, 'lbl_modeTransport', true);
     setRadioGroup(EXPORTER_CAT_IDS, g.exporterCategory, 'lbl_exporterCategory');
     setField('exporterCategoryOtherSpecify', g.exporterCategoryOtherSpecify);
@@ -2138,7 +2131,7 @@
     const wrapper = document.getElementById('statutory-form-wrapper');
     wrapper.querySelectorAll('.ai-badge').forEach((b) => b.remove());
     wrapper.querySelectorAll('input[type="text"], input[type="date"], input[type="number"], textarea').forEach((el) => {
-      el.value = '';
+      el.value = el.dataset.default || '';
       el.classList.remove('autofilled-field');
       delete el.dataset.autofillStatus;
       delete el.dataset.aiSuggested;
