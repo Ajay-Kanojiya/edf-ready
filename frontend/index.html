@@ -242,7 +242,9 @@
       border-color: #000000;
     }
     #statutory-form-wrapper label > input[type="checkbox"],
-    #statutory-form-wrapper label > input[type="radio"] {
+    #statutory-form-wrapper label > input[type="radio"],
+    #statutory-form-wrapper label > input[type="checkbox"]:checked,
+    #statutory-form-wrapper label > input[type="radio"]:checked {
       background-image: none !important;
       opacity: 0;
     }
@@ -1022,10 +1024,10 @@
                   <span class="">BG</span>
                 </label>
               </div>
-              <div class="flex items-start gap-1.5 mode-realisation-other">
-                <input class="rounded border-slate-400 text-slate-800 h-3.5 w-3.5 mt-0.5" id="mr_others" type="checkbox">
+              <label class="flex items-start gap-1.5 mode-realisation-other cursor-pointer">
+                <input class="rounded border-slate-400 text-slate-800 h-3.5 w-3.5" id="mr_others" type="checkbox">
                 <span class="leading-tight text-[11px] text-slate-900">Others (advance payment, etc. including transfer/remittance to bank a/c maintained overseas)</span>
-              </div>
+              </label>
             </div>
           </td>
         </tr>
