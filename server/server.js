@@ -28,11 +28,10 @@ if (!OPENROUTER_API_KEY) {
 const app = express();
 
 app.use((req, res, next) => {
-  if (!req.path.startsWith("/api/")) return next();
   const startedAt = Date.now();
-  console.log(`[api] ${req.method} ${req.path}`);
+  console.log(`[http] ${req.method} ${req.path}`);
   res.on("finish", () => {
-    console.log(`[api] ${req.method} ${req.path} -> ${res.statusCode} (${Date.now() - startedAt}ms)`);
+    console.log(`[http] ${req.method} ${req.path} -> ${res.statusCode} (${Date.now() - startedAt}ms)`);
   });
   next();
 });
@@ -323,6 +322,10 @@ app.post("/api/extract", extractLimiter, handleUpload, async (req, res) => {
     console.error("Extraction failed:", err.message);
     res.status(502).json({ error: "Extraction failed. Please try again." });
   }
+});
+
+app.get("/health", (_req, res) => {
+  res.status(200).json({ status: "ok" });
 });
 
 // Serve the static frontend from the same origin (avoids CORS entirely by default).
