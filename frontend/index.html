@@ -329,8 +329,6 @@
       text-align: right !important;
       padding-right: 14px;
     }
-                          <input class="cell-input text-right text-xs font-bold uppercase" id="signatureBusinessName" placeholder="Enter business name" type="text" value="">
-      ctx.strokeStyle = '#000000';
     .autofilled-field {
       color: #000000 !important;
       font-weight: 700 !important;
@@ -1088,9 +1086,9 @@
         <!-- NAME OF AD IN CASE OF LC/BG -->
         <tr>
           <td class="p-1 align-top" colspan="2">
-            <div class="flex items-center gap-2">
-              <span class="font-medium whitespace-nowrap text-xs">Name of the AD and AD code, in case of LC/BG :</span>
-              <input class="cell-input" id="field_ad_lc" placeholder="Enter Bank Name and AD code" type="text" value="">
+            <div class="flex flex-col gap-1 sm:flex-row sm:items-center sm:gap-2">
+              <span class="font-medium text-xs leading-tight shrink-0">Name of the AD and AD code, in case of LC/BG :</span>
+              <input class="cell-input min-w-0 flex-1" id="field_ad_lc" placeholder="Enter Bank Name and AD code" type="text" value="">
             </div>
           </td>
         </tr>
