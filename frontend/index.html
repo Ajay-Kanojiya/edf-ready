@@ -170,6 +170,8 @@
       background: #ffffff !important;
       box-shadow: none !important;
       vertical-align: middle;
+      print-color-adjust: exact;
+      -webkit-print-color-adjust: exact;
     }
     #statutory-form-wrapper input[type="checkbox"]:checked,
     #statutory-form-wrapper input[type="radio"]:checked {
@@ -178,8 +180,152 @@
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3 8.5 6.5 12 13 4.5' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
       background-position: center;
       background-repeat: no-repeat;
-      background-size: 12px 12px;
+      background-size: 100% 100%;
     }
+    .mode-realisation-cell .mode-realisation-other {
+      min-width: 0;
+    }
+    .mode-realisation-cell .mode-realisation-other span {
+      min-width: 0;
+      color: #0f172a;
+      overflow-wrap: anywhere;
+    }
+    .compact-checkbox-grid label {
+      min-width: 0;
+      align-items: flex-start;
+    }
+    .compact-checkbox-grid input[type="checkbox"] {
+      flex: 0 0 14px;
+    }
+    .compact-checkbox-grid span {
+      min-width: 0;
+      overflow-wrap: anywhere;
+    }
+    #statutory-form-wrapper label:has(> input[type="checkbox"]),
+    #statutory-form-wrapper label:has(> input[type="radio"]) {
+      position: relative;
+    }
+    #statutory-form-wrapper label:has(> input[type="checkbox"])::before,
+    #statutory-form-wrapper label:has(> input[type="radio"])::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 14px;
+      height: 14px;
+      box-sizing: border-box;
+      border: 1px solid #64748b;
+      border-radius: 2px;
+      background: #ffffff;
+      pointer-events: none;
+    }
+    #statutory-form-wrapper label:has(> input[type="checkbox"])::after,
+    #statutory-form-wrapper label:has(> input[type="radio"])::after {
+      content: "";
+      position: absolute;
+      left: 5px;
+      top: 2px;
+      width: 4px;
+      height: 8px;
+      border: solid #000000;
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg) scale(0);
+      transform-origin: center;
+      pointer-events: none;
+    }
+    #statutory-form-wrapper label:has(> input[type="checkbox"]:checked)::after,
+    #statutory-form-wrapper label:has(> input[type="radio"]:checked)::after {
+      transform: rotate(45deg) scale(1);
+    }
+    #statutory-form-wrapper label:has(> input[type="checkbox"]:checked)::before,
+    #statutory-form-wrapper label:has(> input[type="radio"]:checked)::before {
+      border-color: #000000;
+    }
+    #statutory-form-wrapper label > input[type="checkbox"],
+    #statutory-form-wrapper label > input[type="radio"] {
+      background-image: none !important;
+      opacity: 0;
+    }
+    .section-2a-details-table td {
+      min-width: 0;
+      overflow-wrap: anywhere;
+    }
+    .invoice-details-cell > div {
+      min-width: 0;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+    }
+    .invoice-details-cell > div > span,
+    .invoice-details-cell > div > input {
+      min-width: 0;
+      overflow-wrap: anywhere;
+    }
+    .nature-payment-cell {
+      min-width: 0;
+      overflow-wrap: anywhere;
+    }
+    .signature-stamp-box {
+      width: 100%;
+      background: transparent;
+    }
+    .signature-business-name,
+    .signature-designation {
+      color: #32158f !important;
+        text-align: right !important;
+      padding-right: 14px !important;
+      font-size: 11px !important;
+      font-weight: 800 !important;
+      line-height: 1.1 !important;
+      letter-spacing: 0 !important;
+    }
+    .signature-designation {
+      text-align: right !important;
+      box-sizing: border-box;
+    }
+    .signature-business-name input,
+    .signature-business-name .print-value-echo {
+      color: #32158f !important;
+        text-align: right !important;
+      font-size: 11px !important;
+      font-weight: 800 !important;
+      line-height: 1.1 !important;
+      letter-spacing: 0 !important;
+    }
+    .signature-designation input,
+    .signature-designation .print-value-echo {
+      color: #32158f !important;
+      text-align: right !important;
+      font-size: 11px !important;
+      font-weight: 800 !important;
+      line-height: 1.1 !important;
+      letter-spacing: 0 !important;
+    }
+    .signature-mark-row {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      justify-content: flex-start;
+      gap: 2px;
+    }
+    .signature-mark-area {
+      min-width: 0;
+      width: 320px;
+      max-width: 100%;
+      flex: 0 0 auto;
+      overflow: hidden;
+    }
+    .signature-designation {
+      flex: 0 0 auto;
+    }
+    #signatureControl.signature-uploaded .signature-business-name,
+    #signatureControl.signature-uploaded .signature-designation {
+      display: none !important;
+    }
+    #signatureControl > p {
+      text-align: right !important;
+      padding-right: 14px;
+    }
+                          <input class="cell-input text-right text-xs font-bold uppercase" id="signatureBusinessName" placeholder="Enter business name" type="text" value="">
+      ctx.strokeStyle = '#000000';
     .autofilled-field {
       color: #000000 !important;
       font-weight: 700 !important;
@@ -309,6 +455,94 @@
         overflow: visible !important;
         background: transparent !important;
       }
+      .signature-stamp-box {
+        border: none !important;
+        padding: 0 !important;
+        background: transparent !important;
+      }
+      #signatureControl {
+        width: 250px !important;
+        min-width: 250px !important;
+        max-width: 250px !important;
+        margin-left: auto !important;
+        margin-right: 14px !important;
+      }
+      #signatureControl > p {
+        padding-right: 0 !important;
+      }
+      .signature-stamp-box .signature-business-name {
+        display: block !important;
+        width: 360px !important;
+        margin-left: -110px !important;
+        padding: 0 !important;
+      }
+      .signature-stamp-box .signature-mark-row {
+        display: grid !important;
+        grid-template-columns: 1fr 140px 1fr;
+        align-items: end;
+        gap: 0 !important;
+      }
+      .signature-stamp-box .signature-mark-area {
+        grid-column: 2;
+        flex: none !important;
+        width: 140px !important;
+        height: 66px !important;
+      }
+      .signature-stamp-box .signature-designation {
+        display: block !important;
+        grid-column: 3;
+        justify-self: end;
+        width: auto !important;
+        padding: 0 !important;
+        white-space: nowrap !important;
+      }
+      .signature-stamp-box .signature-pad-box {
+        width: 140px !important;
+        margin-left: 0 !important;
+      }
+      #signatureControl #sig-draw-pane > div {
+        width: 140px !important;
+        height: 66px !important;
+      }
+      .signature-stamp-box #signatureCanvas {
+        object-fit: contain !important;
+      }
+      .signature-stamp-box #signatureUploadPreview {
+        width: 140px !important;
+        height: 66px !important;
+        max-height: 66px !important;
+        object-fit: contain !important;
+      }
+      #signatureControl.signature-uploaded .signature-mark-row {
+        display: block !important;
+      }
+      #signatureControl.signature-uploaded .signature-mark-area {
+        width: 100% !important;
+        height: auto !important;
+      }
+      #signatureControl.signature-uploaded .signature-stamp-box #signatureUploadPreview {
+        width: 100% !important;
+        height: auto !important;
+        max-height: 90px !important;
+        object-fit: contain !important;
+      }
+      #statutory-form-wrapper .signature-stamp-box .signature-business-name .print-value-echo {
+        color: #32158f !important;
+        font-size: var(--stamp-name-size, 17px) !important;
+        letter-spacing: 0.06em !important;
+        text-transform: uppercase !important;
+        white-space: nowrap !important;
+        background: transparent !important;
+        text-align: right !important;
+        text-align-last: right !important;
+      }
+      #statutory-form-wrapper .signature-stamp-box .signature-designation .print-value-echo {
+        color: #32158f !important;
+        font-size: 12px !important;
+        background: transparent !important;
+        white-space: nowrap !important;
+        text-align: right !important;
+      }
       #signatureControl .signature-pad-box.hidden {
         display: none !important;
       }
@@ -321,7 +555,8 @@
         background: transparent !important;
       }
       .signature-pad-box #sig-draw-pane > div {
-        height: 5rem !important;
+        width: 140px !important;
+        height: 60px !important;
         padding: 0 !important;
         border: none !important;
         border-radius: 0 !important;
@@ -436,6 +671,17 @@
         color: #111827 !important;
         background: #f8fafc !important;
         border-radius: 2px !important;
+      }
+      .mode-realisation-cell label,
+      .mode-realisation-cell span {
+        color: #000000 !important;
+      }
+      .mode-realisation-cell .mode-realisation-other {
+        align-items: flex-start !important;
+      }
+      #statutory-form-wrapper input[type="checkbox"]:checked,
+      #statutory-form-wrapper input[type="radio"]:checked {
+        background-size: 14px 14px !important;
       }
     }
   </style>
@@ -665,7 +911,7 @@
           </td>
           <td class="p-1 align-top">
             <div class="font-medium mb-1.5 text-xs sm:text-[13px]" id="lbl_modeTransport">Mode of Transport/Delivery:</div>
-            <div class="grid grid-cols-3 gap-y-1.5 gap-x-2 text-xs">
+            <div class="grid grid-cols-3 gap-y-1.5 gap-x-2 text-xs compact-checkbox-grid">
               <label class="inline-flex items-center gap-1.5 cursor-pointer">
                 <input class="rounded border-slate-400 text-slate-800 h-3.5 w-3.5 focus:ring-0" id="mt_air" type="checkbox">
                 <span class="">Air</span>
@@ -763,7 +1009,7 @@
             <span class="font-medium block mb-1 text-xs sm:text-[13px]">Exporters Name &amp; Address:</span>
             <textarea class="cell-textarea" id="field_exporter_address" placeholder="Enter Exporter Name and Address" rows="1"></textarea>
           </td>
-          <td class="p-1 align-top">
+          <td class="p-1 align-top mode-realisation-cell">
             <span class="font-medium block mb-1 text-xs sm:text-[13px]" id="lbl_modeRealisation">Mode of Realisation :</span>
             <div class="space-y-1 text-xs">
               <div class="flex items-center gap-4">
@@ -776,9 +1022,9 @@
                   <span class="">BG</span>
                 </label>
               </div>
-              <div class="flex items-start gap-1.5">
+              <div class="flex items-start gap-1.5 mode-realisation-other">
                 <input class="rounded border-slate-400 text-slate-800 h-3.5 w-3.5 mt-0.5" id="mr_others" type="checkbox">
-                <span class="leading-tight text-[11px] text-slate-700">Others (advance payment, etc. including transfer/remittance to bank a/c maintained overseas)</span>
+                <span class="leading-tight text-[11px] text-slate-900">Others (advance payment, etc. including transfer/remittance to bank a/c maintained overseas)</span>
               </div>
             </div>
           </td>
@@ -851,7 +1097,7 @@
 
     <!-- SECTION 2A: DETAILS OF EXPORT VALUE OF GOODS -->
     <div class="pt-1">
-      <table class="w-full form-table-bordered border-collapse text-left text-xs" style="table-layout: fixed;">
+      <table class="w-full form-table-bordered border-collapse text-left text-xs section-2a-details-table" style="table-layout: fixed;">
         <colgroup>
           <col style="width: 30%;">
           <col style="width: 25%;">
@@ -868,16 +1114,16 @@
               <span class="font-medium block mb-1 text-xs">Client Name &amp; Address:</span>
               <textarea class="cell-textarea" id="field_client_address" placeholder="Enter Client Name &amp; Address" rows="1"></textarea>
             </td>
-            <td class="p-1 align-top text-xs space-y-1">
+            <td class="p-1 align-top text-xs space-y-1 invoice-details-cell">
               <div class="grid grid-cols-[max-content_minmax(0,1fr)] items-center gap-x-1"><span class="font-medium text-[11px] leading-tight">Invoice No:</span><input class="cell-input min-w-0 font-mono" id="field_inv_no" placeholder="Enter Invoice No" type="text" value=""></div>
               <div class="grid grid-cols-[max-content_minmax(0,1fr)] items-center gap-x-1"><span class="font-medium text-[11px] leading-tight">Invoice date:</span><input class="cell-input min-w-0" id="field_inv_date" type="date" value=""></div>
               <div class="grid grid-cols-[max-content_minmax(0,1fr)] items-center gap-x-1"><span class="font-medium text-[11px] leading-tight">Invoice Currency:</span><input class="cell-input min-w-0 font-bold" id="invoiceCurrency" oninput="syncCurrency(this.value)" placeholder="e.g. USD" type="text" value=""></div>
               <div class="grid grid-cols-[max-content_minmax(0,1fr)] items-center gap-x-1"><span class="font-medium text-[11px] leading-tight">Invoice Amount:</span><input class="cell-input min-w-0 font-mono font-bold" id="invoiceTotalAmount" placeholder="0.00" step="0.01" type="number" value=""></div>
               <div class="grid grid-cols-[max-content_minmax(0,1fr)] items-center gap-x-1"><span class="font-medium text-[11px] leading-tight">Contract No. and Date:</span><input class="cell-input min-w-0" id="field_contract_no" placeholder="Contract No. and Date" type="text" value=""></div>
             </td>
-            <td class="p-1 align-top text-xs">
+            <td class="p-1 align-top text-xs nature-payment-cell">
               <span class="font-medium block mb-1" id="lbl_natureOfPayment">Nature of payment in terms of Contract:</span>
-              <div class="grid grid-cols-2 gap-1 mb-2">
+              <div class="grid grid-cols-2 gap-1 mb-2 compact-checkbox-grid">
                 <label class="inline-flex items-center gap-1 cursor-pointer"><input class="rounded border-slate-400 text-slate-800 h-3 w-3" id="np_fob" type="checkbox"><span class="">FOB</span></label>
                 <label class="inline-flex items-center gap-1 cursor-pointer"><input class="rounded border-slate-400 text-slate-800 h-3 w-3" id="np_cif" type="checkbox"><span class="">CIF</span></label>
                 <label class="inline-flex items-center gap-1 cursor-pointer"><input class="rounded border-slate-400 text-slate-800 h-3 w-3" id="np_cnf" type="checkbox"><span class="">C&amp;F</span></label>
@@ -1076,8 +1322,15 @@
                   </div>
                 </div>
                 <!-- Signature Pad / Upload Option -->
-                <div class="w-full sm:w-auto sm:min-w-[300px] sm:max-w-[340px]" id="signatureControl">
-                  <div class="signature-pad-box bg-white border border-slate-300 rounded shadow-xs overflow-hidden">
+                <div class="w-full sm:w-auto sm:min-w-[320px] sm:max-w-[320px] sm:ml-auto" id="signatureControl">
+                  <div class="signature-stamp-box">
+                    <label class="signature-business-name block text-center text-[12px] font-bold text-slate-900">
+                      <span class="sr-only">Business Name</span>
+                      <input class="cell-input text-center text-xs font-bold uppercase" id="signatureBusinessName" placeholder="Enter business name" type="text" value="">
+                    </label>
+                    <div class="signature-mark-row mt-1">
+                      <div class="signature-mark-area">
+                      <div class="signature-pad-box bg-white border-0 rounded-none shadow-none overflow-hidden">
                     <div class="flex items-center border-b border-slate-200 bg-slate-100 text-xs font-semibold text-slate-700 no-print">
                       <button class="flex-1 py-1.5 text-center bg-white text-blue-700 border-b-2 border-blue-600 font-semibold" id="tab-draw-btn" onclick="document.getElementById('sig-draw-pane').classList.remove('hidden'); document.getElementById('sig-upload-pane').classList.add('hidden'); this.className='flex-1 py-1.5 text-center bg-white text-blue-700 border-b-2 border-blue-600 font-semibold'; document.getElementById('tab-upload-btn').className='flex-1 py-1.5 text-center text-slate-600 hover:text-slate-900 hover:bg-slate-50 font-medium';" type="button">
                         Draw Signature
@@ -1088,10 +1341,10 @@
                     </div>
                     <!-- Draw Pane (real canvas) -->
                     <div class="p-2.5 bg-slate-50/50" id="sig-draw-pane">
-                      <div class="relative h-24 bg-white border border-dashed border-slate-300 rounded flex flex-col justify-between p-2">
+                      <div class="relative h-28 bg-white border border-dashed border-slate-300 rounded flex flex-col justify-between p-2">
                         <canvas class="absolute inset-0 w-full h-full cursor-crosshair" id="signatureCanvas"></canvas>
-                        <div class="flex items-center justify-between border-t border-slate-100 pt-1 text-[10px] relative z-10 pointer-events-none no-print">
-                          <span class="text-slate-400">Draw Signature Here</span>
+                        <div class="flex items-center justify-between text-[10px] relative z-10 pointer-events-none no-print">
+                          <span class="text-slate-400" id="signaturePlaceholder">Draw Signature Here</span>
                           <button class="text-slate-600 hover:text-slate-900 font-medium no-print pointer-events-auto" onclick="clearSignature()" type="button">
                             Clear
                           </button>
@@ -1100,15 +1353,22 @@
                     </div>
                     <!-- Upload Pane -->
                     <div class="p-2.5 bg-slate-50/50 hidden" id="sig-upload-pane">
-                      <label class="h-24 border-2 border-dashed border-slate-300 hover:border-blue-400 hover:bg-blue-50/30 rounded flex flex-col items-center justify-center cursor-pointer transition p-2 text-center bg-white">
+                      <label class="h-28 border-2 border-dashed border-slate-300 hover:border-blue-400 hover:bg-blue-50/30 rounded flex flex-col items-center justify-center cursor-pointer transition p-2 text-center bg-white">
                         <svg class="w-5 h-5 text-slate-400 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
-                        <span class="text-xs font-semibold text-slate-700">Click to upload signature</span>
+                        <span class="text-xs font-semibold text-slate-700">Click to upload signature with or without stamp</span>
                         <span class="text-[10px] text-slate-500">PNG, JPG or SVG</span>
                         <input accept="image/*" class="opacity-0 absolute -z-50" onchange="handleSignatureUpload(this)" type="file">
                       </label>
                     </div>
+                      </div>
+                      <img alt="Uploaded signature" class="hidden max-h-24 max-w-full object-contain mx-auto" id="signatureUploadPreview">
+                      </div>
+                      <label class="signature-designation block text-right text-[11px] font-bold text-slate-900">
+                      <span class="sr-only">Designation</span>
+                      <input class="cell-input text-right text-[11px] font-bold" id="signatureDesignation" placeholder="Proprietor" type="text" value="Proprietor">
+                      </label>
+                    </div>
                   </div>
-                  <img alt="Uploaded signature" class="hidden max-h-24 max-w-full object-contain mx-auto" id="signatureUploadPreview">
                   <p class="text-center font-bold text-slate-900 text-[11px] mt-1.5">(Signature of Exporter)</p>
                 </div>
               </div>
@@ -1307,8 +1567,82 @@
     });
   }
 
+  // Print styles aren't reliably active during beforeprint, so size the name by measuring text width.
+  function fitStampBusinessName() {
+    const input = document.getElementById('signatureBusinessName');
+    const echo = input && input.nextElementSibling;
+    if (!echo || !echo.classList.contains('print-value-echo')) return;
+    const text = (input.value || '').trim();
+    if (!text) { echo.style.removeProperty('--stamp-name-size'); return; }
+    const MAX = 17, MIN = 6;
+    const available = 359; // print name area is 360px: the 250px stamp plus 110px extending left
+    const probe = document.createElement('span');
+    probe.textContent = text;
+    probe.style.cssText = `position:absolute;visibility:hidden;white-space:nowrap;font-weight:800;font-family:${getComputedStyle(echo).fontFamily};letter-spacing:0.06em;`;
+    document.body.appendChild(probe);
+    // Glyph widths don't scale linearly at small sizes, so step down until the text fits.
+    let size = MAX;
+    for (; size > MIN; size = Math.round((size - 0.1) * 10) / 10) {
+      probe.style.fontSize = `${size}px`;
+      if (probe.getBoundingClientRect().width <= available) break;
+    }
+    probe.remove();
+    echo.style.setProperty('--stamp-name-size', `${size}px`);
+  }
+
+  // Grow the on-screen name field leftward with its text; shrink the font only when room runs out.
+  function growBusinessNameInput() {
+    const input = document.getElementById('signatureBusinessName');
+    const label = input && input.closest('label');
+    const control = document.getElementById('signatureControl');
+    const td = control && control.closest('td');
+    if (!label || !td) return;
+    input.style.transition = 'none';
+    label.style.width = '';
+    label.style.marginLeft = '';
+    input.style.removeProperty('font-size');
+    const text = (input.value || '').toUpperCase();
+    if (!text) return;
+    const baseWidth = control.getBoundingClientRect().width;
+    const room = control.getBoundingClientRect().left - td.getBoundingClientRect().left;
+    const maxWidth = Math.min(620, baseWidth + Math.max(0, room - 230));
+    const cs = getComputedStyle(input);
+    const baseSize = parseFloat(cs.fontSize);
+    const probe = document.createElement('span');
+    probe.textContent = text;
+    probe.style.cssText = `position:absolute;visibility:hidden;white-space:nowrap;font:${cs.font};letter-spacing:${cs.letterSpacing};`;
+    document.body.appendChild(probe);
+    const pad = 26; // label right padding plus input side padding
+    let size = baseSize;
+    let needed = probe.getBoundingClientRect().width + pad;
+    while (needed > maxWidth && size > 6) {
+      size -= 0.5;
+      probe.style.fontSize = `${size}px`;
+      needed = probe.getBoundingClientRect().width + pad;
+    }
+    probe.remove();
+    const width = Math.max(baseWidth, Math.min(needed, maxWidth));
+    if (width > baseWidth) {
+      label.style.width = `${width}px`;
+      label.style.marginLeft = `${baseWidth - width}px`;
+    }
+    if (size < baseSize) input.style.setProperty('font-size', `${size}px`, 'important');
+  }
+  document.getElementById('signatureBusinessName')?.addEventListener('input', (e) => {
+    const input = e.target;
+    const upper = input.value.toUpperCase();
+    if (input.value !== upper) {
+      const caret = input.selectionStart;
+      input.value = upper;
+      input.setSelectionRange(caret, caret);
+    }
+    growBusinessNameInput();
+  });
+  window.addEventListener('resize', growBusinessNameInput);
+
   function prepareDocumentForPrint() {
     prepareFieldsForPrint();
+    fitStampBusinessName();
     document.querySelectorAll('#servicesTableBody tr.service-row').forEach((row) => {
       const hasValue = Array.from(row.querySelectorAll('input, textarea'))
         .some((field) => (field.value || '').trim());
@@ -1348,14 +1682,18 @@
       const prevData = canvas.width ? ctx.getImageData(0, 0, canvas.width, canvas.height) : null;
       canvas.width = rect.width * ratio;
       canvas.height = rect.height * ratio;
-      ctx.scale(ratio, ratio);
+      ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
       ctx.lineWidth = 2;
       ctx.lineCap = 'round';
-      ctx.strokeStyle = '#1e3a8a';
+      ctx.strokeStyle = '#000000';
       if (prevData) ctx.putImageData(prevData, 0, 0);
     }
     window.addEventListener('resize', resizeCanvas);
     resizeCanvas();
+    const signatureArea = document.querySelector('.signature-mark-area');
+    if (signatureArea && window.ResizeObserver) {
+      new ResizeObserver(resizeCanvas).observe(signatureArea);
+    }
 
     function getPos(evt) {
       const rect = canvas.getBoundingClientRect();
@@ -1365,6 +1703,8 @@
     function start(evt) {
       drawing = true;
       lastPoint = getPos(evt);
+      const placeholder = document.getElementById('signaturePlaceholder');
+      if (placeholder) placeholder.classList.add('invisible');
     }
     function move(evt) {
       if (!drawing) return;
@@ -1388,6 +1728,8 @@
 
     window.clearSignature = function clearSignature() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const placeholder = document.getElementById('signaturePlaceholder');
+      if (placeholder) placeholder.classList.remove('invisible');
       showToast('Signature cleared. Ready to redraw.');
     };
 
@@ -1402,6 +1744,7 @@
         preview.src = reader.result;
         preview.classList.remove('hidden');
         pad.classList.add('hidden');
+        control.classList.add('signature-uploaded');
         showToast('Signature image uploaded successfully');
       };
       reader.readAsDataURL(file);
@@ -1623,7 +1966,7 @@
     });
   }
 
-  function setCheckboxGroup(idMap, fieldData, anchorId) {
+  function setCheckboxGroup(idMap, fieldData, anchorId, exclusive = false) {
     const rawValue = fieldData && fieldData.value;
     const aiSuggested = fieldData && fieldData.status === 'ai_suggested';
     const values = Array.isArray(rawValue)
@@ -1631,10 +1974,13 @@
       : typeof rawValue === 'string'
         ? rawValue.split(/[,;|]/).map((value) => value.trim()).filter(Boolean)
         : [];
+    let selected = false;
     Object.entries(idMap).forEach(([label, id]) => {
       const el = document.getElementById(id);
       if (!el) return;
-      el.checked = choiceMatches(values, label);
+      const matches = choiceMatches(values, label);
+      el.checked = matches && (!exclusive || !selected);
+      if (el.checked) selected = true;
       el.dataset.aiSuggested = aiSuggested && el.checked ? 'true' : 'false';
       if (aiSuggested && el.checked) el.title = 'AI suggested selection. Please check and confirm.';
     });
@@ -1675,6 +2021,22 @@
   const EXPORT_TYPE_IDS = { Goods: 'exp_type_goods', Service: 'exp_type_service' };
   const EXPORTER_CAT_IDS = { 'Custom (DTA units)': 'ec_custom', SEZ: 'ec_sez', '100% EOU': 'ec_eou', 'Warehouse export': 'ec_warehouse', others: 'ec_others' };
 
+  function makeCheckboxGroupExclusive(idMap) {
+    const inputs = Object.values(idMap).map((id) => document.getElementById(id)).filter(Boolean);
+    inputs.forEach((input) => {
+      input.addEventListener('change', () => {
+        if (!input.checked) return;
+        inputs.forEach((sibling) => {
+          if (sibling !== input) sibling.checked = false;
+        });
+      });
+    });
+  }
+
+  makeCheckboxGroupExclusive(TRANSPORT_IDS);
+  makeCheckboxGroupExclusive(REALISATION_IDS);
+  makeCheckboxGroupExclusive(PAYMENT_NATURE_IDS);
+
   const PARTICULAR_ROWS = [
     ['fob', 'val_fob'],
     ['freight', 'val_freight'],
@@ -1691,7 +2053,7 @@
     setField('field_sb_no', g.shippingBillNo);
     setField('field_sb_date', g.shippingBillDate);
     setRadioGroup(EXPORT_TYPE_IDS, g.exportType, 'lbl_exportType');
-    setCheckboxGroup(TRANSPORT_IDS, g.modeOfTransport, 'lbl_modeTransport');
+    setCheckboxGroup(TRANSPORT_IDS, g.modeOfTransport, 'lbl_modeTransport', true);
     setRadioGroup(EXPORTER_CAT_IDS, g.exporterCategory, 'lbl_exporterCategory');
     setField('exporterCategoryOtherSpecify', g.exporterCategoryOtherSpecify);
     setField('field_ad_code', g.adCode);
@@ -1700,7 +2062,7 @@
     setField('field_pan', g.pan);
     setField('field_ad_address', g.adNameAddress);
     setField('field_exporter_address', g.exportersNameAddress);
-    setCheckboxGroup(REALISATION_IDS, g.modeOfRealisation, 'lbl_modeRealisation');
+    setCheckboxGroup(REALISATION_IDS, g.modeOfRealisation, 'lbl_modeRealisation', true);
     setField('field_consignee_address', g.consigneeNameAddress);
     setField('field_port_loading', g.portOfLoading);
     setField('field_third_party', g.thirdPartyNameAddress);
@@ -1719,7 +2081,7 @@
     setField('invoiceCurrency', inv.invoiceCurrency);
     setField('invoiceTotalAmount', inv.invoiceAmount);
     setField('field_contract_no', inv.contractNoDate);
-    setCheckboxGroup(PAYMENT_NATURE_IDS, inv.natureOfPayment, 'lbl_natureOfPayment');
+    setCheckboxGroup(PAYMENT_NATURE_IDS, inv.natureOfPayment, 'lbl_natureOfPayment', true);
     setField('field_hsn', inv.hsnSacCode);
     if (inv.hsnSacCode) applyFieldBadge(document.getElementById('lbl_hsnSac'), inv.hsnSacCode.status, inv.hsnSacCode.confidence);
 
