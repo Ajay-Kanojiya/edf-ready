@@ -332,13 +332,33 @@
     .signature-designation {
       flex: 0 0 auto;
     }
-    #signatureControl.signature-uploaded .signature-business-name,
-    #signatureControl.signature-uploaded .signature-designation {
+    #signatureControl.signature-uploaded #signatureUploadPreview {
+      width: 160px;
+      height: 76px;
+      max-height: 76px;
+      object-fit: contain;
+      margin-left: auto;
+      margin-right: 0;
+    }
+    #signatureControl.signature-stamped .signature-business-name,
+    #signatureControl.signature-stamped #signatureBusinessNameError,
+    #signatureControl.signature-stamped .signature-designation {
       display: none !important;
+    }
+    #signatureControl.signature-stamped #signatureUploadPreview {
+      width: 280px;
+      height: 120px;
+      max-height: 120px;
     }
     #signatureControl > p {
       text-align: right !important;
       padding-right: 14px;
+    }
+    #signatureBusinessName.field-error {
+      outline: 2px solid #dc2626;
+    }
+    #sigKindGroup.field-error {
+      color: #dc2626;
     }
     .autofilled-field {
       color: #000000 !important;
@@ -550,17 +570,33 @@
         object-fit: contain !important;
       }
       #signatureControl.signature-uploaded .signature-mark-row {
-        display: block !important;
+        grid-template-columns: 1fr 160px 1fr;
       }
       #signatureControl.signature-uploaded .signature-mark-area {
-        width: 100% !important;
-        height: auto !important;
+        width: 160px !important;
+        height: 76px !important;
       }
       #signatureControl.signature-uploaded .signature-stamp-box #signatureUploadPreview {
-        width: 100% !important;
-        height: auto !important;
-        max-height: 90px !important;
-        object-fit: contain !important;
+        width: 160px !important;
+        height: 76px !important;
+        max-height: 76px !important;
+      }
+      #signatureControl.signature-stamped {
+        width: 280px !important;
+        min-width: 280px !important;
+        max-width: 280px !important;
+      }
+      #signatureControl.signature-stamped .signature-mark-row {
+        display: block !important;
+      }
+      #signatureControl.signature-stamped .signature-mark-area {
+        width: 280px !important;
+        height: 120px !important;
+      }
+      #signatureControl.signature-stamped .signature-stamp-box #signatureUploadPreview {
+        width: 280px !important;
+        height: 120px !important;
+        max-height: 120px !important;
       }
       #statutory-form-wrapper .signature-stamp-box .signature-business-name .print-value-echo {
         color: #32158f !important;
@@ -807,7 +843,7 @@
   }
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-</head>
+ji</head>
 <body class="bg-slate-100/80 text-slate-900 font-sans min-h-screen antialiased flex flex-col justify-between">
 <!-- BEGIN: Minimal Top Navigation Bar -->
 <header class="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-slate-200 shadow-xs no-print" data-purpose="top-navigation-bar">
@@ -1349,12 +1385,13 @@
                   </div>
                 </div>
                 <!-- Signature Pad / Upload Option -->
-                <div class="w-full sm:w-auto sm:min-w-[320px] sm:max-w-[320px] sm:ml-auto" id="signatureControl">
+                <div class="relative w-full sm:w-auto sm:min-w-[320px] sm:max-w-[320px] sm:ml-auto" id="signatureControl">
                   <div class="signature-stamp-box">
                     <label class="signature-business-name block text-center text-[12px] font-bold text-slate-900">
                       <span class="sr-only">Business Name</span>
-                      <input class="cell-input text-center text-xs font-bold uppercase" id="signatureBusinessName" placeholder="Enter business name" type="text" value="">
+                      <input class="cell-input text-center text-xs font-bold uppercase" id="signatureBusinessName" placeholder="Enter business name *" required aria-required="true" type="text" value="">
                     </label>
+                    <p class="hidden no-print mt-0.5 pr-3.5 text-right text-[11px] font-medium text-red-600" id="signatureBusinessNameError">Business name is required.</p>
                     <div class="signature-mark-row mt-1">
                       <div class="signature-mark-area">
                       <div class="signature-pad-box bg-white border-0 rounded-none shadow-none overflow-hidden">
@@ -1380,11 +1417,12 @@
                     </div>
                     <!-- Upload Pane -->
                     <div class="p-2.5 bg-slate-50/50 hidden" id="sig-upload-pane">
+                      <div class="mb-2 flex flex-col items-center no-print" id="sigKindHome"><span class="inline-flex flex-wrap items-center justify-center gap-x-3 gap-y-1 mr-3 text-[11px] font-medium text-slate-700" id="sigKindGroup"><span>Does your sign include a stamp? <span class="text-red-600">*</span></span><label class="inline-flex items-center gap-1 cursor-pointer"><input id="sigKindStamp" name="sigKind" onchange="applySignatureKind()" type="radio" value="stamp">Yes</label><label class="inline-flex items-center gap-1 cursor-pointer"><input name="sigKind" onchange="applySignatureKind()" type="radio" value="sign">No</label></span><p class="hidden mt-1 text-[11px] font-medium text-red-600" id="sigKindError">Please select Yes or No.</p></div>
                       <label class="h-28 border-2 border-dashed border-slate-300 hover:border-blue-400 hover:bg-blue-50/30 rounded flex flex-col items-center justify-center cursor-pointer transition p-2 text-center bg-white">
                         <svg class="w-5 h-5 text-slate-400 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
                         <span class="text-xs font-semibold text-slate-700">Click to upload signature with or without stamp</span>
                         <span class="text-[10px] text-slate-500">PNG, JPG or SVG</span>
-                        <input accept="image/*" class="opacity-0 absolute -z-50" onchange="handleSignatureUpload(this)" type="file">
+                        <input accept="image/*" class="opacity-0 absolute -z-50" onchange="handleSignatureUpload(this)" onclick="if (!requireSigKind()) event.preventDefault()" type="file">
                       </label>
                     </div>
                       </div>
@@ -1396,7 +1434,7 @@
                       </label>
                     </div>
                   </div>
-                  <p class="text-center font-bold text-slate-900 text-[11px] mt-1.5">(Signature of Exporter)</p>
+                  <p class="text-center font-bold text-slate-900 text-[11px] mt-1.5"><span class="hidden no-print" id="signatureUploadActions"><button aria-label="Clear sign/stamp" class="mr-3 inline-flex items-center gap-1 align-middle text-[10px] font-medium text-red-600 hover:text-red-700" onclick="removeUploadedSignature()" title="Clear sign/stamp" type="button"><svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>Clear sign/stamp</button></span>(Signature of Exporter)</p>
                 </div>
               </div>
             </div>
@@ -1657,6 +1695,8 @@
   }
   document.getElementById('signatureBusinessName')?.addEventListener('input', (e) => {
     const input = e.target;
+    input.classList.remove('field-error');
+    document.getElementById('signatureBusinessNameError')?.classList.add('hidden');
     const upper = input.value.toUpperCase();
     if (input.value !== upper) {
       const caret = input.selectionStart;
@@ -1678,6 +1718,15 @@
   }
 
   function downloadOfficialPDF() {
+    const nameInput = document.getElementById('signatureBusinessName');
+    const stamped = document.getElementById('signatureControl')?.classList.contains('signature-stamped');
+    if (nameInput && !stamped && !nameInput.value.trim()) {
+      nameInput.classList.add('field-error');
+      document.getElementById('signatureBusinessNameError')?.classList.remove('hidden');
+      nameInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      nameInput.focus();
+      return;
+    }
     prepareDocumentForPrint();
     window.print();
   }
@@ -1760,21 +1809,61 @@
       showToast('Signature cleared. Ready to redraw.');
     };
 
+    const sigWithStamp = () => document.getElementById('sigKindStamp')?.checked === true;
+
+    window.requireSigKind = function requireSigKind() {
+      if (document.querySelector('input[name="sigKind"]:checked')) return true;
+      const group = document.getElementById('sigKindGroup');
+      group?.classList.add('field-error');
+      document.getElementById('sigKindError')?.classList.remove('hidden');
+      return false;
+    };
+
+    // Stamped class is applied only while an image is uploaded.
+    window.applySignatureKind = function applySignatureKind() {
+      document.getElementById('sigKindGroup')?.classList.remove('field-error');
+      document.getElementById('sigKindError')?.classList.add('hidden');
+      const control = document.getElementById('signatureControl');
+      if (!control || !control.classList.contains('signature-uploaded')) return;
+      control.classList.toggle('signature-stamped', sigWithStamp());
+    };
+
     window.handleSignatureUpload = function handleSignatureUpload(input) {
       const file = input.files && input.files[0];
       const preview = document.getElementById('signatureUploadPreview');
       const control = document.getElementById('signatureControl');
       const pad = control?.querySelector('.signature-pad-box');
       if (!file || !preview || !control || !pad) return;
+      if (!requireSigKind()) { input.value = ''; return; }
       const reader = new FileReader();
       reader.onload = () => {
         preview.src = reader.result;
         preview.classList.remove('hidden');
         pad.classList.add('hidden');
         control.classList.add('signature-uploaded');
-        showToast('Signature image uploaded successfully');
+        applySignatureKind();
+        document.getElementById('signatureUploadActions')?.prepend(document.getElementById('sigKindGroup'));
+        document.getElementById('signatureUploadActions')?.classList.remove('hidden');
+        showToast(sigWithStamp() ? 'Signature with stamp uploaded' : 'Signature image uploaded successfully');
       };
       reader.readAsDataURL(file);
+    };
+
+    window.removeUploadedSignature = function removeUploadedSignature() {
+      const preview = document.getElementById('signatureUploadPreview');
+      const control = document.getElementById('signatureControl');
+      const pad = control?.querySelector('.signature-pad-box');
+      if (!preview || !control || !pad) return;
+      preview.removeAttribute('src');
+      preview.classList.add('hidden');
+      pad.classList.remove('hidden');
+      control.classList.remove('signature-uploaded', 'signature-stamped');
+      document.getElementById('signatureUploadActions')?.classList.add('hidden');
+      document.getElementById('sigKindHome')?.appendChild(document.getElementById('sigKindGroup'));
+      document.querySelectorAll('input[name="sigKind"]').forEach((r) => { r.checked = false; });
+      const fileInput = document.querySelector('#sig-upload-pane input[type="file"]');
+      if (fileInput) fileInput.value = '';
+      showToast('Uploaded image removed.');
     };
   })();
 </script>
