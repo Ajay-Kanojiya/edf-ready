@@ -16,7 +16,7 @@ npm install
 npm start
 ```
 
-Open http://localhost:3001 — upload an invoice/shipping bill (PDF/PNG/JPG/WEBP, up to 10MB) or
+Open http://localhost:8000 — upload an invoice/shipping bill (PDF/PNG/JPG/WEBP, up to 10MB) or
 use "Paste text instead", then click "✨ Extract with AI". Fields are tagged **✓ Extracted**
 (verbatim from the document) or **✨ AI Suggested** (inferred, with a confidence %).
 
