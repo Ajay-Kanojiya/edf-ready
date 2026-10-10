@@ -778,12 +778,13 @@
   .print-frame > thead > tr > td,
   .print-frame > tbody > tr > td,
   .print-frame > tfoot > tr > td { padding: 0; border: 0; }
-  .print-frame > thead { display: table-header-group; }
+  .print-frame > thead { display: none; }
   .print-frame > tfoot { display: table-footer-group; }
   /* Zero page margin removes the browser's date/title/URL/page-number header and footer. */
   @page { margin: 0; }
   @media print {
     main { padding: 0 !important; }
+    .print-frame > thead { display: table-header-group; }
     .form-sheet { padding: 0 8mm !important; }
     .print-frame > thead > tr > td { padding: 10mm 0 4mm; }
     .print-frame > tfoot > tr > td { padding: 4mm 0 10mm; }
