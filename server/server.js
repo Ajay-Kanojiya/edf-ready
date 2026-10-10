@@ -5,6 +5,7 @@ const cors = require("cors");
 const multer = require("multer");
 const rateLimit = require("express-rate-limit");
 const path = require("path");
+const crypto = require("crypto");
 const { EDF_RESPONSE_SCHEMA, EXTRACTION_PROMPT, FALLBACK_EXTRACTION_PROMPT } = require("./schema");
 const { isOcrEligible, runOcr, heuristicParseEDF } = require("./ocrFallback");
 
@@ -327,6 +328,67 @@ app.post("/api/extract", extractLimiter, handleUpload, async (req, res) => {
 app.get("/health", (_req, res) => {
   res.status(200).json({ status: "ok" });
 });
+
+// Private IDFC-specific EDF form: HTTP Basic auth over HTTPS; disabled unless a password (or password hash) is configured.
+const IDFC_ACCESS_USER = process.env.IDFC_ACCESS_USER || "idfc";
+const IDFC_ACCESS_PASSWORD = process.env.IDFC_ACCESS_PASSWORD;
+const IDFC_PRIVATE_HEADERS = { "Cache-Control": "no-store", "X-Robots-Tag": "noindex, nofollow" };
+
+function safeEqual(a, b) {
+  const hash = (value) => crypto.createHash("sha256").update(String(value)).digest();
+  return crypto.timingSafeEqual(hash(a), hash(b));
+}
+
+function idfcEnabled(_req, res, next) {
+  if (!IDFC_ACCESS_PASSWORD) return res.status(404).end();
+  return next();
+}
+
+// Passwords must travel over TLS; plain HTTP is only tolerated for direct localhost development.
+function requireHttps(req, res, next) {
+  if (req.secure || req.headers["x-forwarded-proto"] === "https") {
+    res.set("Strict-Transport-Security", "max-age=31536000");
+    return next();
+  }
+  const hostHeader = String(req.headers.host || "");
+  const host = hostHeader.replace(/:\d+$/, "").toLowerCase();
+  if (!req.headers["x-forwarded-for"] && ["localhost", "127.0.0.1", "[::1]"].includes(host)) return next();
+  if (!/^[a-z0-9.-]+(:\d+)?$/i.test(hostHeader)) return res.status(400).end();
+  if (req.method === "GET" || req.method === "HEAD") return res.redirect(308, `https://${hostHeader}${req.originalUrl}`);
+  return res.status(403).send("HTTPS is required.");
+}
+
+function requireIdfcAccess(req, res, next) {
+  const [scheme, encoded] = (req.headers.authorization || "").split(" ");
+  if (scheme === "Basic" && encoded) {
+    const decoded = Buffer.from(encoded, "base64").toString();
+    const sep = decoded.indexOf(":");
+    if (sep > -1) {
+      const password = decoded.slice(sep + 1);
+      const userOk = safeEqual(decoded.slice(0, sep), IDFC_ACCESS_USER);
+      const passOk = password.length <= 256 && safeEqual(password, IDFC_ACCESS_PASSWORD);
+      if (userOk && passOk) {
+        res.set(IDFC_PRIVATE_HEADERS);
+        return next();
+      }
+    }
+  }
+  res.set({ ...IDFC_PRIVATE_HEADERS, "WWW-Authenticate": 'Basic realm="IDFC EDF", charset="UTF-8"' });
+  return res.status(401).send("Authentication required.");
+}
+
+const idfcAuthLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 20,
+  skipSuccessfulRequests: true,
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
+// Old login-page URL (bookmarks/history) now just goes to the protected form.
+app.get("/clients/idfc/login", (_req, res) => res.redirect("/clients/idfc/"));
+
+app.use("/clients/idfc", idfcEnabled, requireHttps, idfcAuthLimiter, requireIdfcAccess, express.static(path.join(__dirname, "private", "idfc")));
 
 // Serve the static frontend from the same origin (avoids CORS entirely by default).
 app.use(express.static(path.join(__dirname, "..", "frontend")));
