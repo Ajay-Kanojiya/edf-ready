@@ -5,6 +5,7 @@ const cors = require("cors");
 const multer = require("multer");
 const rateLimit = require("express-rate-limit");
 const path = require("path");
+const crypto = require("crypto");
 const { EDF_RESPONSE_SCHEMA, EXTRACTION_PROMPT, FALLBACK_EXTRACTION_PROMPT } = require("./schema");
 const { isOcrEligible, runOcr, heuristicParseEDF } = require("./ocrFallback");
 
@@ -327,6 +328,40 @@ app.post("/api/extract", extractLimiter, handleUpload, async (req, res) => {
 app.get("/health", (_req, res) => {
   res.status(200).json({ status: "ok" });
 });
+
+// Private IDFC-specific EDF form: HTTP Basic auth, disabled entirely unless a password is configured.
+const IDFC_ACCESS_USER = process.env.IDFC_ACCESS_USER || "idfc";
+const IDFC_ACCESS_PASSWORD = process.env.IDFC_ACCESS_PASSWORD;
+
+function safeEqual(a, b) {
+  const hash = (value) => crypto.createHash("sha256").update(String(value)).digest();
+  return crypto.timingSafeEqual(hash(a), hash(b));
+}
+
+function requireIdfcAccess(req, res, next) {
+  if (!IDFC_ACCESS_PASSWORD) return res.status(404).end();
+  const [scheme, encoded] = (req.headers.authorization || "").split(" ");
+  if (scheme === "Basic" && encoded) {
+    const decoded = Buffer.from(encoded, "base64").toString();
+    const sep = decoded.indexOf(":");
+    if (sep > -1 && safeEqual(decoded.slice(0, sep), IDFC_ACCESS_USER) && safeEqual(decoded.slice(sep + 1), IDFC_ACCESS_PASSWORD)) {
+      res.set({ "Cache-Control": "no-store", "X-Robots-Tag": "noindex, nofollow" });
+      return next();
+    }
+  }
+  res.set("WWW-Authenticate", 'Basic realm="IDFC EDF", charset="UTF-8"');
+  return res.status(401).send("Authentication required.");
+}
+
+const idfcAuthLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 20,
+  skipSuccessfulRequests: true,
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
+app.use("/clients/idfc", idfcAuthLimiter, requireIdfcAccess, express.static(path.join(__dirname, "private", "idfc")));
 
 // Serve the static frontend from the same origin (avoids CORS entirely by default).
 app.use(express.static(path.join(__dirname, "..", "frontend")));
