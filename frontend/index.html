@@ -176,9 +176,9 @@
     #statutory-form-wrapper input[type="checkbox"],
     #statutory-form-wrapper input[type="radio"] {
       appearance: none !important;
-      width: 14px !important;
+      width: 20px !important;
       height: 14px !important;
-      min-width: 14px !important;
+      min-width: 20px !important;
       border: 1px solid #64748b !important;
       border-radius: 2px !important;
       background: #ffffff !important;
@@ -209,7 +209,7 @@
       align-items: flex-start;
     }
     .compact-checkbox-grid input[type="checkbox"] {
-      flex: 0 0 14px;
+      flex: 0 0 20px;
     }
     .compact-checkbox-grid span {
       min-width: 0;
@@ -221,39 +221,42 @@
     }
     #statutory-form-wrapper label:has(> input[type="checkbox"])::before,
     #statutory-form-wrapper label:has(> input[type="radio"])::before {
-      content: "";
+      content: "[ ]";
       position: absolute;
       left: 0;
       top: 0;
-      width: 14px;
+      width: 20px;
       height: 14px;
       box-sizing: border-box;
-      border: 1px solid #64748b;
-      border-radius: 2px;
-      background: #ffffff;
+      border: 0;
+      background: none;
+      /* Font glyph brackets render at one weight everywhere, unlike 1px gradient lines. */
+      font: 400 13px/14px Arial, Helvetica, sans-serif;
+      color: #000;
+      text-align: justify;
+      text-align-last: justify;
       pointer-events: none;
     }
     #statutory-form-wrapper label:has(> input[type="checkbox"])::after,
     #statutory-form-wrapper label:has(> input[type="radio"])::after {
       content: "";
       position: absolute;
-      left: 5px;
-      top: 2px;
-      width: 4px;
-      height: 8px;
-      border: solid #000000;
-      border-width: 0 2px 2px 0;
-      transform: rotate(45deg) scale(0);
-      transform-origin: center;
+      left: 0;
+      top: 0;
+      width: 20px;
+      height: 14px;
+      font: 400 12px/14px Arial, Helvetica, sans-serif;
+      color: #000;
+      text-align: center;
       pointer-events: none;
     }
     #statutory-form-wrapper label:has(> input[type="checkbox"]:checked)::after,
     #statutory-form-wrapper label:has(> input[type="radio"]:checked)::after {
-      transform: rotate(45deg) scale(1);
+      content: "\221A";
     }
     #statutory-form-wrapper label:has(> input[type="checkbox"]:checked)::before,
     #statutory-form-wrapper label:has(> input[type="radio"]:checked)::before {
-      border-color: #000000;
+      background-color: transparent;
     }
     #statutory-form-wrapper label > input[type="checkbox"],
     #statutory-form-wrapper label > input[type="radio"],
@@ -757,6 +760,52 @@
       }
     }
   </style>
+<style data-purpose="idfc-approved-edf-layout">
+  .form-sheet { font-family: Calibri, Carlito, "Segoe UI", Arial, sans-serif; }
+  .form-sheet .bg-gov-100,
+  .form-sheet .bg-gov-50,
+  .form-sheet .bg-slate-50,
+  .form-sheet .bg-slate-100\/70 {
+    background-color: #ffffff !important;
+  }
+  #statutory-form-wrapper span.font-medium,
+  #statutory-form-wrapper div.font-medium {
+    font-weight: 700;
+  }
+  .print-frame { width: 100%; border-collapse: collapse; }
+  textarea.single-line { resize: none; overflow: hidden; display: block; }
+  .print-frame > thead > tr > td,
+  .print-frame > tbody > tr > td,
+  .print-frame > tfoot > tr > td { padding: 0; border: 0; }
+  .print-frame > thead { display: table-header-group; }
+  .print-frame > tfoot { display: table-footer-group; }
+  /* Zero page margin removes the browser's date/title/URL/page-number header and footer. */
+  @page { margin: 0; }
+  @media print {
+    main { padding: 0 !important; }
+    .form-sheet { padding: 0 8mm !important; }
+    .print-frame > thead > tr > td { padding: 10mm 0 4mm; }
+    .print-frame > tfoot > tr > td { padding: 4mm 0 10mm; }
+    .print-frame > tbody > tr,
+    .form-table-bordered.edf-main-table {
+      break-inside: auto !important;
+      page-break-inside: auto !important;
+    }
+    #servicesTable tfoot td { font-size: 12px !important; }
+    #servicesTableBody .print-value-echo { font-size: 9px !important; word-break: normal !important; overflow-wrap: break-word !important; }
+    #servicesTable thead tr:nth-child(n+3) th { font-size: 8px !important; }
+    .edf-main-table > tbody > tr > td { padding-bottom: 9px !important; }
+    .section-2a-details-table > tbody > tr > td { padding-bottom: 9px !important; }
+    #goodsParticularsTable > tbody > tr > td { padding-top: 3px !important; padding-bottom: 3px !important; }
+    #servicesTableBody td { padding-top: 12px !important; padding-bottom: 12px !important; }
+    .payment-details-block > * + * { margin-top: 10px !important; }
+    #statutory-form-wrapper td.p-2 { padding-bottom: 44px !important; }
+    #statutory-form-wrapper td.p-2.sec5-cell { padding-bottom: 8px !important; }
+    #statutory-form-wrapper :not(.signature-business-name):not(.signature-designation) > .print-value-echo { font-weight: 400 !important; }
+    #leoInvoiceWrap.print-empty-leo,
+    #leoComma.print-empty-leo { display: none !important; }
+  }
+</style>
 <style data-purpose="ai-badge-styles">
   .ai-badge {
     display: inline-flex;
@@ -843,7 +892,7 @@
   }
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-ji</head>
+</head>
 <body class="bg-slate-100/80 text-slate-900 font-sans min-h-screen antialiased flex flex-col justify-between">
 <!-- BEGIN: Minimal Top Navigation Bar -->
 <header class="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-slate-200 shadow-xs no-print" data-purpose="top-navigation-bar">
@@ -919,11 +968,8 @@ ji</head>
 <!-- END: Auto-Extraction Dropzone -->
 <!-- FORM CANVAS: EXACT TWO-PAGE STATUTORY ORIENTATION -->
 <div class="w-full max-w-[960px] space-y-2" id="statutory-form-wrapper"><div class="bg-white p-2 sm:p-4 shadow-lg border border-slate-300 rounded-xs form-sheet text-slate-900 w-full overflow-x-hidden">
-  <p class="text-right text-xs font-semibold text-black mb-1">Annex</p>
-  <!-- Title & Action Bar -->
-  <div class="flex items-center justify-between mb-1.5 pb-0.5 no-print flex-wrap gap-2">
-    <div class="w-28 hidden sm:block"></div>
-    <h1 class="text-base sm:text-lg font-bold tracking-tight font-sans text-black text-center flex-1">Export Declaration Form (EDF)</h1>
+  <!-- Action Bar -->
+  <div class="flex items-center justify-end mb-1.5 pb-0.5 no-print flex-wrap gap-2">
     <div class="flex items-center gap-1.5 flex-wrap justify-end">
       <button class="px-2 py-1 text-[11px] sm:px-2.5 sm:py-1.5 sm:text-xs font-medium text-slate-700 bg-white border border-slate-300 rounded hover:bg-slate-50 transition" onclick="startOver()" title="Clear all fields client-side" type="button">Clear</button>
       <button class="inline-flex items-center gap-1 px-2.5 py-1 text-[11px] sm:gap-1.5 sm:px-3.5 sm:py-1.5 sm:text-xs md:px-4 md:py-2 md:text-sm font-medium text-white bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 rounded-lg shadow-sm transition-colors cursor-pointer whitespace-nowrap" onclick="downloadOfficialPDF()" type="button">
@@ -933,48 +979,77 @@ ji</head>
     </div>
   </div>
 
-  <!-- Printable Header Visible in Print Only -->
-  <div class="hidden print:block text-center mb-4">
-    <h1 class="text-xl font-bold text-black">Export Declaration Form</h1>
-    <!-- <p class="text-xs text-slate-600">(Mandatory with effect from 01 October 2026)</p> -->
-  </div>
+  <!-- Logo header and bank footer repeat on every printed page -->
+  <table class="print-frame">
+  <thead><tr><td><div class="flex justify-end"><img alt="IDFC FIRST Bank" src="idfc-first-logo.png" style="width:138px;height:auto"></div></td></tr></thead>
+  <tbody><tr><td>
+  <h2 class="text-center font-bold text-black text-base my-2">Export Declaration Form</h2>
 
   <!-- ==================== PART 1: SECTION 1 & 2A ==================== -->
-  <div class="form-part space-y-1.5"><table class="w-full form-table-bordered border-collapse text-left text-xs">
+  <div class="form-part space-y-1.5"><table class="w-full form-table-bordered edf-main-table border-collapse text-left text-xs" style="table-layout: fixed;">
+      <colgroup>
+        <col style="width:5.17%"><col style="width:16.26%"><col style="width:5%"><col style="width:6.24%"><col style="width:5%"><col style="width:5%"><col style="width:4.29%"><col style="width:3.21%"><col style="width:0.71%"><col style="width:7.41%"><col style="width:0.42%"><col style="width:1.87%"><col style="width:8.47%"><col style="width:10.94%"><col style="width:0.95%"><col style="width:7.99%"><col style="width:11.08%">
+      </colgroup>
       <tbody>
         <!-- SECTION 1 HEADER -->
-        <tr class="bg-gov-100 font-bold">
-          <td class="p-1.5 text-sm text-black" colspan="2">
+        <tr class="font-bold">
+          <td class="p-1.5 text-sm text-black" colspan="17">
             1. General Information:
           </td>
         </tr>
-        <!-- TYPE OF EXPORT & FORM NO -->
+        <!-- EXPORT AGENCY / TYPE OF EXPORT / DISPATCH INDICATOR -->
         <tr>
-          <td class="w-1/2 p-1 align-top">
-            <div class="flex flex-col gap-1 sm:flex-row sm:items-center sm:gap-2">
-              <span class="font-bold text-black text-xs sm:text-[13px] whitespace-nowrap shrink-0" id="lbl_exportType">Type of export :</span>
-              <input class="cell-input font-medium" id="field_export_type" placeholder="Enter Type of service like Service/Software or Goods/Service" type="text" value="">
+          <td class="p-1 align-top" colspan="17">
+            <div class="space-y-1.5 text-xs sm:text-[13px] compact-checkbox-grid">
+              <div class="flex flex-wrap items-center gap-x-3 gap-y-1">
+                <span class="font-medium">Export Agency :</span>
+                <label class="inline-flex items-center gap-1.5 cursor-pointer"><input class="rounded border-slate-400 text-slate-800 h-3.5 w-3.5" id="ea_adbank" type="checkbox"><span class="">AD Bank</span></label>
+                <label class="inline-flex items-center gap-1.5 cursor-pointer"><input class="rounded border-slate-400 text-slate-800 h-3.5 w-3.5" id="ea_sez" type="checkbox"><span class="">SEZ</span></label>
+                <label class="inline-flex items-center gap-1.5 cursor-pointer"><input class="rounded border-slate-400 text-slate-800 h-3.5 w-3.5" id="ea_stpi" type="checkbox"><span class="">STPI</span></label>
+              </div>
+              <div class="flex flex-wrap items-center gap-x-3 gap-y-1">
+                <span class="font-medium">Type of Export:</span>
+                <label class="inline-flex items-center gap-1.5 cursor-pointer"><input class="rounded border-slate-400 text-slate-800 h-3.5 w-3.5" id="te_regular" type="checkbox"><span class="">Regular Export</span></label>
+                <label class="inline-flex items-center gap-1.5 cursor-pointer"><input class="rounded border-slate-400 text-slate-800 h-3.5 w-3.5" id="te_project" type="checkbox"><span class="">Project Export</span></label>
+              </div>
+              <div class="flex flex-wrap items-center gap-x-3 gap-y-1">
+                <span class="font-medium">Dispatch Indicator :</span>
+                <label class="inline-flex items-center gap-1.5 cursor-pointer"><input class="rounded border-slate-400 text-slate-800 h-3.5 w-3.5" id="di_bank" type="checkbox"><span class="">Bank</span></label>
+                <label class="inline-flex items-center gap-1.5 cursor-pointer"><input class="rounded border-slate-400 text-slate-800 h-3.5 w-3.5" id="di_exporter" type="checkbox"><span class="">Exporter</span></label>
+                <label class="inline-flex items-center gap-1.5 cursor-pointer"><input class="rounded border-slate-400 text-slate-800 h-3.5 w-3.5" id="di_nodispatch" type="checkbox"><span class="">No Dispatch</span></label>
+              </div>
             </div>
           </td>
-          <td class="w-1/2 p-1 align-top">
+        </tr>
+        <!-- EXPORT TYPE & FORM NO -->
+        <tr>
+          <td class="p-1 align-top" colspan="7">
+            <div class="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs sm:text-[13px] compact-checkbox-grid">
+              <span class="font-medium" id="lbl_exportType">Export Type :</span>
+              <label class="inline-flex items-center gap-1.5 cursor-pointer"><input class="rounded border-slate-400 text-slate-800 h-3.5 w-3.5" id="et_software" type="checkbox"><span class="">Software</span></label>
+              <label class="inline-flex items-center gap-1.5 cursor-pointer"><input class="rounded border-slate-400 text-slate-800 h-3.5 w-3.5" id="et_service" type="checkbox"><span class="">Service</span></label>
+              <label class="inline-flex items-center gap-1.5 cursor-pointer"><input class="rounded border-slate-400 text-slate-800 h-3.5 w-3.5" id="et_goods" type="checkbox"><span class="">Goods</span></label>
+            </div>
+          </td>
+          <td class="p-1 align-top" colspan="10">
             <div class="flex items-center gap-2">
-              <span class="font-medium whitespace-nowrap text-xs sm:text-[13px]">Form No:</span>
-              <input class="cell-input font-mono font-medium" id="field_form_no" placeholder="Enter Form No" type="text" value="">
+              <span class="font-medium whitespace-nowrap shrink-0 text-xs sm:text-[13px]">Form No. &amp; Date:</span>
+              <input class="cell-input font-mono font-medium" id="field_form_no" placeholder="Enter Form No. &amp; Date" type="text" value="">
             </div>
           </td>
         </tr>
         <!-- SHIPPING BILL NO & MODE OF TRANSPORT -->
         <tr>
-          <td class="p-1 align-top">
+          <td class="p-1 align-top" colspan="7">
             <div class="font-medium mb-1 text-xs sm:text-[13px]">Shipping Bill No. &amp; Date:</div>
             <div class="flex gap-2">
               <input class="cell-input" id="field_sb_no" placeholder="SB No." type="text" value="">
               <input class="cell-input" id="field_sb_date" type="date" value="">
             </div>
           </td>
-          <td class="p-1 align-top">
+          <td class="p-1 align-top" colspan="10">
             <div class="font-medium mb-1.5 text-xs sm:text-[13px]" id="lbl_modeTransport">Mode of Transport/Delivery:</div>
-            <div class="grid grid-cols-3 gap-y-1.5 gap-x-2 text-xs compact-checkbox-grid">
+            <div class="flex flex-wrap gap-y-1.5 gap-x-2 text-xs compact-checkbox-grid">
               <label class="inline-flex items-center gap-1.5 cursor-pointer">
                 <input class="rounded border-slate-400 text-slate-800 h-3.5 w-3.5 focus:ring-0" id="mt_air" type="checkbox">
                 <span class="">Air</span>
@@ -997,14 +1072,18 @@ ji</head>
               </label>
               <label class="inline-flex items-center gap-1.5 cursor-pointer">
                 <input class="rounded border-slate-400 text-slate-800 h-3.5 w-3.5 focus:ring-0" id="mt_others" type="checkbox">
-                <span class="">others</span>
+                <span class="">Others</span>
               </label>
+            </div>
+            <div class="flex items-center gap-1 mt-1.5 text-xs">
+              <span class="whitespace-nowrap shrink-0">(Please Specify if Other)</span>
+              <input class="cell-input py-0.5 text-xs" id="mt_other_specify" type="text">
             </div>
           </td>
         </tr>
         <!-- CATEGORY OF EXPORTER & AD CODE -->
         <tr>
-          <td class="p-1 align-top">
+          <td class="p-1 align-top" colspan="7">
             <div class="font-medium mb-1 text-xs sm:text-[13px]" id="lbl_exporterCategory">Category of Exporter:</div>
             <div class="space-y-1 text-xs">
               <div class="flex items-center gap-3">
@@ -1026,17 +1105,18 @@ ji</head>
                   <input class="text-slate-900 h-3.5 w-3.5 border-slate-400" id="ec_warehouse" name="exporter_cat" type="radio">
                   <span class="">Warehouse export</span>
                 </label>
-              </div>
-              <div class="flex items-center gap-1">
                 <label class="inline-flex items-center gap-1.5 cursor-pointer">
                   <input class="text-slate-900 h-3.5 w-3.5 border-slate-400" id="ec_others" name="exporter_cat" type="radio">
-                  <span class="">Other (Specify).......</span>
+                  <span class="">Others</span>
                 </label>
-                <input class="cell-input py-0.5 text-xs" id="exporterCategoryOtherSpecify" placeholder="Specify if other" type="text">
+              </div>
+              <div class="flex items-center gap-1">
+                <span class="whitespace-nowrap shrink-0">(Please Specify if Other)</span>
+                <input class="cell-input py-0.5 text-xs" id="exporterCategoryOtherSpecify" type="text">
               </div>
             </div>
           </td>
-          <td class="p-1 align-top">
+          <td class="p-1 align-top" colspan="10">
             <div class="flex items-center gap-2">
               <span class="font-medium whitespace-nowrap text-xs sm:text-[13px]">AD code:</span>
               <input class="cell-input font-mono font-medium" id="field_ad_code" placeholder="Enter AD code" type="text" value="">
@@ -1045,7 +1125,7 @@ ji</head>
         </tr>
         <!-- IE CODE, GSTIN, PAN & AD NAME ADDRESS -->
         <tr>
-          <td class="p-1 align-top">
+          <td class="p-1 align-top" colspan="7">
             <div class="space-y-1.5 text-xs sm:text-[13px]">
               <div class="flex items-center gap-2">
                 <span class="font-medium w-16">IE Code:</span>
@@ -1061,19 +1141,19 @@ ji</head>
               </div>
             </div>
           </td>
-          <td class="p-1 align-top">
+          <td class="p-1 align-top" colspan="10">
             <span class="font-medium block mb-1 text-xs sm:text-[13px]">AD Name &amp; Address:</span>
             <textarea class="cell-textarea" id="field_ad_address" placeholder="Enter AD Name and Address" rows="1"></textarea>
           </td>
         </tr>
         <!-- EXPORTER NAME & MODE OF REALISATION -->
         <tr>
-          <td class="p-1 align-top">
+          <td class="p-1 align-top" colspan="7">
             <span class="font-medium block mb-1 text-xs sm:text-[13px]">Exporters Name &amp; Address:</span>
             <textarea class="cell-textarea" id="field_exporter_address" placeholder="Enter Exporter Name and Address" rows="1"></textarea>
           </td>
-          <td class="p-1 align-top mode-realisation-cell">
-            <span class="font-medium block mb-1 text-xs sm:text-[13px]" id="lbl_modeRealisation">Mode of Realisation :</span>
+          <td class="p-1 align-top mode-realisation-cell" colspan="10">
+            <span class="font-medium block mb-1 text-xs sm:text-[13px]" id="lbl_modeRealisation">Mode of Realizations :</span>
             <div class="space-y-1 text-xs">
               <div class="flex items-center gap-4">
                 <label class="inline-flex items-center gap-1.5 cursor-pointer">
@@ -1094,63 +1174,69 @@ ji</head>
         </tr>
         <!-- CONSIGNEE & PORT OF LOADING -->
         <tr>
-          <td class="p-1 align-top">
+          <td class="p-1 align-top" colspan="7">
             <span class="font-medium block mb-1 text-xs sm:text-[13px]">Consignee Name &amp; Address:</span>
             <textarea class="cell-textarea" id="field_consignee_address" placeholder="Enter Consignee Name and Address" rows="1"></textarea>
           </td>
-          <td class="p-1 align-top">
+          <td class="p-1 align-top" colspan="10">
             <span class="font-medium block mb-1 text-xs sm:text-[13px]">Port of Loading / Source Port in case of SEZ :</span>
             <input class="cell-input mt-1" id="field_port_loading" placeholder="Port of loading" type="text" value="">
           </td>
         </tr>
         <!-- THIRD PARTY & COUNTRY OF DESTINATION / DISCHARGE -->
         <tr>
-          <td class="p-1 align-top">
-            <span class="font-medium block text-xs leading-snug">Third Party name &amp; Address (In case of third Party Payments for Exports) :</span>
+          <td class="p-1 align-top" colspan="10">
+            <span class="font-medium block text-xs leading-snug">Third Party name &amp; Address</span>
             <textarea class="cell-textarea mt-1" id="field_third_party" placeholder="Leave blank if direct settlement" rows="1"></textarea>
-            <div class="mt-2 pt-1 border-t border-slate-200">
+            <span class="block text-xs mt-1">(In case of third Party Payments for Exports)</span>
+            <div class="mt-2">
               <span class="font-medium block text-xs">Relationship between Exporter &amp; Third Party:</span>
               <input class="cell-input mt-0.5" id="field_third_party_rel" placeholder="e.g. Authorized Agent" type="text" value="">
             </div>
           </td>
-          <td class="nested-grid-cell align-top">
-            <div class="grid grid-cols-2 h-full">
-              <div class="p-1 border-r border-b border-black">
-                <span class="font-medium block text-xs">Country of Final Destination:</span>
-                <input class="cell-input mt-1" id="field_dest_country" placeholder="Destination Country" type="text" value="">
-              </div>
-              <div class="p-1 border-b border-black">
-                <span class="font-medium block text-xs">Port of Discharge:</span>
-                <input class="cell-input mt-1" id="field_port_discharge" placeholder="Port of Discharge" type="text" value="">
-              </div>
-              <div class="p-1 col-span-2">
-                <span class="font-medium block text-xs">Date of Let Export order (LEO):</span>
-                <input class="cell-input mt-0.5" id="field_leo_date" type="date" value="">
-              </div>
-            </div>
+          <td class="p-1 align-top" colspan="4">
+            <span class="font-medium block text-xs">Country of Final Destination:</span>
+            <input class="cell-input mt-1" id="field_dest_country" placeholder="Destination Country" type="text" value="">
+            <span class="block text-xs mt-1">(Country where service is rendered)</span>
+          </td>
+          <td class="p-1 align-top" colspan="3">
+            <span class="font-medium block text-xs">Port of Discharge:</span>
+            <input class="cell-input mt-1" id="field_port_discharge" placeholder="Port of Discharge" type="text" value="">
           </td>
         </tr>
-        <!-- NAME OF AD IN CASE OF LC/BG -->
+        <!-- NAME OF AD IN CASE OF LC/BG & LEO -->
         <tr>
-          <td class="p-1 align-top" colspan="2">
-            <div class="flex flex-col gap-1 sm:flex-row sm:items-center sm:gap-2">
-              <span class="font-medium text-xs leading-tight shrink-0">Name of the AD and AD code, in case of LC/BG :</span>
-              <input class="cell-input min-w-0 flex-1" id="field_ad_lc" placeholder="Enter Bank Name and AD code" type="text" value="">
+          <td class="p-1 align-top" colspan="7">
+            <span class="font-medium block text-xs leading-tight mb-1">Name of the AD and AD code, in case of LC/BG :</span>
+            <input class="cell-input min-w-0" id="field_ad_lc" placeholder="Enter Bank Name and AD code" type="text" value="">
+          </td>
+          <td class="p-1 align-top" colspan="10">
+            <span class="font-medium block text-xs leading-tight mb-1">Date of Let Export order (LEO):</span>
+            <div class="flex items-center gap-1">
+              <input class="cell-input" id="field_leo_date" style="max-width:11rem" type="date" value="">
+              <span class="flex flex-1 items-center gap-1" id="leoInvoiceWrap">
+                <span id="leoComma">,</span>
+                <input class="cell-input min-w-0" id="field_leo_invoice" placeholder="Invoice Number and Date (optional)" type="text" value="">
+              </span>
             </div>
           </td>
         </tr>
         <!-- DESCRIPTION OF GOODS -->
         <tr>
-          <td class="p-1 align-top" colspan="2">
-            <span class="font-medium block text-xs mb-1">Description of Goods/Services:</span>
-            <textarea class="cell-textarea" id="field_desc_goods" placeholder="Enter description of goods or services" rows="1"></textarea>
+          <td class="p-1 align-top" colspan="17">
+            <span class="font-medium block text-xs mb-1">Description of Goods/Services/Software :</span>
+            <textarea class="cell-textarea" id="field_desc_goods" placeholder="Enter description of goods, services or software" rows="1"></textarea>
           </td>
         </tr>
-        <!-- TOTAL FOB VALUE IN WORDS -->
+        <!-- TOTAL FOB VALUE IN FIGURE & WORDS -->
         <tr>
-          <td class="p-1 align-top bg-gov-50" colspan="2">
+          <td class="p-1 align-top" colspan="17">
             <div class="flex flex-col gap-1 sm:flex-row sm:items-center sm:gap-2">
-              <span class="font-medium text-xs leading-tight">Total FOB/Services value in words (INR):</span>
+              <span class="font-medium text-xs leading-tight whitespace-nowrap">Total FOB / Services value in Figure:</span>
+              <input class="cell-input min-w-0 flex-1 font-medium uppercase" id="fobInFigure" placeholder="e.g. USD 10000" type="text" value="">
+            </div>
+            <div class="flex flex-col gap-1 sm:flex-row sm:items-center sm:gap-2 mt-1.5">
+              <span class="font-medium text-xs leading-tight whitespace-nowrap">Total FOB / Services value in Words:</span>
               <input class="cell-input min-w-0 flex-1 font-medium uppercase" id="fobInWords" placeholder="Total value in words" type="text" value="">
             </div>
           </td>
@@ -1159,15 +1245,15 @@ ji</head>
     </table>
 
     <!-- SECTION 2A: DETAILS OF EXPORT VALUE OF GOODS -->
-    <div class="pt-1">
+    <div style="margin-top: -1.5px;">
       <table class="w-full form-table-bordered border-collapse text-left text-xs section-2a-details-table" style="table-layout: fixed;">
         <colgroup>
-          <col style="width: 30%;">
-          <col style="width: 25%;">
-          <col style="width: 45%;">
+          <col style="width: 26.4%;">
+          <col style="width: 34.2%;">
+          <col style="width: 39.4%;">
         </colgroup>
         <tbody>
-          <tr class="bg-gov-100 font-bold">
+          <tr class="font-bold">
             <td class="p-1.5 text-xs sm:text-sm text-black" colspan="3">
               2A. Details of Export Value^ of Goods (This part shall be repeated for each invoice drawn under a shipping bill)
             </td>
@@ -1178,8 +1264,8 @@ ji</head>
               <textarea class="cell-textarea" id="field_client_address" placeholder="Enter Client Name &amp; Address" rows="1"></textarea>
             </td>
             <td class="p-1 align-top text-xs space-y-1 invoice-details-cell">
-              <div class="grid grid-cols-[max-content_minmax(0,1fr)] items-center gap-x-1"><span class="font-medium text-[11px] leading-tight">Invoice No:</span><input class="cell-input min-w-0 font-mono" id="field_inv_no" placeholder="Enter Invoice No" type="text" value=""></div>
-              <div class="grid grid-cols-[max-content_minmax(0,1fr)] items-center gap-x-1"><span class="font-medium text-[11px] leading-tight">Invoice date:</span><input class="cell-input min-w-0" id="field_inv_date" type="date" value=""></div>
+              <div class="grid grid-cols-[max-content_minmax(0,1fr)] items-center gap-x-1"><span class="font-medium text-[11px] leading-tight">Invoice No.</span><input class="cell-input min-w-0 font-mono" id="field_inv_no" placeholder="Enter Invoice No" type="text" value=""></div>
+              <div class="grid grid-cols-[max-content_minmax(0,1fr)] items-center gap-x-1"><span class="font-medium text-[11px] leading-tight">Invoice date.</span><input class="cell-input min-w-0" id="field_inv_date" type="date" value=""></div>
               <div class="grid grid-cols-[max-content_minmax(0,1fr)] items-center gap-x-1"><span class="font-medium text-[11px] leading-tight">Invoice Currency:</span><input class="cell-input min-w-0 font-bold" id="invoiceCurrency" oninput="syncCurrency(this.value)" placeholder="e.g. USD" type="text" value=""></div>
               <div class="grid grid-cols-[max-content_minmax(0,1fr)] items-center gap-x-1"><span class="font-medium text-[11px] leading-tight">Invoice Amount:</span><input class="cell-input min-w-0 font-mono font-bold" id="invoiceTotalAmount" placeholder="0.00" step="0.01" type="number" value=""></div>
               <div class="grid grid-cols-[max-content_minmax(0,1fr)] items-center gap-x-1"><span class="font-medium text-[11px] leading-tight">Contract No. and Date:</span><input class="cell-input min-w-0" id="field_contract_no" placeholder="Contract No. and Date" type="text" value=""></div>
@@ -1191,10 +1277,10 @@ ji</head>
                 <label class="inline-flex items-center gap-1 cursor-pointer"><input class="rounded border-slate-400 text-slate-800 h-3 w-3" id="np_cif" type="checkbox"><span class="">CIF</span></label>
                 <label class="inline-flex items-center gap-1 cursor-pointer"><input class="rounded border-slate-400 text-slate-800 h-3 w-3" id="np_cnf" type="checkbox"><span class="">C&amp;F</span></label>
                 <label class="inline-flex items-center gap-1 cursor-pointer"><input class="rounded border-slate-400 text-slate-800 h-3 w-3" id="np_ci" type="checkbox"><span class="">CI</span></label>
-                <label class="inline-flex items-center gap-1 cursor-pointer"><input class="rounded border-slate-400 text-slate-800 h-3 w-3" id="np_periodical" type="checkbox"><span class="">periodical</span></label>
-                <label class="inline-flex items-center gap-1 cursor-pointer"><input class="rounded border-slate-400 text-slate-800 h-3 w-3" id="np_milestone" type="checkbox"><span class="">milestone</span></label>
-                <label class="inline-flex items-center gap-1 cursor-pointer"><input class="rounded border-slate-400 text-slate-800 h-3 w-3" id="np_advance" type="checkbox"><span class="">advance</span></label>
-                <label class="inline-flex items-center gap-1 cursor-pointer"><input class="rounded border-slate-400 text-slate-800 h-3 w-3" id="np_others" type="checkbox"><span class="">others</span></label>
+                <label class="inline-flex items-center gap-1 cursor-pointer"><input class="rounded border-slate-400 text-slate-800 h-3 w-3" id="np_periodical" type="checkbox"><span class="">Periodical</span></label>
+                <label class="inline-flex items-center gap-1 cursor-pointer"><input class="rounded border-slate-400 text-slate-800 h-3 w-3" id="np_milestone" type="checkbox"><span class="">Milestone</span></label>
+                <label class="inline-flex items-center gap-1 cursor-pointer"><input class="rounded border-slate-400 text-slate-800 h-3 w-3" id="np_advance" type="checkbox"><span class="">Advance</span></label>
+                <label class="inline-flex items-center gap-1 cursor-pointer"><input class="rounded border-slate-400 text-slate-800 h-3 w-3" id="np_others" type="checkbox"><span class="">Others</span></label>
               </div>
               <div class="pt-1 border-t border-slate-200">
                 <span class="font-medium text-xs block mb-0.5" id="lbl_hsnSac">HSN/Service Accounting Codes (SAC):</span>
@@ -1207,12 +1293,12 @@ ji</head>
 
       <table class="w-full form-table-bordered border-collapse text-xs text-left" id="goodsParticularsTable" style="table-layout: fixed; border-top-width: medium; border-top-style: none; border-top-color: currentcolor;">
         <colgroup>
-          <col style="width: 30%;">
-          <col style="width: 25%;">
-          <col style="width: 45%;">
+          <col style="width: 26.4%;">
+          <col style="width: 34.2%;">
+          <col style="width: 39.4%;">
         </colgroup>
         <thead>
-          <tr class="bg-gov-100 font-bold border-b border-black">
+          <tr class="font-bold border-b border-black">
             <th class="py-0 px-2 text-black text-xs">Particulars</th>
             <th class="py-0 px-2 text-center text-black text-xs">Currency</th>
             <th class="py-0 px-2 text-center text-black text-xs">Amount</th>
@@ -1250,14 +1336,22 @@ ji</head>
             <td class="p-0 px-1.5 align-middle"><input class="cell-input-compact text-right font-mono" id="val_deduction" oninput="calculateTotals()" placeholder="0.00" step="0.01" type="number" value=""></td>
           </tr>
           <tr>
-            <td class="py-0 px-2 font-medium text-xs align-middle leading-tight">Packing Charges</td>
-            <td class="p-0 px-1.5 align-middle"><input class="cell-input-compact uppercase curr-sync" placeholder="Currency" type="text" value=""></td>
-            <td class="p-0 px-1.5 align-middle"><input class="cell-input-compact text-right font-mono" id="val_packing" oninput="calculateTotals()" placeholder="0.00" step="0.01" type="number" value=""></td>
+            <td class="py-0.5 px-2 text-xs align-middle" colspan="3">
+              <div class="flex items-center gap-2">
+                <span class="font-medium leading-tight">Packing Charges</span>
+                <input class="cell-input-compact uppercase curr-sync" placeholder="Currency" style="width:6rem" type="text" value="">
+                <input class="cell-input-compact text-right font-mono" id="val_packing" oninput="calculateTotals()" placeholder="0.00" step="0.01" style="width:9rem" type="number" value="">
+              </div>
+            </td>
           </tr>
-          <tr class="bg-gov-100 font-bold border-t-2 border-black">
-            <td class="py-0.5 px-2 text-black text-xs align-middle leading-tight">Full export value / Net Realisable export value</td>
-            <td class="py-0.5 px-2 font-mono uppercase text-xs align-middle" id="netCurrencyCell">-</td>
-            <td class="p-0 px-1.5 align-middle"><input class="cell-input-compact text-right font-mono font-bold text-slate-900 bg-white" id="val_net_realisable" placeholder="0.00" readonly="" type="text" value=""></td>
+          <tr class="font-bold border-t-2 border-black">
+            <td class="py-0.5 px-2 text-black text-xs align-middle" colspan="3">
+              <div class="flex items-center gap-2">
+                <span class="leading-tight">Full export value / Net Realisable export value</span>
+                <span class="font-mono uppercase text-xs" id="netCurrencyCell">-</span>
+                <input class="cell-input-compact text-right font-mono font-bold text-slate-900 bg-white" id="val_net_realisable" placeholder="0.00" readonly="" style="width:9rem" type="text" value="">
+              </div>
+            </td>
           </tr>
         </tbody>
       </table>
@@ -1267,32 +1361,32 @@ ji</head>
   <div class="form-part statutory-page-2-marker space-y-2 pt-1"><!-- SECTION 2B: DETAILS OF EXPORT VALUE OF SERVICES -->
     <div>
       <div class="overflow-x-auto -mx-1 px-1">
-      <table class="w-full form-table-bordered border-collapse text-left text-xs min-w-[900px]" id="servicesTable">
+      <table class="w-full form-table-bordered border-collapse text-left text-xs min-w-[940px]" id="servicesTable">
         <thead>
           <tr class="bg-gov-100 font-bold">
-            <th class="p-1.5 text-sm text-black" colspan="11" id="servicesSectionHeading">
+            <th class="p-1.5 text-sm text-black" colspan="12" id="servicesSectionHeading">
               2B. Details of Export Value^ of Services
             </th>
           </tr>
           <tr class="bg-slate-50 font-semibold border-b">
-            <th class="p-1.5 text-xs text-slate-800" colspan="11">
+            <th class="p-1.5 text-xs text-slate-800" colspan="12">
               Details of services provided to multiple recipients
             </th>
           </tr>
           <!-- Multicolumn Headings -->
           <tr class="text-center bg-slate-100/70 font-semibold text-[11px] align-middle">
             <th class="p-1 w-8" rowspan="2">S. No.</th>
-            <th class="p-1 w-32" rowspan="2">Service recipient Name &amp; Address</th>
-            <th class="p-1 w-16" rowspan="2">Country</th>
+            <th class="p-1 w-28" rowspan="2">Service recipient Name &amp; Address</th>
+            <th class="p-1 w-20" rowspan="2">Country</th>
             <th class="p-1 border-b border-black" colspan="4">Details of Invoice</th>
             <th class="p-1 w-20 leading-tight" rowspan="2">Net<br>Realisable<br>value</th>
-            <th class="p-1 w-24 leading-tight" rowspan="2">Contract No.,<br>if any, and<br>Date</th>
-            <th class="p-1 w-28 leading-tight" rowspan="2">Description<br>of services</th>
-            <th class="p-1 w-14 leading-tight" rowspan="2">SAC<br>Code</th>
+            <th class="p-1 w-[88px] leading-tight" rowspan="2">Contract No.,<br>if any, and<br>Date</th>
+            <th class="p-1 w-24 leading-tight" rowspan="2">Description<br>of services</th>
+            <th class="p-1 w-[72px] leading-tight" rowspan="2">SAC<br>Code</th>
             <th class="p-1 w-16 leading-tight" rowspan="2">Remarks</th>
           </tr>
           <tr class="text-center bg-slate-100/70 text-[11px]">
-            <th class="p-1 w-16 border-r border-black">No.</th>
+            <th class="p-1 w-24 border-r border-black">No.</th>
             <th class="p-1 w-16 border-r border-black">Date</th>
             <th class="p-1 w-12 border-r border-black text-center">Currency</th>
             <th class="p-1 w-20 text-center">Amount</th>
@@ -1314,6 +1408,32 @@ ji</head>
             <td class="p-1 relative"><textarea class="cell-textarea text-xs" data-field="remarks" placeholder="Remarks" rows="1"></textarea></td>
           </tr>
         </tbody>
+        <tfoot>
+          <tr>
+            <td class="p-1.5 align-top text-xs" colspan="12">
+              <div class="space-y-1.5 payment-details-block">
+                <p class="font-bold">Service Export Payment Details:</p>
+                <div>
+                  <span class="font-medium">Inward Details (Ref, Date, Amount):</span>
+                  <textarea class="cell-textarea mt-0.5" id="field_inward_details" placeholder="e.g. IWRM999999999 USD 4975 dated 01-Oct-2026" rows="1"></textarea>
+                </div>
+                <div class="flex items-center gap-3 compact-checkbox-grid">
+                  <span class="font-medium">Payment Received:</span>
+                  <label class="inline-flex items-center gap-1.5 cursor-pointer"><input class="rounded border-slate-400 text-slate-800 h-3.5 w-3.5" id="pr_part" type="checkbox"><span class="">Part</span></label>
+                  <label class="inline-flex items-center gap-1.5 cursor-pointer"><input class="rounded border-slate-400 text-slate-800 h-3.5 w-3.5" id="pr_full" type="checkbox"><span class="">Full</span></label>
+                </div>
+                <div>
+                  <span class="font-medium">Foreign Bank Charges if any:</span>
+                  <input class="cell-input mt-0.5" id="field_foreign_bank_charges" type="text" value="">
+                </div>
+                <div>
+                  <span class="font-medium">Request for Reduction in Realization amount with Reason if any:</span>
+                  <textarea class="cell-textarea mt-0.5" id="field_reduction_request" rows="1"></textarea>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tfoot>
       </table>
       </div>
       <div class="flex items-center justify-between mt-1.5 no-print">
@@ -1342,14 +1462,8 @@ ji</head>
               <input class="cell-input" id="parcelReceiptNoDate" placeholder="AWB / Receipt Number and Date" type="text" value="">
             </div>
           </td>
-          <td class="w-1/2 p-1 align-top bg-slate-50/40">
-            <div class="ad-authentication-box h-28 flex flex-col justify-between p-2 border border-dashed border-slate-400 rounded bg-white">
-              <span class="text-slate-400 text-[11px] uppercase tracking-wider font-semibold text-center">Authorised Dealer Bank Authentication</span>
-              <div class="text-center">
-                <p class="text-[11px] text-slate-500 font-medium">Stamp &amp; Signature of Authorised Dealer</p>
-              </div>
-            </div>
-              <p class="ad-authentication-print-label">Stamp &amp; Signature of Authorised Dealer</p>
+          <td class="w-1/2 p-1 align-top">
+            <p class="font-medium text-xs">Stamp &amp; Signature of Authorised Dealer</p>
           </td>
         </tr>
       </tbody>
@@ -1452,11 +1566,11 @@ ji</head>
           </td>
         </tr>
         <tr>
-          <td class="p-2 text-[12px] leading-snug text-slate-800">
+          <td class="p-2 sec5-cell text-[12px] leading-snug text-slate-800">
             <p class="">
               Certified, on the basis of above declaration at 4, that the goods/services described above and the export value^ declared by the exporter in this form is as per the corresponding invoice/gist of invoices submitted and declared by the exporter.
             </p>
-            <div class="pt-3 mt-1.5 flex items-end justify-between">
+            <div class="pt-14 mt-1.5 flex items-end justify-between">
               <div class="flex items-center gap-2">
                 <span class="font-bold text-slate-900 text-xs">Date:</span>
                 <input class="cell-input font-medium text-xs w-36" type="date" value="">
@@ -1474,10 +1588,13 @@ ji</head>
     <!-- STATUTORY FOOTNOTES (Exact matching IMAGE_10) -->
     <div class="pt-1.5 text-[11px] text-slate-700 space-y-0.5 font-sans">
       <p class="">1. @ Strike out whichever is not applicable. <span class="no-print text-slate-500">(Click any word in the declaration to strike it out; click again to undo.)</span></p>
-      <p class="">2. ^ If the full export value is not ascertainable at the time of export, the value which the exporter, having regard to the prevailing market conditions expects to receive on the sale of the goods in overseas market.</p>
+      <p class="">2. ^ If the export value is not ascertainable at the time of export, the value which the exporter, having regard to the prevailing market conditions expects to receive on the sale of the goods in overseas market.</p>
       <p class="">3. Export value may be indicated as nil in case the goods are sent without any consideration.</p>
     </div>
     </div>
+  </td></tr></tbody>
+  <tfoot><tr><td><div class="text-center text-[12px] text-black mt-3"><p>IDFC FIRST Bank Ltd</p><p>Export Declaration Form</p></div></td></tr></tfoot>
+  </table>
 </div></div>
 <section aria-labelledby="edf-help-heading" class="w-full max-w-[960px] mt-6 mb-4 px-2 sm:px-0 no-print">
   <h2 class="text-base font-bold text-slate-800" id="edf-help-heading">EDF online autofill help</h2>
@@ -1504,6 +1621,26 @@ ji</head>
 <span class="" id="toastMessage">Form updated successfully.</span>
 </div>
 <!-- Scripts -->
+<script data-purpose="wrapping-fields">
+  // Single-line inputs clip long text; swap them for auto-growing one-line textareas so values wrap and stay visible.
+  (function convertTextInputsToWrappingFields() {
+    const keep = ['signatureBusinessName', 'signatureDesignation'];
+    document.querySelectorAll('#statutory-form-wrapper input[type="text"].cell-input').forEach((input) => {
+      if (input.readOnly || keep.includes(input.id)) return;
+      const ta = document.createElement('textarea');
+      Array.from(input.attributes).forEach((a) => {
+        if (a.name !== 'type' && a.name !== 'value') ta.setAttribute(a.name, a.value);
+      });
+      ta.className = `${input.className.replace('cell-input', 'cell-textarea')} single-line`;
+      ta.rows = 1;
+      ta.value = input.value;
+      input.replaceWith(ta);
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && e.target.matches && e.target.matches('textarea.single-line')) e.preventDefault();
+    });
+  })();
+</script>
 <script data-purpose="form-interactions">
   // Recalculates Goods Section totals
   function calculateTotals() {
@@ -1709,6 +1846,8 @@ ji</head>
 
   function prepareDocumentForPrint() {
     prepareFieldsForPrint();
+    document.getElementById('leoInvoiceWrap')?.classList.toggle('print-empty-leo', !document.getElementById('field_leo_invoice')?.value.trim());
+    document.getElementById('leoComma')?.classList.toggle('print-empty-leo', !document.getElementById('field_leo_date')?.value);
     fitStampBusinessName();
     document.querySelectorAll('#servicesTableBody tr.service-row').forEach((row) => {
       const hasValue = Array.from(row.querySelectorAll('input, textarea'))
@@ -2135,6 +2274,7 @@ ji</head>
   const REALISATION_IDS = { 'L/C': 'mr_lc', BG: 'mr_bg', Others: 'mr_others' };
   const PAYMENT_NATURE_IDS = { FOB: 'np_fob', CIF: 'np_cif', 'C&F': 'np_cnf', CI: 'np_ci', periodical: 'np_periodical', milestone: 'np_milestone', advance: 'np_advance', others: 'np_others' };
   const EXPORTER_CAT_IDS = { 'Custom (DTA units)': 'ec_custom', SEZ: 'ec_sez', '100% EOU': 'ec_eou', 'Warehouse export': 'ec_warehouse', others: 'ec_others' };
+  const EXPORT_TYPE_IDS = { Software: 'et_software', Service: 'et_service', Goods: 'et_goods' };
 
   function makeCheckboxGroupExclusive(idMap) {
     const inputs = Object.values(idMap).map((id) => document.getElementById(id)).filter(Boolean);
@@ -2151,6 +2291,11 @@ ji</head>
   makeCheckboxGroupExclusive(TRANSPORT_IDS);
   makeCheckboxGroupExclusive(REALISATION_IDS);
   makeCheckboxGroupExclusive(PAYMENT_NATURE_IDS);
+  makeCheckboxGroupExclusive(EXPORT_TYPE_IDS);
+  makeCheckboxGroupExclusive({ a: 'ea_adbank', b: 'ea_sez', c: 'ea_stpi' });
+  makeCheckboxGroupExclusive({ a: 'te_regular', b: 'te_project' });
+  makeCheckboxGroupExclusive({ a: 'di_bank', b: 'di_exporter', c: 'di_nodispatch' });
+  makeCheckboxGroupExclusive({ a: 'pr_part', b: 'pr_full' });
 
   const PARTICULAR_ROWS = [
     ['fob', 'val_fob'],
@@ -2167,7 +2312,7 @@ ji</head>
     setField('field_form_no', g.formNo);
     setField('field_sb_no', g.shippingBillNo);
     setField('field_sb_date', g.shippingBillDate);
-    setField('field_export_type', g.exportType);
+    setCheckboxGroup(EXPORT_TYPE_IDS, g.exportType, 'lbl_exportType', true);
     setCheckboxGroup(TRANSPORT_IDS, g.modeOfTransport, 'lbl_modeTransport', true);
     setRadioGroup(EXPORTER_CAT_IDS, g.exporterCategory, 'lbl_exporterCategory');
     setField('exporterCategoryOtherSpecify', g.exporterCategoryOtherSpecify);
@@ -2234,6 +2379,17 @@ ji</head>
       setRowField(tr, 'remarks', row.remarks);
     });
     updateServiceRowIndices();
+
+    const totalFigure = services.reduce((sum, row) => sum + (Number(row.amount && row.amount.value) || 0), 0)
+      || Number(inv.invoiceAmount && inv.invoiceAmount.value) || 0;
+    if (totalFigure) {
+      setField('fobInFigure', {
+        value: `${(invoiceCurrencyEl && invoiceCurrencyEl.value) || ''} ${totalFigure}`.trim(),
+        status: 'ai_suggested',
+        confidence: 1,
+        rationale: 'Total of the invoice amount(s) read from the document.',
+      });
+    }
 
     const fpo = data.fpo || {};
     setField('fpoName', fpo.fpoNameAddress);
@@ -2353,7 +2509,7 @@ ji</head>
   // --- dynamic field sizing: grow textareas to fit content instead of fixed rows ---
   function autoGrowTextarea(el) {
     el.style.height = 'auto';
-    el.style.height = `${el.scrollHeight}px`;
+    el.style.height = el.scrollHeight ? `${el.scrollHeight}px` : '';
   }
 
   function wireAutoGrow(scope) {

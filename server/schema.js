@@ -55,7 +55,7 @@ const EDF_RESPONSE_SCHEMA = {
     generalInfo: {
       type: "OBJECT",
       properties: {
-        exportType: strField, // "Goods" | "Service"
+        exportType: strField, // "Software" | "Service" | "Goods"
         formNo: strField,
         shippingBillNo: strField,
         shippingBillDate: strField, // ISO yyyy-mm-dd
