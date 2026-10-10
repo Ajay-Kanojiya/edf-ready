@@ -773,7 +773,7 @@
   #statutory-form-wrapper div.font-medium {
     font-weight: 700;
   }
-  .print-frame { width: 100%; border-collapse: collapse; }
+  .print-frame { width: 100%; border-collapse: collapse; table-layout: fixed; }
   textarea.single-line { resize: none; overflow: hidden; display: block; }
   .print-frame > thead > tr > td,
   .print-frame > tbody > tr > td,
@@ -1255,7 +1255,7 @@
         </colgroup>
         <tbody>
           <tr class="font-bold">
-            <td class="p-1.5 text-[13px] sm:whitespace-nowrap text-black" colspan="3">
+            <td class="p-1.5 text-[13px] lg:whitespace-nowrap print:whitespace-nowrap text-black" colspan="3">
               2A. Details of Export Value^ of Goods (This part shall be repeated for each invoice drawn under a shipping bill)
             </td>
           </tr>
@@ -1272,16 +1272,22 @@
               <div class="grid grid-cols-[max-content_minmax(0,1fr)] items-center gap-x-1"><span class="font-medium text-[11px] leading-tight">Contract No. and Date:</span><input class="cell-input min-w-0" id="field_contract_no" placeholder="Contract No. and Date" type="text" value=""></div>
             </td>
             <td class="p-1 align-top text-xs nature-payment-cell">
-              <span class="font-medium block mb-1" id="lbl_natureOfPayment">Nature of payment in terms of Contract:</span>
-              <div class="grid grid-cols-2 gap-1 mb-2 compact-checkbox-grid">
-                <label class="inline-flex items-center gap-1 cursor-pointer"><input class="rounded border-slate-400 text-slate-800 h-3 w-3" id="np_fob" type="checkbox"><span class="">FOB</span></label>
-                <label class="inline-flex items-center gap-1 cursor-pointer"><input class="rounded border-slate-400 text-slate-800 h-3 w-3" id="np_cif" type="checkbox"><span class="">CIF</span></label>
-                <label class="inline-flex items-center gap-1 cursor-pointer"><input class="rounded border-slate-400 text-slate-800 h-3 w-3" id="np_cnf" type="checkbox"><span class="">C&amp;F</span></label>
-                <label class="inline-flex items-center gap-1 cursor-pointer"><input class="rounded border-slate-400 text-slate-800 h-3 w-3" id="np_ci" type="checkbox"><span class="">CI</span></label>
-                <label class="inline-flex items-center gap-1 cursor-pointer"><input class="rounded border-slate-400 text-slate-800 h-3 w-3" id="np_periodical" type="checkbox"><span class="">Periodical</span></label>
-                <label class="inline-flex items-center gap-1 cursor-pointer"><input class="rounded border-slate-400 text-slate-800 h-3 w-3" id="np_milestone" type="checkbox"><span class="">Milestone</span></label>
-                <label class="inline-flex items-center gap-1 cursor-pointer"><input class="rounded border-slate-400 text-slate-800 h-3 w-3" id="np_advance" type="checkbox"><span class="">Advance</span></label>
-                <label class="inline-flex items-center gap-1 cursor-pointer"><input class="rounded border-slate-400 text-slate-800 h-3 w-3" id="np_others" type="checkbox"><span class="">Others</span></label>
+              <div class="space-y-1 mb-2 compact-checkbox-grid">
+                <div class="flex flex-wrap items-center gap-x-2">
+                  <span class="font-medium" id="lbl_natureOfPayment">Nature of payment in terms of Contract:</span>
+                </div>
+                <div class="flex flex-nowrap items-center gap-x-1.5 whitespace-nowrap">
+                  <label class="inline-flex items-center gap-1 cursor-pointer"><input class="rounded border-slate-400 text-slate-800 h-3 w-3" id="np_fob" type="checkbox"><span class="">FOB</span></label>
+                  <label class="inline-flex items-center gap-1 cursor-pointer"><input class="rounded border-slate-400 text-slate-800 h-3 w-3" id="np_cif" type="checkbox"><span class="">CIF</span></label>
+                  <label class="inline-flex items-center gap-1 cursor-pointer"><input class="rounded border-slate-400 text-slate-800 h-3 w-3" id="np_cnf" type="checkbox"><span class="">C&amp;F</span></label>
+                  <label class="inline-flex items-center gap-1 cursor-pointer"><input class="rounded border-slate-400 text-slate-800 h-3 w-3" id="np_ci" type="checkbox"><span class="">CI</span></label>
+                  <label class="inline-flex items-center gap-1 cursor-pointer"><input class="rounded border-slate-400 text-slate-800 h-3 w-3" id="np_periodical" type="checkbox"><span class="">Periodical</span></label>
+                </div>
+                <div class="flex flex-nowrap items-center gap-x-1.5 whitespace-nowrap">
+                  <label class="inline-flex items-center gap-1 cursor-pointer"><input class="rounded border-slate-400 text-slate-800 h-3 w-3" id="np_milestone" type="checkbox"><span class="">Milestone</span></label>
+                  <label class="inline-flex items-center gap-1 cursor-pointer"><input class="rounded border-slate-400 text-slate-800 h-3 w-3" id="np_advance" type="checkbox"><span class="">Advance</span></label>
+                  <label class="inline-flex items-center gap-1 cursor-pointer"><input class="rounded border-slate-400 text-slate-800 h-3 w-3" id="np_others" type="checkbox"><span class="">Others</span></label>
+                </div>
               </div>
               <div class="pt-1 border-t border-slate-200">
                 <span class="font-medium text-xs block mb-0.5" id="lbl_hsnSac">HSN/Service Accounting Codes (SAC):</span>
