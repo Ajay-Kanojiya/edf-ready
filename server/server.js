@@ -16,7 +16,8 @@ const OPENROUTER_MODEL = process.env.OPENROUTER_MODEL || "google/gemini-2.5-flas
 const OPENROUTER_MODELS = [OPENROUTER_MODEL];
 const FRONTEND_ORIGIN = process.env.FRONTEND_ORIGIN || `http://localhost:${PORT}`;
 const RATE_LIMIT_MAX = Number(process.env.RATE_LIMIT_MAX) || 30;
-
+const ALLOW_INSECURE_HTTP = process.env.ALLOW_INSECURE_HTTP === "true" && process.env.NODE_ENV !== "production";
+// 
 const MAX_FILE_BYTES = 10 * 1024 * 1024; // 10MB
 const MAX_TEXT_CHARS = 20000;
 const ALLOWED_MIME_TYPES = new Set(["application/pdf", "image/png", "image/jpeg", "image/webp"]);
@@ -350,6 +351,7 @@ function requireHttps(req, res, next) {
     res.set("Strict-Transport-Security", "max-age=31536000");
     return next();
   }
+  if (ALLOW_INSECURE_HTTP) return next();
   const hostHeader = String(req.headers.host || "");
   const host = hostHeader.replace(/:\d+$/, "").toLowerCase();
   if (!req.headers["x-forwarded-for"] && ["localhost", "127.0.0.1", "[::1]"].includes(host)) return next();
