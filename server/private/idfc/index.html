@@ -671,7 +671,7 @@
           display: flex !important;
         }
         .section-3-table {
-          margin-top: 0.5rem !important;
+          margin-top: -1.5px !important;
         }
       #statutory-form-wrapper input::placeholder,
       #statutory-form-wrapper textarea::placeholder {
@@ -778,16 +778,56 @@
   .print-frame > thead > tr > td,
   .print-frame > tbody > tr > td,
   .print-frame > tfoot > tr > td { padding: 0; border: 0; }
+  /* Sections are separate bordered tables; overlap their borders so there is no gap between them. */
+  .form-part { padding-top: 0 !important; }
+  .form-part > div.pt-1 { padding-top: 0 !important; }
+  .form-part > * + *,
+  .form-part + .form-part { margin-top: -1.5px !important; }
+  .statutory-page-2-marker > :last-child { margin-top: 6px !important; }
+  .section-2a-details-table { border-bottom-width: 1px; }
+  #goodsParticularsTable { margin-top: -1px; }
   .print-frame > thead { display: none; }
   .print-frame > tfoot { display: table-footer-group; }
   /* Zero page margin removes the browser's date/title/URL/page-number header and footer. */
-  @page { margin: 0; }
+  @page { margin: 0 0 10mm 0; @bottom-center { content: "Page " counter(page) " of " counter(pages); font: 11px Arial, sans-serif; color: #000; } }
+  /* Phones: stack the fixed-column statutory tables into one column (screen only; print keeps the grid). */
+  @media screen and (max-width: 767px) {
+    .edf-main-table > colgroup,
+    .section-2a-details-table > colgroup { display: none; }
+    .edf-main-table > tbody,
+    .edf-main-table > tbody > tr,
+    .edf-main-table > tbody > tr > td,
+    .section-2a-details-table > tbody,
+    .section-2a-details-table > tbody > tr,
+    .section-2a-details-table > tbody > tr > td,
+    .section-3-table > tbody,
+    .section-3-table > tbody > tr,
+    .section-3-table > tbody > tr > td {
+      display: block;
+      width: 100% !important;
+    }
+    .edf-main-table > tbody > tr > td,
+    .section-2a-details-table > tbody > tr > td,
+    .section-3-table > tbody > tr > td {
+      border-width: 0 0 1px 0;
+      padding: 6px 8px !important;
+    }
+    .edf-main-table > tbody > tr:last-child > td:last-child,
+    .section-2a-details-table > tbody > tr:last-child > td:last-child,
+    .section-3-table > tbody > tr:last-child > td:last-child { border-bottom-width: 0; }
+    .edf-main-table .space-y-1 > .flex.items-center { flex-wrap: wrap; }
+    .section-2a-details-table .flex-nowrap { flex-wrap: wrap; }
+    #goodsParticularsTable .flex { flex-wrap: wrap; }
+    .sec5-cell > div.flex { flex-direction: column; align-items: stretch; gap: 12px; }
+    #statutory-form-wrapper .sec5-cell .ad-signature-line { width: 100%; }
+    #statutory-form-wrapper .sec5-cell .text-right { text-align: left; }
+  }
   @media print {
     main { padding: 0 !important; }
     .print-frame > thead { display: table-header-group; }
     .form-sheet { padding: 0 8mm !important; }
     .print-frame > thead > tr > td { padding: 10mm 0 4mm; }
-    .print-frame > tfoot > tr > td { padding: 4mm 0 10mm; }
+    .print-frame > tfoot > tr > td { padding: 4mm 0 0; }
     .print-frame > tbody > tr,
     .form-table-bordered.edf-main-table {
       break-inside: auto !important;
@@ -1351,7 +1391,7 @@
               </div>
             </td>
           </tr>
-          <tr class="font-bold border-t-2 border-black">
+          <tr class="font-bold border-black">
             <td class="py-0.5 px-2 text-black text-xs align-middle" colspan="3">
               <div class="flex items-center gap-2">
                 <span class="leading-tight">Full export value / Net Realisable export value</span>
@@ -1874,7 +1914,74 @@
       return;
     }
     prepareDocumentForPrint();
+    if (window.matchMedia('(max-width: 767px)').matches) {
+      printInDesktopLayout(794);
+      return;
+    }
     window.print();
+  }
+
+  // Phones print at screen width and block printing from iframes, so print a static A4-width copy in a new tab.
+  async function printInDesktopLayout(widthPx) {
+    const win = window.open('', '_blank');
+    if (!win) { window.print(); return; }
+    const clone = document.documentElement.cloneNode(true);
+    const toggles = 'input[type="checkbox"], input[type="radio"]';
+    const liveToggles = document.querySelectorAll(toggles);
+    clone.querySelectorAll(toggles).forEach((el, i) => el.toggleAttribute('checked', liveToggles[i].checked));
+    const liveCanvases = document.querySelectorAll('canvas');
+    clone.querySelectorAll('canvas').forEach((canvas, i) => {
+      const img = document.createElement('img');
+      img.src = liveCanvases[i].toDataURL();
+      img.className = canvas.className;
+      img.id = canvas.id;
+      canvas.replaceWith(img);
+    });
+    clone.querySelectorAll('script').forEach((s) => s.remove());
+    // Phone browsers don't repeat table headers or fixed elements per page, so drop the table and start each page with its own logo.
+    const frame = clone.querySelector('.print-frame');
+    const content = frame?.querySelector(':scope > tbody > tr > td');
+    if (content) {
+      const logoEl = frame.querySelector(':scope > thead img');
+      let logoSrc = logoEl.getAttribute('src');
+      try {
+        const blob = await (await fetch(logoSrc, { credentials: 'same-origin' })).blob();
+        logoSrc = await new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => resolve(reader.result);
+          reader.onerror = reject;
+          reader.readAsDataURL(blob);
+        });
+      } catch (e) { /* keep the relative src */ }
+      const pageLogo = (newPage) => {
+        const el = document.createElement('div');
+        el.className = 'page-logo';
+        if (newPage) el.style.cssText = 'break-before:page;page-break-before:always';
+        el.innerHTML = `<img alt="IDFC FIRST Bank" src="${logoSrc}" style="width:138px;height:auto">`;
+        return el;
+      };
+      content.querySelector('.section-2a-details-table')?.parentElement.before(pageLogo(true));
+      content.querySelector('.section-3-table')?.nextElementSibling?.before(pageLogo(true));
+      content.prepend(pageLogo(false));
+      const footer = frame.querySelector(':scope > tfoot > tr > td');
+      if (footer) content.append(...footer.childNodes);
+      frame.replaceWith(...content.childNodes);
+    }
+    const logoCss = '.page-logo{display:block;padding:10mm 0 4mm;margin:0!important}.page-logo img{margin-left:auto}';
+    clone.querySelector('meta[name="viewport"]')?.setAttribute('content', 'width=794');
+    clone.querySelector('head').insertAdjacentHTML('afterbegin', `<base href="${document.baseURI}">`);
+    // Reproduce the desktop print width: keep the sm breakpoint on and pin the page width, whatever the phone viewport is.
+    const liveStyles = document.querySelectorAll('style');
+    clone.querySelectorAll('style').forEach((s, i) => {
+      try {
+        s.textContent = Array.from(liveStyles[i].sheet.cssRules).map((r) => r.cssText).join('\n')
+          .replace(/\(min-width:\s*640px\)/g, '(min-width: 0px)');
+      } catch (e) { /* keep original rules */ }
+    });
+    clone.querySelector('head').insertAdjacentHTML('beforeend', `<style>html,body{width:${widthPx}px!important;min-width:${widthPx}px!important;max-width:none!important;overflow:visible!important}@page{margin:0 0 10mm 0;@bottom-center{content:"Page " counter(page) " of " counter(pages);font:11px Arial,sans-serif;color:#000}}${logoCss}@media screen{body{visibility:hidden}}</style>`);
+    win.document.open();
+    win.document.write(`<!DOCTYPE html>${clone.outerHTML}<script>window.addEventListener('afterprint',()=>window.close());window.addEventListener('load',()=>setTimeout(()=>window.print(),600));<\/script>`);
+    win.document.close();
   }
   window.addEventListener('beforeprint', prepareDocumentForPrint);
 

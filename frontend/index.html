@@ -458,10 +458,31 @@
       width: 100% !important;
     }
 
+    .print-frame { width: 100%; border-collapse: collapse; table-layout: fixed; }
+    .print-frame > thead,
+    .print-frame > tfoot { display: none; }
+    .print-frame > thead > tr > td,
+    .print-frame > tbody > tr > td,
+    .print-frame > tfoot > tr > td { padding: 0; border: 0; }
+    /* Sections are separate bordered tables; overlap their borders so there is no gap between them. */
+    .form-part { padding-top: 0 !important; }
+    .form-part > div.pt-1 { padding-top: 0 !important; }
+    .form-part > * + *,
+    .form-part + .form-part { margin-top: -1.5px !important; }
+    .statutory-page-2-marker > :last-child { margin-top: 6px !important; }
+    .section-2a-details-table { border-bottom-width: 1px; }
+    #goodsParticularsTable { margin-top: -1px; }
+
     @media print {
       @page {
-        margin: 10mm 8mm;
+        margin: 0 0 10mm 0;
+        @bottom-center { content: "Page " counter(page) " of " counter(pages); font: 11px Arial, sans-serif; color: #000; }
       }
+      .print-frame > thead { display: table-header-group; }
+      .print-frame > thead > tr > td { padding: 10mm 0 0; }
+      .print-frame > tfoot { display: table-footer-group; }
+      .print-frame > tfoot > tr > td { padding: 0; }
+      main { padding: 0 !important; }
       body {
         background: #ffffff !important;
         padding: 0 !important;
@@ -482,7 +503,7 @@
         margin: 0 !important;
         width: 100% !important;
         max-width: 100% !important;
-        padding: 0 !important;
+        padding: 0 8mm !important;
       }
       .cell-input, .cell-input-compact, .cell-textarea {
         background-color: transparent !important;
@@ -667,7 +688,7 @@
           display: flex !important;
         }
         .section-3-table {
-          margin-top: 0.5rem !important;
+          margin-top: -1.5px !important;
         }
       #statutory-form-wrapper input::placeholder,
       #statutory-form-wrapper textarea::placeholder {
@@ -843,7 +864,7 @@
   }
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-ji</head>
+</head>
 <body class="bg-slate-100/80 text-slate-900 font-sans min-h-screen antialiased flex flex-col justify-between">
 <!-- BEGIN: Minimal Top Navigation Bar -->
 <header class="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-slate-200 shadow-xs no-print" data-purpose="top-navigation-bar">
@@ -919,6 +940,10 @@ ji</head>
 <!-- END: Auto-Extraction Dropzone -->
 <!-- FORM CANVAS: EXACT TWO-PAGE STATUTORY ORIENTATION -->
 <div class="w-full max-w-[960px] space-y-2" id="statutory-form-wrapper"><div class="bg-white p-2 sm:p-4 shadow-lg border border-slate-300 rounded-xs form-sheet text-slate-900 w-full overflow-x-hidden">
+  <!-- Empty header/footer rows give every printed page its margin, so the page margin itself can be 0 and the browser prints no date/URL header -->
+  <table class="print-frame">
+  <thead><tr><td></td></tr></thead>
+  <tbody><tr><td>
   <p class="text-right text-xs font-semibold text-black mb-1">Annex</p>
   <!-- Title & Action Bar -->
   <div class="flex items-center justify-between mb-1.5 pb-0.5 no-print flex-wrap gap-2">
@@ -1254,7 +1279,7 @@ ji</head>
             <td class="p-0 px-1.5 align-middle"><input class="cell-input-compact uppercase curr-sync" placeholder="Currency" type="text" value=""></td>
             <td class="p-0 px-1.5 align-middle"><input class="cell-input-compact text-right font-mono" id="val_packing" oninput="calculateTotals()" placeholder="0.00" step="0.01" type="number" value=""></td>
           </tr>
-          <tr class="bg-gov-100 font-bold border-t-2 border-black">
+          <tr class="bg-gov-100 font-bold border-black">
             <td class="py-0.5 px-2 text-black text-xs align-middle leading-tight">Full export value / Net Realisable export value</td>
             <td class="py-0.5 px-2 font-mono uppercase text-xs align-middle" id="netCurrencyCell">-</td>
             <td class="p-0 px-1.5 align-middle"><input class="cell-input-compact text-right font-mono font-bold text-slate-900 bg-white" id="val_net_realisable" placeholder="0.00" readonly="" type="text" value=""></td>
@@ -1270,12 +1295,12 @@ ji</head>
       <table class="w-full form-table-bordered border-collapse text-left text-xs min-w-[900px]" id="servicesTable">
         <thead>
           <tr class="bg-gov-100 font-bold">
-            <th class="p-1.5 text-sm text-black" colspan="11" id="servicesSectionHeading">
+            <th class="p-1.5 text-sm text-black" colspan="12" id="servicesSectionHeading">
               2B. Details of Export Value^ of Services
             </th>
           </tr>
           <tr class="bg-slate-50 font-semibold border-b">
-            <th class="p-1.5 text-xs text-slate-800" colspan="11">
+            <th class="p-1.5 text-xs text-slate-800" colspan="12">
               Details of services provided to multiple recipients
             </th>
           </tr>
@@ -1478,6 +1503,9 @@ ji</head>
       <p class="">3. Export value may be indicated as nil in case the goods are sent without any consideration.</p>
     </div>
     </div>
+  </td></tr></tbody>
+  <tfoot><tr><td></td></tr></tfoot>
+  </table>
 </div></div>
 <section aria-labelledby="edf-help-heading" class="w-full max-w-[960px] mt-6 mb-4 px-2 sm:px-0 no-print">
   <h2 class="text-base font-bold text-slate-800" id="edf-help-heading">EDF online autofill help</h2>
@@ -1728,7 +1756,44 @@ ji</head>
       return;
     }
     prepareDocumentForPrint();
+    if (window.matchMedia('(max-width: 767px)').matches) {
+      printInDesktopLayout(794);
+      return;
+    }
     window.print();
+  }
+
+  // Phones print at screen width and block printing from iframes, so print a static A4-width copy in a new tab.
+  function printInDesktopLayout(widthPx) {
+    const win = window.open('', '_blank');
+    if (!win) { window.print(); return; }
+    const clone = document.documentElement.cloneNode(true);
+    const toggles = 'input[type="checkbox"], input[type="radio"]';
+    const liveToggles = document.querySelectorAll(toggles);
+    clone.querySelectorAll(toggles).forEach((el, i) => el.toggleAttribute('checked', liveToggles[i].checked));
+    const liveCanvases = document.querySelectorAll('canvas');
+    clone.querySelectorAll('canvas').forEach((canvas, i) => {
+      const img = document.createElement('img');
+      img.src = liveCanvases[i].toDataURL();
+      img.className = canvas.className;
+      img.id = canvas.id;
+      canvas.replaceWith(img);
+    });
+    clone.querySelectorAll('script').forEach((s) => s.remove());
+    clone.querySelector('meta[name="viewport"]')?.setAttribute('content', 'width=794');
+    clone.querySelector('head').insertAdjacentHTML('afterbegin', `<base href="${document.baseURI}">`);
+    // Reproduce the desktop print width: keep the sm breakpoint on and pin the page width, whatever the phone viewport is.
+    const liveStyles = document.querySelectorAll('style');
+    clone.querySelectorAll('style').forEach((s, i) => {
+      try {
+        s.textContent = Array.from(liveStyles[i].sheet.cssRules).map((r) => r.cssText).join('\n')
+          .replace(/\(min-width:\s*640px\)/g, '(min-width: 0px)');
+      } catch (e) { /* keep original rules */ }
+    });
+    clone.querySelector('head').insertAdjacentHTML('beforeend', `<style>html,body{width:${widthPx}px!important;min-width:${widthPx}px!important;max-width:none!important;overflow:visible!important}@page{margin:0 0 10mm 0;@bottom-center{content:"Page " counter(page) " of " counter(pages);font:11px Arial,sans-serif;color:#000}}@media screen{body{visibility:hidden}}</style>`);
+    win.document.open();
+    win.document.write(`<!DOCTYPE html>${clone.outerHTML}<script>window.addEventListener('afterprint',()=>window.close());window.addEventListener('load',()=>setTimeout(()=>window.print(),600));<\/script>`);
+    win.document.close();
   }
   window.addEventListener('beforeprint', prepareDocumentForPrint);
 
