@@ -743,7 +743,7 @@
       }
       .print-value-echo.print-filled-field,
       #statutory-form-wrapper textarea.print-filled-field {
-        font-weight: 600 !important;
+        font-weight: 400 !important;
         color: #111827 !important;
         background: #f8fafc !important;
         border-radius: 2px !important;
@@ -786,6 +786,42 @@
   .statutory-page-2-marker > :last-child { margin-top: 6px !important; }
   .section-2a-details-table { border-bottom-width: 1px; }
   #goodsParticularsTable { margin-top: -1px; }
+  .packing-charges-row > .cell-input-compact {
+    flex: 1 1 auto;
+    width: auto;
+    min-width: 0;
+  }
+  #val_packing,
+  #val_net_realisable {
+    color: #000000 !important;
+  }
+  .export-value-label {
+    min-width: 0;
+    flex: 0 0 auto;
+    white-space: nowrap;
+    font-size: 11px;
+  }
+  .export-value-row > .cell-input-compact {
+    flex: 1 1 auto;
+    width: auto;
+    min-width: 0;
+  }
+  .payment-detail-entry {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: baseline;
+    gap: 0.35rem;
+  }
+  .payment-detail-entry > span {
+    flex: 0 0 auto;
+  }
+  .payment-detail-entry > input,
+  .payment-detail-entry > textarea,
+  .payment-detail-entry > .print-value-echo {
+    flex: 1 1 auto;
+    min-width: 0;
+    margin-top: 0 !important;
+  }
   .print-frame > thead { display: none; }
   .print-frame > tfoot { display: table-footer-group; }
   /* Zero page margin removes the browser's date/title/URL/page-number header and footer. */
@@ -818,6 +854,9 @@
     .edf-main-table .space-y-1 > .flex.items-center { flex-wrap: wrap; }
     .section-2a-details-table .flex-nowrap { flex-wrap: wrap; }
     #goodsParticularsTable .flex { flex-wrap: wrap; }
+    .export-value-row { flex-wrap: nowrap !important; }
+    .export-value-label { min-width: 0; flex: 0 0 auto; white-space: nowrap; font-size: 10px; }
+    .export-value-row .cell-input-compact { flex: 1 1 auto; width: auto; min-width: 0; }
     .sec5-cell > div.flex { flex-direction: column; align-items: stretch; gap: 12px; }
     #statutory-form-wrapper .sec5-cell .ad-signature-line { width: 100%; }
     #statutory-form-wrapper .sec5-cell .text-right { text-align: left; }
@@ -844,6 +883,12 @@
     #statutory-form-wrapper td.p-2 { padding-bottom: 44px !important; }
     #statutory-form-wrapper td.p-2.sec5-cell,
     #statutory-form-wrapper td.p-2.sec4-cell { padding-bottom: 8px !important; }
+    .payment-detail-entry { display: block; }
+    .payment-detail-entry > span { display: inline; }
+    .payment-detail-entry > .print-value-echo {
+      display: inline !important;
+      margin: 0 !important;
+    }
     #statutory-form-wrapper :not(.signature-business-name):not(.signature-designation) > .print-value-echo { font-weight: 400 !important; }
     #leoInvoiceWrap.print-empty-leo,
     #leoComma.print-empty-leo { display: none !important; }
@@ -1384,19 +1429,17 @@
           </tr>
           <tr>
             <td class="py-0.5 px-2 text-xs align-middle" colspan="3">
-              <div class="flex items-center gap-2">
-                <span class="font-medium leading-tight">Packing Charges</span>
-                <input class="cell-input-compact uppercase curr-sync" placeholder="Currency" style="width:6rem" type="text" value="">
-                <input class="cell-input-compact text-right font-mono" id="val_packing" oninput="calculateTotals()" placeholder="0.00" step="0.01" style="width:9rem" type="number" value="">
+              <div class="packing-charges-row flex flex-nowrap items-center gap-2">
+                <span class="leading-tight whitespace-nowrap">Packing Charges</span>
+                <input class="cell-input-compact" id="val_packing" type="text" value="">
               </div>
             </td>
           </tr>
-          <tr class="font-bold border-black">
+          <tr class="border-black">
             <td class="py-0.5 px-2 text-black text-xs align-middle" colspan="3">
-              <div class="flex items-center gap-2">
-                <span class="leading-tight">Full export value / Net Realisable export value</span>
-                <span class="font-mono uppercase text-xs" id="netCurrencyCell">-</span>
-                <input class="cell-input-compact text-right font-mono font-bold text-slate-900 bg-white" id="val_net_realisable" placeholder="0.00" readonly="" style="width:9rem" type="text" value="">
+              <div class="export-value-row flex flex-nowrap items-center gap-2">
+                <span class="export-value-label leading-tight">Full export value / Net Realisable export value</span>
+                <input class="cell-input-compact" id="val_net_realisable" type="text" value="">
               </div>
             </td>
           </tr>
@@ -1460,7 +1503,7 @@
             <td class="p-1.5 align-top text-xs" colspan="12">
               <div class="space-y-1.5 payment-details-block">
                 <p class="font-bold">Service Export Payment Details:</p>
-                <div>
+                <div class="payment-detail-entry">
                   <span class="font-medium">Inward Details (Ref, Date, Amount):</span>
                   <textarea class="cell-textarea mt-0.5" id="field_inward_details" placeholder="e.g. IWRM999999999 USD 4975 dated 01-Oct-2026" rows="1"></textarea>
                 </div>
@@ -1469,11 +1512,11 @@
                   <label class="inline-flex items-center gap-1.5 cursor-pointer"><input class="rounded border-slate-400 text-slate-800 h-3.5 w-3.5" id="pr_part" type="checkbox"><span class="">Part</span></label>
                   <label class="inline-flex items-center gap-1.5 cursor-pointer"><input class="rounded border-slate-400 text-slate-800 h-3.5 w-3.5" id="pr_full" type="checkbox"><span class="">Full</span></label>
                 </div>
-                <div>
+                <div class="payment-detail-entry">
                   <span class="font-medium">Foreign Bank Charges if any:</span>
                   <input class="cell-input mt-0.5" id="field_foreign_bank_charges" type="text" value="">
                 </div>
-                <div>
+                <div class="payment-detail-entry">
                   <span class="font-medium">Request for Reduction in Realization amount with Reason if any:</span>
                   <textarea class="cell-textarea mt-0.5" id="field_reduction_request" rows="1"></textarea>
                 </div>
@@ -1697,14 +1740,6 @@
     const commission = parseFloat(document.getElementById('val_commission')?.value) || 0;
     const discount = parseFloat(document.getElementById('val_discount')?.value) || 0;
     const deduction = parseFloat(document.getElementById('val_deduction')?.value) || 0;
-    const packing = parseFloat(document.getElementById('val_packing')?.value) || 0;
-
-    const net = (fob + freight + insurance + packing) - (commission + discount + deduction);
-    
-    const netField = document.getElementById('val_net_realisable');
-    if (netField) {
-      netField.value = net.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-    }
   }
 
   // Update Net Realisable Value for a service row when its amount changes
@@ -1769,8 +1804,6 @@
   function syncCurrency(val) {
     const normalized = (val || '').trim().toUpperCase();
     document.querySelectorAll('.curr-sync').forEach(el => el.value = normalized);
-    const netCurr = document.getElementById('netCurrencyCell');
-    if (netCurr) netCurr.textContent = normalized || '-';
   }
 
   // Toast messenger
@@ -2575,7 +2608,6 @@
     while (servicesBody.children.length > 1) servicesBody.lastElementChild.remove();
     updateServiceRowIndices();
     document.getElementById('val_net_realisable').value = '';
-    document.getElementById('netCurrencyCell').textContent = '-';
     const progress = document.getElementById('extractionProgress');
     const progressBar = document.getElementById('extractionProgressBar');
     if (progress) progress.classList.add('hidden');
